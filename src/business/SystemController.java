@@ -1,5 +1,7 @@
-
+package business;
 import java.util.*;
+import data.*;
+import presentation.UiController;
 
 /**
  * 
@@ -45,7 +47,7 @@ public class SystemController {
     /**
      * 
      */
-    private UIController uiController;
+    private UiController uiController;
 
     /**
      * 
@@ -59,18 +61,16 @@ public class SystemController {
      * @param void 
      * @return
      */
-    public void startup(void) {
+    public void startup() {
         // TODO implement here
-        return null;
     }
 
     /**
      * @param void 
      * @return
      */
-    public void buildList(void) {
+    public void buildList() {
         // TODO implement here
-        return null;
     }
     
     public ArrayList<Employee> getManagerList_() {
@@ -121,11 +121,11 @@ public class SystemController {
 		this.databaseController_ = databaseController_;
 	}
 
-	public UIController getUiController() {
+	public UiController getUiController() {
 		return uiController;
 	}
 
-	public void setUiController(UIController uiController) {
+	public void setUiController(UiController uiController) {
 		this.uiController = uiController;
 	}
 

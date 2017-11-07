@@ -1,5 +1,6 @@
+package presentation;
 
-import java.util.*;
+import javax.swing.JPanel;
 
 /**
  * 
@@ -27,18 +28,16 @@ public class DeveloperPanel {
      * @param void 
      * @return
      */
-    public void updateAssignmentPopUp(void void) {
+    public void updateAssignmentPopUp() {
         // TODO implement here
-        return null;
     }
 
     /**
      * @param void 
      * @return
      */
-    public void reportFixPopUp(void void) {
+    public void reportFixPopUp() {
         // TODO implement here
-        return null;
     }
 
     public JPanel getPanel_() {

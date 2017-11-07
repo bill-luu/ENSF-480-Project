@@ -1,5 +1,4 @@
-
-import java.util.*;
+package data;
 
 /**
  * 
@@ -50,7 +49,5 @@ public class Product {
 	public void setProductDescription(String productDescription) {
 		this.productDescription = productDescription;
 	}
-
-    
 
 }

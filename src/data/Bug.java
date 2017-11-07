@@ -1,5 +1,4 @@
-
-import java.util.*;
+package data;
 
 /**
  * 
@@ -28,9 +27,9 @@ public class Bug {
     private int produceId_;
 
     /**
-     * 
+     * Add enum here
      */
-    private State state_;
+    //private State state_; 
 
     /**
      * 
@@ -42,7 +41,7 @@ public class Bug {
      * @param void 
      * @return
      */
-    public String extractKeywords(void void) {
+    public String extractKeywords() {
         // TODO implement here
         return null;
     }
@@ -78,14 +77,14 @@ public class Bug {
 	}
 
 
-	public State getState_() {
-		return state_;
-	}
+//	public State getState_() {
+//		return state_;
+//	}
 
 
-	public void setState_(State state_) {
-		this.state_ = state_;
-	}
+//	public void setState_(State state_) {
+//		this.state_ = state_;
+//	}
 
 
 	public String getDescription_() {

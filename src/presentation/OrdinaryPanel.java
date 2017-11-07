@@ -1,5 +1,6 @@
+package presentation;
 
-import java.util.*;
+import javax.swing.JPanel;
 
 /**
  * 
@@ -27,18 +28,16 @@ public class OrdinaryPanel {
      * @param void 
      * @return
      */
-    public void createLoginPopUp(void void) {
+    public void createLoginPopUp() {
         // TODO implement here
-        return null;
     }
 
     /**
      * @param void 
      * @return
      */
-    public void submitBugPopUp(void void) {
+    public void submitBugPopUp() {
         // TODO implement here
-        return null;
     }
 
 

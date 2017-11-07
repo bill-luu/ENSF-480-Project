@@ -1,5 +1,9 @@
+package presentation;
 
-import java.util.*;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import data.*;
+import business.SystemController;
 
 /**
  * 
@@ -35,7 +39,7 @@ public class UiController {
      * @param void 
      * @return
      */
-    public ArrayList<Product> BrowseProducts(void void) {
+    public ArrayList<Product> BrowseProducts() {
         // TODO implement here
         return null;
     }
@@ -44,9 +48,9 @@ public class UiController {
      * @param void 
      * @return
      */
-    public ArrayList<Bug> BrowseBugs(void void) {
+    public ArrayList<Bug> BrowseBugs() {
         // TODO implement here
-        return null;
+    	return null;
     }
 
     /**
@@ -55,7 +59,6 @@ public class UiController {
      */
     public void SubmitBug(Bug bug_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -64,7 +67,6 @@ public class UiController {
      */
     public void UpdateBug(Bug bug_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -73,16 +75,15 @@ public class UiController {
      */
     public void ApproveBug(Bug bug_) {
         // TODO implement here
-        return null;
     }
 
     /**
      * @param void 
      * @return
      */
-    public ArrayList<Employee> BrowseDevelopers(void void) {
+    public ArrayList<Employee> BrowseDevelopers() {
         // TODO implement here
-        return null;
+    	return null;
     }
 
     /**
@@ -91,7 +92,6 @@ public class UiController {
      */
     public void AddDeveloper(Employee developer_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -100,7 +100,6 @@ public class UiController {
      */
     public void UpdateDeveloper(Employee developer_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -109,16 +108,6 @@ public class UiController {
      */
     public void RemoveDeveloper(Employee developer_) {
         // TODO implement here
-        return null;
-    }
-
-    /**
-     * @param void 
-     * @return
-     */
-    public ArrayList<Product> BrowseProducts(void void) {
-        // TODO implement here
-        return null;
     }
 
     /**
@@ -127,7 +116,6 @@ public class UiController {
      */
     public void AddProduct(Product product_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -136,7 +124,6 @@ public class UiController {
      */
     public void RemoveProduct(Product product_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -154,7 +141,6 @@ public class UiController {
      */
     public void RemoveAssignment(Assignment assignment_) {
         // TODO implement here
-        return null;
     }
 
     /**
@@ -163,7 +149,6 @@ public class UiController {
      */
     public void AddAssignment(Assignment assignment_) {
         // TODO implement here
-        return null;
     }
 
     /**

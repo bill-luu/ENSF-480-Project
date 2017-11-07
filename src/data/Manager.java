@@ -1,5 +1,4 @@
-
-import java.util.*;
+package data;
 
 /**
  * 
@@ -11,6 +10,4 @@ public class Manager extends Employee {
      */
     public Manager() {
     }
-
-
 }

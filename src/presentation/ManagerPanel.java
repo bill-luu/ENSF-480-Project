@@ -1,5 +1,6 @@
+package presentation;
 
-import java.util.*;
+import javax.swing.JPanel;
 
 /**
  * 
@@ -27,27 +28,24 @@ public class ManagerPanel {
      * @param void 
      * @return
      */
-    public void createProductPopUp(void void) {
+    public void createProductPopUp() {
         // TODO implement here
-        return null;
     }
 
     /**
      * @param void 
      * @return
      */
-    public void createDeveloperPopUp(void void) {
+    public void createDeveloperPopUp() {
         // TODO implement here
-        return null;
     }
 
     /**
      * @param void 
      * @return
      */
-    public void createAssignmentPopUp(void void) {
+    public void createAssignmentPopUp() {
         // TODO implement here
-        return null;
     }
 
 	public JPanel getPanel_() {
