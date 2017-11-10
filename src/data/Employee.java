@@ -11,17 +11,17 @@ public class Employee {
     }
 
     /**
-     * 
+     * The first name of the employee
      */
     private String firstName_;
 
     /**
-     * 
+     * The last name of the employee
      */
     private String lastName_;
 
     /**
-     * 
+     * The user id of the employee
      */
     private int userId_;
 

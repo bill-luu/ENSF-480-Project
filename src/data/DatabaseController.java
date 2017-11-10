@@ -14,34 +14,34 @@ public class DatabaseController {
     }
 
     /**
-     * 
+     * The file containing the products
      */
-    private final String PRODUCT_FILE = "";
+    private final String PRODUCT_FILE = "Products.txt";
 
     /**
-     * 
+     * The file containing the Assignments 
      */
-    private final String ASSIGNMENT_FILE = "";
+    private final String ASSIGNMENT_FILE = "Assignment.txt";
 
     /**
-     * 
+     * The file containing the Developers
      */
-    private final String DEVELOPER_FILE = "";
+    private final String DEVELOPER_FILE = "Developers.txt";
 
     /**
-     * 
+     * The file containing the managers
      */
-    private final String MANAGER_FILE = "";
+    private final String MANAGER_FILE = "Managers.txt";
 
     /**
-     * 
+     * The file containing the login info
      */
-    private final String LOGIN_FILE = "";
+    private final String LOGIN_FILE = "Login.txt";
 
     /**
-     * 
+     * The file containing the Bugs
      */
-    private final String BUG_FILE = "";
+    private final String BUG_FILE = "Bugs.txt";
 
 
     /**
