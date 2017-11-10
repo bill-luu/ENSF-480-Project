@@ -11,6 +11,15 @@ public class OrdinaryPanel {
      * Default constructor
      */
     public OrdinaryPanel() {
+    	
+    }
+    
+    /**
+     * 
+     * @param uiController
+     */
+    public OrdinaryPanel(UiController uiController) {
+    	
     }
 
     /**
