@@ -280,9 +280,24 @@ public class DatabaseController
 		return tempBugsList;
 	}
 	
-	public void writeReport()
+	public void writeReport(String report)
 	{
-		
+		BufferedWriter output;
+		Random rand = new Random();
+		int temp = rand.nextInt() % 20000;
+		String reportName = "Report";
+		reportName = reportName.concat(String.valueOf(temp));
+		try
+		{
+			output = new BufferedWriter(new FileWriter(reportName));
+			output.write(report);
+			output.close();
+		}
+		catch(IOException | NullPointerException e)
+		{
+			System.out.println("Error writing the report file.");
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void writeProductFile(ArrayList<Product> products)
