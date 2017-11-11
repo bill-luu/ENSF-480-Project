@@ -67,12 +67,12 @@ public class Bug {
 	}
 
 
-	public int getProduceId_() {
+	public int getProductId_() {
 		return produceId_;
 	}
 
 
-	public void setProduceId_(int produceId_) {
+	public void setProductId_(int produceId_) {
 		this.produceId_ = produceId_;
 	}
 
