@@ -61,14 +61,14 @@ public class Bug {
 		this.bugTitle_ = bugTitle_;
 	}
 
-	public int getproductId_() {
-		return productId_;
+	public int getProductId_() {
+		return produceId_;
 	}
 
-	public void setproductId_(int productId_) {
-		this.productId_ = productId_;
-	}
-
+	public void setProductId_(int produceId_) {
+		this.produceId_ = produceId_;
+  }
+  
 	// public State getState_() {
 	// return state_;
 	// }
