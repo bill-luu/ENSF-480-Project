@@ -18,22 +18,22 @@ public class Assignment {
     private int assignmentId_;
 
     /**
-     * 
+     * The unique ID of the assignment
      */
     private int developerId_;
 
     /**
-     * 
+     * The ID of the developer assigned to the assignment
      */
     private int bugId_;
 
     /**
-     * 
+     * The ID of the bug that needs to be fixed
      */
     private int managerId_;
 
     /**
-     * 
+     * The ID of the manager that created the assignment
      */
     private ArrayList<String> updateMessages_;
 
