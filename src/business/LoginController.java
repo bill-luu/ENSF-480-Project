@@ -41,12 +41,12 @@ public class LoginController {
         for(String validLogin : loginInfo_){
         	if(validLogin.matches("dev-<" + login + ">")){
         		Developer dev = new Developer();
-        		dev.setUsername(login.split(":")[0]);
+        		dev.setUsername_(login.split(":")[0]);
         		return dev;
         	}
 			else if (validLogin.matches("man-<" + login + ">")){
 				Manager man = new Manager();
-				man.setUsername(login.split(":")[0]);
+				man.setUsername_(login.split(":")[0]);
         		return man;
 			}
         }

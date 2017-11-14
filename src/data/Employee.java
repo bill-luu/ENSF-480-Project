@@ -21,6 +21,11 @@ public class Employee {
     private String lastName_;
 
     /**
+     * The username of the employee
+     */
+    private String username_;
+    
+    /**
      * The user id of the employee
      */
     private int userId_;
@@ -48,6 +53,15 @@ public class Employee {
 	public void setUserId_(int userId_) {
 		this.userId_ = userId_;
 	}
+	
+	public String getUsername_() {
+		return username_;
+	}
+
+	public void setUsername_(String username_) {
+		this.username_ = username_;
+	}
+	
 
     
 }
