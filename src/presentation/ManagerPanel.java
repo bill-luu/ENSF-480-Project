@@ -1,5 +1,11 @@
 package presentation;
 
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -7,13 +13,7 @@ import javax.swing.JPanel;
  */
 public class ManagerPanel {
 
-    /**
-     * Default constructor
-     */
-    public ManagerPanel() {
-    }
-
-    /**
+	 /**
      * 
      */
     private JPanel panel_;
@@ -22,7 +22,30 @@ public class ManagerPanel {
      * 
      */
     private UiController uiController_;
-
+    
+    /**
+     * 
+     * @param uiController
+     */
+    public ManagerPanel(UiController uiController) {
+    	this.uiController_ = uiController;
+    	panel_ = new JPanel();
+    	panel_.setName("ManagerPanel");
+    	
+    	JButton demoBackButton = new JButton("Go Back");
+    	
+    	demoBackButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				JPanel viewHolder = (JPanel)(uiController.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout)viewHolder.getLayout();
+				layout.show(viewHolder, "OrdinaryPanel");
+			}
+    	});
+    	
+    	panel_.add(new JLabel("Manager"));
+    	panel_.add(demoBackButton);
+    }
 
     /**
      * @param void 

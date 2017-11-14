@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -61,6 +62,20 @@ public class UiController {
     	frame_.setVisible(true);
     }
 
+    /**
+     * Check if the JPanel has already been added to the CardLayout
+     * @param panel_name The JPanel's name in the CardLayout
+     * @param viewHolder The JPanel holding the CardLayout
+     * @return True if the there exists a panel with name 'panel_name', false otherwise.
+     */
+    public boolean checkPanelExists(String panel_name, JPanel viewHolder){
+		for(Component panel : viewHolder.getComponents()){
+			if(panel != null && panel.getName().equals(panel_name) && panel instanceof JPanel)
+				return true;
+		}
+		return false;
+	}
+    
     /**
      * Fetch the product list from the system
      * @return An arraylist of products
@@ -205,5 +220,9 @@ public class UiController {
 		this.frame_ = frame_;
 	}
 
+	//TODO: This is for testing only. Remove once system is up and running.
+	public static void main(String args[]){
+		UiController u = new UiController();
+	}
     
 }
