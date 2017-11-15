@@ -12,17 +12,17 @@ public class Product {
     }
 
     /**
-     * 
+     * The ID of the product
      */
     private int productId_;
 
     /**
-     * 
+     * The name of the product
      */
     private String productName_;
 
     /**
-     * 
+     * The description of the product
      */
     private String productDescription;
 
