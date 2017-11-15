@@ -2,12 +2,19 @@ package presentation;
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import business.SystemController;
 
 /**
  * 
@@ -37,6 +44,7 @@ public class OrdinaryPanel {
     	JLabel title = new JLabel("Ordinary Panel");
     	JButton demoDevButton = new JButton("Go to Dev Screen");
     	JButton demoManButton = new JButton("Go to Manager Screen");
+    	JButton loginButton = new JButton("Login");
     	
     	demoDevButton.addActionListener(new ActionListener(){
 			@Override
@@ -74,9 +82,17 @@ public class OrdinaryPanel {
 			}
     	});
     	
+    	loginButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				createLoginPopUp();
+			}
+    	});
+    	
     	panel_.add(title);
     	panel_.add(demoDevButton);
     	panel_.add(demoManButton);
+    	panel_.add(loginButton);
     }
 
     /**
@@ -84,7 +100,35 @@ public class OrdinaryPanel {
      * @return
      */
     public void createLoginPopUp() {
-        // TODO implement here
+        JPanel loginPanel = new JPanel();
+        
+        JTextField usernameEntry = new JTextField();
+        usernameEntry.setPreferredSize(new Dimension(150, 25));
+        
+        JPasswordField passwordEntry = new JPasswordField();
+        passwordEntry.setPreferredSize(new Dimension(150, 25));
+        
+        Box vBox = Box.createVerticalBox(); // Align components in one column
+        vBox.add(usernameEntry);
+        vBox.add(passwordEntry);
+        
+        loginPanel.add(vBox);
+        Object options[] = {"Login", "Cancel"};
+        
+        int selection = JOptionPane.showOptionDialog(null, loginPanel, 
+        		"BTS Login", 
+        		JOptionPane.OK_CANCEL_OPTION, 
+        		JOptionPane.PLAIN_MESSAGE,
+        		null,
+        		options, 
+        		options[0]);
+        
+        if(selection == JOptionPane.OK_OPTION){
+        	String username = usernameEntry.getText();
+        	String password = String.valueOf(passwordEntry.getPassword());
+        	// Call Login method in uicontroller and take action based on result
+        }
+    	
     }
 
     /**
