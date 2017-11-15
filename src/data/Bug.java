@@ -32,7 +32,7 @@ public class Bug {
 	private int productId_;
 
 	/**
-	 * Enum for bug state. Can be pending_approval, awaiting_assignment, in_progress, rejected, or fixed.
+	 * Enum for bug state. Can be PENDING_APPROVAL, REJECTED, AWAITING_ASSIGNMENT, IN_PROGRESS, or FIXED.
 	 */
 	 private State state_;
 
