@@ -6,14 +6,14 @@ import data.Employee;
 import data.Manager;
 
 /**
- * LoginController is a class that authenicates user logins
+ * LoginController is a class that authenicates user logins.
  */
 public class LoginController {
 
 	/**
-     * An arraylist of all logins and passwords in the form:
-     *  	man<username:password> for Managers
-     * 		dev<username:password> for Developers
+     * An arraylist of all usernames and passwords in the form:
+     *  	man-<username:password> for Managers
+     * 		dev-<username:password> for Developers
      */
     private ArrayList<String> loginInfo_;
 
@@ -54,7 +54,7 @@ public class LoginController {
     }
 
     /**
-	 * Get the arraylist of login information
+	 * Get the arraylist of login information (usernames and passwords)
 	 */
 	public ArrayList<String> getLoginInfo_() {
 		return loginInfo_;
@@ -62,7 +62,7 @@ public class LoginController {
 
 	/**
 	 * Set the arraylist of login information
-	 * @param loginInfo_
+	 * @param loginInfo_ The arraylist of usernames and passwords
 	 */
 	public void setLoginInfo_(ArrayList<String> loginInfo_) {
 		this.loginInfo_ = loginInfo_;

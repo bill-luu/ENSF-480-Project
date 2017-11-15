@@ -8,7 +8,7 @@ public class Bug {
 	/**
 	 * Enum to represent the current bug state
 	 */
-	enum State {pending_approval, rejected, awaiting_assignment, in_progress, fixed};
+	enum State {PENDING_APPROVAL, REJECTED, AWAITING_ASSIGNMENT, IN_PROGRESS, FIXED};
 	
 	/**
 	 * Default constructor
