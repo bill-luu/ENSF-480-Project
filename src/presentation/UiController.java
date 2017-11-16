@@ -202,6 +202,11 @@ public class UiController {
      * @return Null if the login fails, the users Developer/Manager account object if successful
      */
     public Employee login(String login){
+    	//Temporary
+	    	if(system_ == null)
+	    		return null;
+    	//
+    	
     	userLoggedIn_ = system_.loginUser(login);
     	return userLoggedIn_;
     }

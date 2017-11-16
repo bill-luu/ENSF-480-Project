@@ -32,7 +32,7 @@ public class ManagerPanel {
     	panel_ = new JPanel();
     	panel_.setName("ManagerPanel");
     	
-    	JButton demoBackButton = new JButton("Go Back");
+    	JButton demoBackButton = new JButton("Logout");
     	
     	demoBackButton.addActionListener(new ActionListener(){
 			@Override

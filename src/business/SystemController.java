@@ -78,11 +78,12 @@ public class SystemController {
     	if(logged_in_user == null)
     		return null;
     	else if(logged_in_user instanceof Manager){
-    		
+    		return null;
     	}
     	else if(logged_in_user instanceof Developer){
-    		
+    		return null;
     	}
+    	else return null;
     }
     
     public ArrayList<Employee> getManagerList_() {
