@@ -125,7 +125,7 @@ public class SystemController {
 		this.loginInfoList_ = loginInfoList_;
 	}
 
-	public ArrayList<Assignment> getassignmentList_() {
+	public ArrayList<Assignment> getAssignmentList_() {
 		return assignmentList_;
 	}
 
