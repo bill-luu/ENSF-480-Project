@@ -1,4 +1,5 @@
 package business;
+
 import java.util.*;
 import data.*;
 import presentation.UiController;
@@ -8,84 +9,95 @@ import presentation.UiController;
  */
 public class SystemController {
 
-    /**
-     * Default constructor
-     */
-    public SystemController() {
-    	startup();
-    }
-
-    /**
-     * A list of managers in the company
-     */
-    private ArrayList<Manager> managerList_;
-
-    /**
-     *  A list of bugs
-     */
-    private ArrayList<Bug> bugList_;
+	/**
+	 * Default constructor
+	 */
+	public SystemController() {
+		startup();
+	}
 
 	/**
-     * The list of developers in the company
-     */
-    private ArrayList<Developer> developerList_;
+	 * A list of managers in the company
+	 */
+	private ArrayList<Manager> managerList_;
 
-    /**
-     * The list of assignments
-     */
-    private ArrayList<Assignment> assignmentList_;
+	/**
+	 * A list of bugs
+	 */
+	private ArrayList<Bug> bugList_;
 
-    /**
-     * A list of products at the company
-     */
-    private ArrayList<Product> productList_;
+	/**
+	 * The list of developers in the company
+	 */
+	private ArrayList<Developer> developerList_;
 
-    /**
-     * The database controller
-     */
-    private DatabaseController databaseController_;
+	/**
+	 * The list of assignments
+	 */
+	private ArrayList<Assignment> assignmentList_;
 
-    /**
-     * The Ui Controller
-     */
-    private UiController uiController;
+	/**
+	 * A list of products at the company
+	 */
+	private ArrayList<Product> productList_;
 
-    /**
-     * The login controller
-     */
-    private LoginController loginController_;
+	private ArrayList<String> loginInfoList_;
 
-    /**
-     * The startup sequence of the program, creates the other controllers and builds the arraylists
-     * @param void 
-     * @return
-     */
-    public void startup() {
-    	System.out.println("System is starting up");
-    	
-    	//Create each of the controllers & set them
-    	setDatabaseController_(new DatabaseController());
-    	setLoginController_(new LoginController());
-    	setUiController(new UiController());
-    	
-    	buildList();
-    }
+	/**
+	 * The database controller
+	 */
+	private DatabaseController databaseController_;
 
-    /**
-     * Reads the databaseContoller for each of the lists
-     * @param void 
-     * @return
-     */
-    public void buildList() {
-    	managerList_ = databaseController_.readManagerFile();
-    	developerList_ = databaseController_.readDeveloperFile();
-    	
-    	bugList_ = databaseController_.readBugFile();
-    	assignmentList_ = databaseController_.readAssignmentFile();
-    	productList_ = databaseController_.readProductFile();
-    }
-    
-    public ArrayList<Manager> getManagerList_() {
+	/**
+	 * The Ui Controller
+	 */
+	private UiController uiController;
+
+	/**
+	 * The login controller
+	 */
+	private LoginController loginController_;
+
+	/**
+	 * The startup sequence of the program, creates the other controllers and
+	 * builds the arraylists
+	 * 
+	 * @param void
+	 * @return
+	 */
+	public void startup() {
+		System.out.println("System is starting up");
+
+		// Create each of the controllers & set them
+		setDatabaseController_(new DatabaseController());
+		setLoginController_(new LoginController());
+		setUiController(new UiController());
+
+		buildList();
+	}
+
+	/**
+	 * Reads the databaseContoller for each of the lists
+	 * 
+	 * @param void
+	 * @return
+	 */
+	public void buildList() {
+		managerList_ = databaseController_.readManagerFile();
+		developerList_ = databaseController_.readDeveloperFile();
+
+		bugList_ = databaseController_.readBugFile();
+		assignmentList_ = databaseController_.readAssignmentFile();
+		productList_ = databaseController_.readProductFile();
+
+		loginInfoList_ = databaseController_.readLoginInfoFile();
+	}
+
+	public ArrayList<String> getLoginInfoList_() {
+		return loginInfoList_;
+	}
+
+	public ArrayList<Manager> getManagerList_() {
 		return managerList_;
 	}
 
@@ -109,12 +121,16 @@ public class SystemController {
 		this.developerList_ = developerList_;
 	}
 
-	public ArrayList<Assignment> getAssignmnetList_() {
+	public void setLoginInfoList_(ArrayList<String> loginInfoList_) {
+		this.loginInfoList_ = loginInfoList_;
+	}
+
+	public ArrayList<Assignment> getAssignmentList_() {
 		return assignmentList_;
 	}
 
-	public void setAssignmnetList_(ArrayList<Assignment> assignmnetList_) {
-		this.assignmentList_ = assignmnetList_;
+	public void setAssignmentList_(ArrayList<Assignment> assignmentList_) {
+		this.assignmentList_ = assignmentList_;
 	}
 
 	public ArrayList<Product> getProductList_() {
@@ -148,9 +164,42 @@ public class SystemController {
 	public void setLoginController_(LoginController loginController_) {
 		this.loginController_ = loginController_;
 	}
-	
-	public static void main(String[] args)
-	{
+
+	public void addToManagerList(Manager manToAdd) {
+		managerList_.add(manToAdd);
+	}
+
+	public void addToBugList(Bug bugToAdd) {
+		bugList_.add(bugToAdd);
+	}
+
+	public void addToAssignmentList(Assignment assToAdd) {
+		assignmentList_.add(assToAdd);
+	}
+
+	public void addToProductList(Product productToAdd) {
+		productList_.add(productToAdd);
+	}
+
+	public void addToDeveloperList(Developer devToAdd, String loginInfoToAdd) {
+		developerList_.add(devToAdd);
+		loginInfoList_.add(loginInfoToAdd);
+	}
+
+	public void save() {
+		databaseController_.writeAssignmentFile(assignmentList_);
+		databaseController_.writeBugFile(bugList_);
+		databaseController_.writeDeveloperFile(developerList_);
+		databaseController_.writeManagerFile(managerList_);
+		databaseController_.writeProductFile(productList_);
+		databaseController_.writeLoginInfoFile(loginInfoList_);
+	}
+
+	public void shutdown() {
+		save();
+	}
+
+	public static void main(String[] args) {
 		SystemController application = new SystemController();
 	}
 }
