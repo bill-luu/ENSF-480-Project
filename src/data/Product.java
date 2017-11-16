@@ -5,26 +5,26 @@ package data;
  */
 public class Product {
 
-    /**
-     * Default constructor
-     */
-    public Product() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public Product() {
+	}
 
-    /**
-     * The ID of the product
-     */
-    private int productId_;
+	/**
+	 * The ID of the product
+	 */
+	private int productId_;
 
-    /**
-     * The name of the product
-     */
-    private String productName_;
+	/**
+	 * The name of the product
+	 */
+	private String productName_;
 
-    /**
-     * The description of the product
-     */
-    private String productDescription;
+	/**
+	 * The description of the product
+	 */
+	private String productDescription;
 
 	public int getProductId_() {
 		return productId_;

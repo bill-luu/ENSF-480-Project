@@ -5,11 +5,10 @@ package data;
  */
 public class Developer extends Employee {
 
-    /**
-     * Default constructor
-     */
-    public Developer() {
-    }
-
+	/**
+	 * Default constructor
+	 */
+	public Developer() {
+	}
 
 }

@@ -5,9 +5,9 @@ package data;
  */
 public class Manager extends Employee {
 
-    /**
-     * Default constructor
-     */
-    public Manager() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public Manager() {
+	}
 }
