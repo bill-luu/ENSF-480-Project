@@ -147,6 +147,10 @@ public class DatabaseController
 					{
 						tempDeveloper.setLastName_(tokens.nextToken());
 					}
+					else if (i == 3)
+					{
+						tempDeveloper.setUsername_(tokens.nextToken());
+					}
 					i++;
 				}
 				tempDeveloperList.add(tempDeveloper);
@@ -188,6 +192,10 @@ public class DatabaseController
 					else if (i == 2)
 					{
 						tempManager.setLastName_(tokens.nextToken());
+					}
+					else if (i == 3)
+					{
+						tempManager.setUsername_(tokens.nextToken());
 					}
 					i++;
 				}
@@ -375,6 +383,8 @@ public class DatabaseController
 				tempString = tempString.concat(developers.get(i).getFirstName_());
 				tempString = tempString.concat(" ");
 				tempString = tempString.concat(developers.get(i).getLastName_());
+				tempString = tempString.concat(" ");
+				tempString = tempString.concat(developers.get(i).getUsername_());
 				
 				output.write(tempString);
 				output.newLine();
@@ -402,6 +412,8 @@ public class DatabaseController
 				tempString = tempString.concat(managers.get(i).getFirstName_());
 				tempString = tempString.concat(" ");
 				tempString = tempString.concat(managers.get(i).getLastName_());
+				tempString = tempString.concat(" ");
+				tempString = tempString.concat(managers.get(i).getUsername_());
 				
 				output.write(tempString);
 				output.newLine();

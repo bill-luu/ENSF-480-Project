@@ -15,7 +15,7 @@ import business.SystemController;
 // SystemController changes
 // TODO: approveBug() & submitBug() methods are not in the SystemController class 
 // TODO: Add/Remove/Update methods are not present in the SystemController class
-// TODO: getAssignmnetList_() in SystemController needs to take in "int userId_" as an arguement
+// TODO: getAssignmentList_() in SystemController needs to take in "int userId_" as an arguement
 
 /**
  * UiController is the controller class for the GUI of the BTS. 
@@ -117,7 +117,7 @@ public class UiController {
      * Fetch the developer list from the system
      * @return An arraylist of Developers
      */
-    public ArrayList<Employee> BrowseDevelopers() {
+    public ArrayList<Developer> BrowseDevelopers() {
         return system_.getDeveloperList_();
     }
 
@@ -167,7 +167,7 @@ public class UiController {
      * @return An arraylist of assignments 
      */
     public ArrayList<Assignment> BrowseAssignments(int userId_) {
-        return system_.getAssignmnetList_(); // TODO: change args of getAssignmnetList_ in system
+        return system_.getAssignmentList_(); // TODO: change args of getAssignmentList_ in system
     }
 
     /**
