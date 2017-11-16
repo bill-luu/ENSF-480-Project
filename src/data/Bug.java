@@ -6,6 +6,11 @@ package data;
 public class Bug {
 
 	/**
+	 * Enum to represent the current bug state
+	 */
+	enum State {PENDING_APPROVAL, REJECTED, AWAITING_ASSIGNMENT, IN_PROGRESS, FIXED};
+	
+	/**
 	 * Default constructor
 	 */
 	public Bug() {
@@ -27,9 +32,9 @@ public class Bug {
 	private int productId_;
 
 	/**
-	 * Add enum here
+	 * Enum for bug state. Can be PENDING_APPROVAL, REJECTED, AWAITING_ASSIGNMENT, IN_PROGRESS, or FIXED.
 	 */
-	// private State state_;
+	 private State state_;
 
 	/**
 	 * Description of the bug
@@ -69,13 +74,13 @@ public class Bug {
 		this.productId_ = productId_;
   }
   
-	// public State getState_() {
-	// return state_;
-	// }
+	 public State getState_() {
+		 return state_;
+	 }
 
-	// public void setState_(State state_) {
-	// this.state_ = state_;
-	// }
+	 public void setState_(State state_) {
+		 this.state_ = state_;
+	 }
 
 	public String getDescription_() {
 		return description_;
