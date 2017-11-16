@@ -62,11 +62,11 @@ public class Bug {
 	}
 
 	public int getProductId_() {
-		return produceId_;
+		return productId_;
 	}
 
-	public void setProductId_(int produceId_) {
-		this.produceId_ = produceId_;
+	public void setProductId_(int productId_) {
+		this.productId_ = productId_;
   }
   
 	// public State getState_() {
