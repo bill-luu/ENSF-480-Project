@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -31,6 +33,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import data.Bug;
 import data.Developer;
@@ -70,9 +74,12 @@ public class OrdinaryPanel {
     public OrdinaryPanel(UiController uiController) {
     	this.uiController_ = uiController;
     	panel_ = new JPanel();
+    	panel_.setLayout(new GridBagLayout());
     	panel_.setName("OrdinaryPanel");
     	
-    	JLabel title = new JLabel("Ordinary Panel");
+    	GridBagConstraints gbc = new GridBagConstraints();
+    	JLabel title = new JLabel("Products");
+    	JLabel title2 = new JLabel("Bugs");
     	JButton loginButton = new JButton("Login");
     	JButton submitBugButton = new JButton("Report Bug");
     	
@@ -125,7 +132,11 @@ public class OrdinaryPanel {
     	buglist = new JList<String>(bugModel);
     	
     	JScrollPane bugScroller = new JScrollPane(buglist);
+    	
+    	
     	JScrollPane productScroller = new JScrollPane(productlist);
+    	
+    	
     	
     	// Temporary components for testing
 	    	JButton demoDevButton = new JButton("Test Dev Screen");
@@ -165,7 +176,26 @@ public class OrdinaryPanel {
 				}
 	    	});
     	// End temporary components
-	    	
+	    
+	    // Open Popup when clicking on list
+	    buglist.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				inspectBugPopUp();
+			}
+	    });
+	    
+	    // Open Popup when clicking on list
+	    productlist.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO: Update bug list with bugs
+			}
+	    });
+	    
+	    // Open login popup when clicking login button
     	loginButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -173,20 +203,36 @@ public class OrdinaryPanel {
 			}
     	});
     	
+    	// Open submit bug popup when clicking submit bug button
     	submitBugButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				submitBugPopUp();
 			}
     	});
+    	gbc.gridx = 1; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
+    	panel_.add(title, gbc);
     	
-    	panel_.add(title);
-    	panel_.add(demoDevButton);
-    	panel_.add(demoManButton);
-    	panel_.add(loginButton);
-    	panel_.add(productScroller);
-    	panel_.add(bugScroller);
-    	panel_.add(submitBugButton);
+    	gbc.gridx = 5; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
+    	panel_.add(title2, gbc);
+    	
+    	gbc.gridx = 10; gbc.gridy = 2; gbc.gridwidth = 1; gbc.gridheight = 1;
+    	panel_.add(demoDevButton, gbc);
+    	
+    	gbc.gridx = 10; gbc.gridy = 4; gbc.gridwidth = 1; gbc.gridheight = 1;
+    	panel_.add(demoManButton, gbc);
+    	
+    	gbc.gridx = 10; gbc.gridy = 0; gbc.gridwidth = 1; gbc.gridheight = 1;
+    	panel_.add(loginButton, gbc);
+    	
+    	gbc.gridx = 1; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
+    	panel_.add(productScroller, gbc);
+    	
+    	gbc.gridx = 5; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
+    	panel_.add(bugScroller, gbc);
+    	
+    	gbc.gridx = 4; gbc.gridy = 9; gbc.gridwidth = 3; gbc.gridheight = 1;
+    	panel_.add(submitBugButton, gbc);
     }
 
     /**
@@ -260,13 +306,12 @@ public class OrdinaryPanel {
     }
 
     /**
-     * @param void 
-     * @return
+     * Create a popup for users to submit a new bug in the system
      */
     public void submitBugPopUp() {
     	JPanel bugPanel = new JPanel();
     	
-    	HintTextField title = new HintTextField("Enter a Bug Title Here");
+    	HintTextField title = new HintTextField("Enter a bug title here");
     	
     	JTextArea description = new JTextArea();
     	description.setPreferredSize(new Dimension(500, 250));
@@ -291,7 +336,6 @@ public class OrdinaryPanel {
     	bugPanel.add(vBox);
     	
     	Object options[] = {"Submit Bug", "Cancel"};
-    	 
     	int selection = JOptionPane.showOptionDialog(null, bugPanel, 
         		"New Bug", 
         		JOptionPane.OK_CANCEL_OPTION, 
@@ -307,12 +351,32 @@ public class OrdinaryPanel {
     }
     
     /**
-     * @param void 
-     * @return
+     * Create a new popup for users to inspect a bug
      */
-    public void inspectBugPopUp() {
+    public void inspectBugPopUp() { // TODO: Add real bug object info
     	JPanel bugPanel = new JPanel();
     	String bug = buglist.getSelectedValue();
+    	
+    	JLabel bugTitle = new JLabel(bug);
+    	JLabel bugProduct = new JLabel("Product");
+    	JLabel bugDescription = new JLabel("Description");
+    	
+    	Box vBox = Box.createVerticalBox();
+    	vBox.add(bugTitle);
+    	vBox.add(Box.createVerticalStrut(15));
+    	vBox.add(bugProduct);
+    	vBox.add(Box.createVerticalStrut(15));
+    	vBox.add(bugDescription);
+    	bugPanel.add(vBox);
+    	
+    	Object options[] = {"OK"};
+    	JOptionPane.showOptionDialog(null, bugPanel, 
+        		"Inspect Bug", 
+        		JOptionPane.OK_OPTION, 
+        		JOptionPane.PLAIN_MESSAGE,
+        		null,
+        		options, 
+        		options[0]);
     }
 
 	public JPanel getPanel_() {

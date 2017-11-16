@@ -9,14 +9,6 @@ import javax.swing.JPanel;
 import data.*;
 import business.SystemController;
 
-// UiController changes
-// TODO: Add methods for Create/Update/Remove LoginInfo so developer/manager info can be changed when their objects change
-
-// SystemController changes
-// TODO: approveBug() & submitBug() methods are not in the SystemController class 
-// TODO: Add/Remove/Update methods are not present in the SystemController class
-// TODO: getAssignmnetList_() in SystemController needs to take in "int userId_" as an arguement
-
 /**
  * UiController is the controller class for the GUI of the BTS. 
  * It displays different views dynamically using a CardLayout.
