@@ -15,6 +15,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import business.SystemController;
+import data.Developer;
+import data.Employee;
+import data.Manager;
 
 /**
  * 
@@ -32,18 +35,17 @@ public class OrdinaryPanel {
     private UiController uiController_;
     
     /**
-     * 
-     * @param uiController
+     * Constructor for the Ordinary Panel
+     * @param uiController The UIController objet that this panel will be added to.
      */
     public OrdinaryPanel(UiController uiController) {
-    	System.out.println("Ctor Ordinary");
     	this.uiController_ = uiController;
     	panel_ = new JPanel();
     	panel_.setName("OrdinaryPanel");
     	
     	JLabel title = new JLabel("Ordinary Panel");
-    	JButton demoDevButton = new JButton("Go to Dev Screen");
-    	JButton demoManButton = new JButton("Go to Manager Screen");
+    	JButton demoDevButton = new JButton("Test Dev Screen");
+    	JButton demoManButton = new JButton("Test Manager Screen");
     	JButton loginButton = new JButton("Login");
     	
     	demoDevButton.addActionListener(new ActionListener(){
@@ -55,7 +57,6 @@ public class OrdinaryPanel {
 				
 				// Create new DeveloperPanel if it doesn't exist
 				if(! uiController.checkPanelExists("DeveloperPanel", viewHolder)){
-					System.out.println("Ctor Developer");
 					viewHolder.add(new DeveloperPanel(uiController).getPanel_(), "DeveloperPanel");
 				}
 				
@@ -73,7 +74,6 @@ public class OrdinaryPanel {
 				
 				// Create new ManagerPanel if it doesn't exist
 				if(! uiController.checkPanelExists("ManagerPanel", viewHolder)){
-					System.out.println("Ctor Manager");
 					viewHolder.add(new ManagerPanel(uiController).getPanel_(), "ManagerPanel");
 				}
 				
@@ -127,6 +127,16 @@ public class OrdinaryPanel {
         	String username = usernameEntry.getText();
         	String password = String.valueOf(passwordEntry.getPassword());
         	// Call Login method in uicontroller and take action based on result
+        	Employee logged_in_result = new Employee();
+        	if(logged_in_result == null){
+        		// 
+        	}
+        	else if(logged_in_result instanceof Manager){
+        		
+        	}
+        	else if(logged_in_result instanceof Developer){
+        		
+        	}
         }
     	
     }

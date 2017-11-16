@@ -73,6 +73,18 @@ public class SystemController {
         // TODO implement here
     }
     
+    public Employee loginUser(String login){
+    	Employee logged_in_user = loginController_.validateLogin(login);
+    	if(logged_in_user == null)
+    		return null;
+    	else if(logged_in_user instanceof Manager){
+    		
+    	}
+    	else if(logged_in_user instanceof Developer){
+    		
+    	}
+    }
+    
     public ArrayList<Employee> getManagerList_() {
 		return managerList_;
 	}

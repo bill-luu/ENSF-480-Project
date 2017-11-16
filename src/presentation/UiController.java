@@ -195,7 +195,17 @@ public class UiController {
         // TODO implement here
         return "";
     }
-
+    
+    /**
+     * Attempt to login the user to the system with their input login information
+     * @param login The username and password entered by the user in the form: "username:password"
+     * @return Null if the login fails, the users Developer/Manager account object if successful
+     */
+    public Employee login(String login){
+    	userLoggedIn_ = system_.loginUser(login);
+    	return userLoggedIn_;
+    }
+    
 	public Employee getUserLoggedIn() {
 		return userLoggedIn_;
 	}
