@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -77,9 +78,15 @@ public class OrdinaryPanel {
     	panel_.setLayout(new GridBagLayout());
     	panel_.setName("OrdinaryPanel");
     	
+    	Font titlefont = new Font("Calibri", Font.BOLD, 40);
+    	
     	GridBagConstraints gbc = new GridBagConstraints();
     	JLabel title = new JLabel("Products");
+    	title.setFont(titlefont);
+    	
     	JLabel title2 = new JLabel("Bugs");
+    	title2.setFont(titlefont);
+    	
     	JButton loginButton = new JButton("Login");
     	JButton submitBugButton = new JButton("Report Bug");
     	
@@ -132,10 +139,10 @@ public class OrdinaryPanel {
     	buglist = new JList<String>(bugModel);
     	
     	JScrollPane bugScroller = new JScrollPane(buglist);
-    	
+    	bugScroller.setPreferredSize(new Dimension(150, 400));
     	
     	JScrollPane productScroller = new JScrollPane(productlist);
-    	
+    	productScroller.setPreferredSize(new Dimension(150, 400));
     	
     	
     	// Temporary components for testing

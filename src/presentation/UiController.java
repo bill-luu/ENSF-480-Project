@@ -51,6 +51,7 @@ public class UiController {
     	
     	frame_.add(viewHolder);
     	frame_.setSize(700, 700);
+    	frame_.setResizable(false);
     	frame_.setVisible(true);
     }
 
