@@ -1,10 +1,17 @@
 package presentation;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import data.*;
 import business.SystemController;
@@ -35,6 +42,32 @@ public class UiController {
      * Default constructor
      */
     public UiController(SystemController system) {
+    	
+    	// Better look and feel than default java components
+    	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+	        if ("Nimbus".equals(info.getName())) {
+	            try {
+					UIManager.setLookAndFeel(info.getClassName());
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+				}
+	            break;
+	        }
+		}
+    	
+    	// Give it some color
+    	Color grey_blue = new Color(120,144,156);
+    	Color blue = new Color(38,166,154);
+    	UIManager.put("nimbusBase", blue);
+    	UIManager.put("control", grey_blue);
+    	UIManager.put("nimbusBlueGrey", blue);
+    	
     	// Init GUI components
     	frame_ = new JFrame("Bug Tracking System");
     	system_ = system;
@@ -51,9 +84,18 @@ public class UiController {
     	layout.show(viewHolder, "OrdinaryPanel");
     	
     	frame_.add(viewHolder);
-    	frame_.setSize(700, 700);
+    	frame_.setSize(800, 800);
     	frame_.setResizable(false);
     	frame_.setVisible(true);
+    	
+    	frame_.addWindowListener(new WindowAdapter(){
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				system_.save();
+				System.exit(0);
+			}
+    	});
     }
 
     /**
@@ -101,7 +143,7 @@ public class UiController {
 	 *            The bug to be updated in the system
 	 */
 	public void UpdateBug(Bug bug_) {
-		// TODO implement here
+		system_.updateBug(bug_);
 	}
 
 	/**
@@ -109,7 +151,8 @@ public class UiController {
 	 *            The bug to be approved in the system
 	 */
 	public void ApproveBug(Bug bug_) {
-		// TODO implement here
+		bug_.setState_(Bug.State.AWAITING_ASSIGNMENT);
+		system_.updateBug(bug_);
 	}
 
 	/**
@@ -126,9 +169,12 @@ public class UiController {
 	 * 
 	 * @param developer_
 	 *            The new developer account to be added
+	 * @param devPassword
+	 * 			  The new developers password
 	 */
-	public void AddDeveloper(Employee developer_) {
-		// TODO implement here
+	public void AddDeveloper(Developer developer_, String devPassword) {
+		String loginInfoToAdd = "dev-<" + developer_.getUsername_() + ":" + devPassword + ">";
+		system_.addToDeveloperList(developer_, loginInfoToAdd);
 	}
 
 	/**
@@ -137,8 +183,8 @@ public class UiController {
 	 * @param developer_
 	 *            The developer account to be updated
 	 */
-	public void UpdateDeveloper(Employee developer_) {
-		// TODO implement here
+	public void UpdateDeveloper(Developer developer_) {
+		system_.updateDeveloper(developer_);
 	}
 
 	/**
@@ -147,8 +193,8 @@ public class UiController {
 	 * @param developer_
 	 *            The developer account to be removed
 	 */
-	public void RemoveDeveloper(Employee developer_) {
-		// TODO implement here
+	public void RemoveDeveloper(Developer developer_) {
+		//TODO: Remove method
 	}
 
 	/**
@@ -158,7 +204,7 @@ public class UiController {
 	 *            The new product to be added
 	 */
 	public void AddProduct(Product product_) {
-		// TODO implement here
+		system_.addToProductList(product_);
 	}
 
 	/**
@@ -168,7 +214,7 @@ public class UiController {
 	 *            The product to be removed
 	 */
 	public void RemoveProduct(Product product_) {
-		// TODO implement here
+		// TODO Remove method
 	}
 
 	/**
@@ -179,8 +225,7 @@ public class UiController {
 	 * @return An arraylist of assignments
 	 */
 	public ArrayList<Assignment> BrowseAssignments(int userId_) {
-		return system_.getAssignmentList_(); // TODO: change args of
-												// getAssignmentList_ in system
+		return system_.getAssignmentList_(); 
 	}
 
 	/**
@@ -190,7 +235,7 @@ public class UiController {
 	 *            The assignment to be removed
 	 */
 	public void RemoveAssignment(Assignment assignment_) {
-		// TODO implement here
+		// TODO Remove method
 	}
 
 	/**
@@ -200,7 +245,7 @@ public class UiController {
 	 *            The new assignment to be added
 	 */
 	public void AddAssignment(Assignment assignment_) {
-		// TODO implement here
+		system_.addToAssignmentList(assignment_);
 	}
 
 	/**
@@ -211,7 +256,7 @@ public class UiController {
 	 * @return The report held in a string object
 	 */
 	public String GenerateReport(Assignment assignment_) {
-		// TODO implement here
+		//TODO: generate report
 		return "";
 	}
 
@@ -226,11 +271,6 @@ public class UiController {
 	 *         object if successful
 	 */
 	public Employee login(String login) {
-		// Temporary
-		if (system_ == null)
-			return null;
-		//
-
 		userLoggedIn_ = system_.loginUser(login);
 		return userLoggedIn_;
 	}
