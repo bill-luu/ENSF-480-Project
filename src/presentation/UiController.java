@@ -2,6 +2,9 @@ package presentation;
 
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -54,6 +57,14 @@ public class UiController {
     	frame_.setSize(700, 700);
     	frame_.setResizable(false);
     	frame_.setVisible(true);
+    	
+    	frame_.addWindowListener(new WindowAdapter(){
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				system_.save();
+			}
+    	});
     }
 
     /**

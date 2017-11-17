@@ -62,7 +62,17 @@ public class OrdinaryPanel {
 	 * The JList display for bugs
 	 */
 	private JList<String> buglist;
-
+	
+	/**
+	 * Combobox for selecting pages to view
+	 */
+	JComboBox<String> pageSelector;
+	
+	/**
+	 * Button for logging into the system
+	 */
+	private JButton loginButton;
+	
 	/**
 	 * Constructor for the Ordinary Panel
 	 * 
@@ -89,7 +99,7 @@ public class OrdinaryPanel {
 
 		String[] pages = { "Bugs" };
 		DefaultComboBoxModel<String> pageModel = new DefaultComboBoxModel<String>(pages);
-		JComboBox<String> pageSelector = new JComboBox<String>(pageModel);
+		pageSelector = new JComboBox<String>(pageModel);
 
 		ArrayList<Product> products = uiController.BrowseProducts();
 		ArrayList<Bug> bugs = uiController.BrowseBugs();
@@ -293,9 +303,11 @@ public class OrdinaryPanel {
 						"Invalid Login", JOptionPane.WARNING_MESSAGE);
 			} else if (logged_in_result instanceof Manager) {
 				// Get components
+				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
+				loginButton.setVisible(false);
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
-
+				
 				// Create new ManagerPanel if it doesn't exist
 				if (!uiController_.checkPanelExists("ManagerPanel", viewHolder)) {
 					viewHolder.add(new ManagerPanel(uiController_).getPanel_(), "ManagerPanel");
@@ -304,6 +316,8 @@ public class OrdinaryPanel {
 				// Change view to manager panel
 				layout.show(viewHolder, "ManagerPanel");
 			} else if (logged_in_result instanceof Developer) {
+				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
+				loginButton.setVisible(false);
 				// Get components
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
@@ -383,30 +397,31 @@ public class OrdinaryPanel {
 		ArrayList<Bug> bugs = uiController_.BrowseBugs();
 		for (Bug b : bugs) {
 			if (b.getBugId_() == bugID) {
-				JLabel bugTitle = new JLabel(b.getBugTitle_());
-				JLabel bugProduct = new JLabel("" + b.getProductId_());
-				JLabel bugDescription = new JLabel(b.getDescription_());
-				JLabel bugState = new JLabel(b.getState_().toString());
+				JLabel bugTitle = new JLabel("Bug:" + b.getBugTitle_());
+				JLabel bugDescription = new JLabel("Description:" + b.getDescription_());
+				JLabel bugState = new JLabel("Status:" + b.getState_().toString());
 				ArrayList<Product> productlist = uiController_.BrowseProducts();
 				
 				for (Product p : productlist) {
 					if (p.getProductId_() == b.getProductId_()) {
-						JLabel productTitle = new JLabel("Product");
+						JLabel productTitle = new JLabel("<HTML><U>Product Information</U></HTML>");
 						JLabel productID = new JLabel("" + p.getProductId_());
 						JLabel productName = new JLabel(p.getProductName_());
 						JLabel productDescription = new JLabel(p.getProductDescription());
 						
-						Font titlefont = new Font("Calibri", Font.PLAIN, 20);
-						// TODO:
+						Font font = new Font("Calibri", Font.PLAIN, 20);
+						bugTitle.setFont(font); 		productTitle.setFont(new Font("Calibri", Font.PLAIN, 30));
+						productID.setFont(font);		productName.setFont(font);
+						bugDescription.setFont(font); 	productDescription.setFont(font);
+						bugState.setFont(font); 		
+						
 						Box vBox = Box.createVerticalBox();
 						vBox.add(bugTitle);
-						vBox.add(Box.createVerticalStrut(15));
-						vBox.add(bugProduct);
 						vBox.add(Box.createVerticalStrut(15));
 						vBox.add(bugDescription);
 						vBox.add(Box.createVerticalStrut(15));
 						vBox.add(bugState);
-						vBox.add(Box.createVerticalStrut(30));
+						vBox.add(Box.createVerticalStrut(15));
 						vBox.add(productTitle);
 						vBox.add(Box.createVerticalStrut(15));
 						vBox.add(productID);
