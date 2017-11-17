@@ -256,8 +256,48 @@ public class UiController {
 	 * @return The report held in a string object
 	 */
 	public String GenerateReport(Assignment assignment_) {
-		//TODO: generate report
-		return "";
+		ArrayList<String> bugMessages = assignment_.getUpdateMessages_();
+		ArrayList<Bug> buglist= system_.getBugList_();
+		ArrayList<Developer> devs = system_.getDeveloperList_();
+		
+		Bug fixed_bug = null;
+		Developer dev_who_fixed = null;
+		
+		// Search system for bug
+		for(Bug b : buglist)
+			if(b.getBugId_() == assignment_.getBugId_())
+				fixed_bug = b;
+		
+		// Search system for dev
+		for(Developer d : devs)
+			if(d.getUserId_() == assignment_.getDeveloperId_())
+				dev_who_fixed = d;
+		
+		if(dev_who_fixed == null || fixed_bug == null)
+			return null;
+		
+		String report = new String("Bug Report \n");
+		report += "*********************************************************\n";
+		report += "Bug:\n";
+		report += "ID: " + fixed_bug.getBugId_() + "\n";
+		report += "Name: " + fixed_bug.getBugTitle_() + "\n";
+		report += "Description: " + fixed_bug.getDescription_() + "\n";
+		report += "State: " + fixed_bug.getState_() + "\n";
+		
+		report += "*********************************************************\n";
+		report += "Assignment:\n";
+		report += "Assign ID: " + assignment_.getAssignmentId_() + "\n";
+		report += "Dev Assigned: " + dev_who_fixed.getFirstName_() + " " + dev_who_fixed.getLastName_() + "\n";
+		report += "Developer ID: " + dev_who_fixed.getUserId_() + "\n";
+		
+		report += "*********************************************************\n";
+		report += "Progess Report \n\n";
+		int bugUpdateNo = 1;
+		for(String s: bugMessages){
+			report += "Bug Update " + bugUpdateNo + ": " +  s + "\n\n";
+		}
+		report += "*********************************************************\n";
+		return report;
 	}
 
 	/**

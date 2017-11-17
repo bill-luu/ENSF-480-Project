@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import data.Assignment;
 import data.Bug;
 import data.Developer;
 import data.Employee;
@@ -193,7 +194,9 @@ public class OrdinaryPanel {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				createLoginPopUp();
+				//createLoginPopUp();
+				Assignment assignment_ = uiController.BrowseAssignments(20000).get(0);
+				uiController.GenerateReport(assignment_);
 			}
 		});
 
