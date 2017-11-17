@@ -67,40 +67,11 @@ public class ManagerPanel {
 		/*****BUG LIST PANEL*****/
 		JPanel bugListPanel = new JPanel();
 		JLabel bugListLabel = new JLabel("Bug List");
+		JButton addBugButton = new JButton("Add Bug");
 		bugListPanel.setLayout(new BoxLayout(bugListPanel, BoxLayout.Y_AXIS));
 		
-		
-		/* remove this with the actual bug list*/
 		ArrayList<Bug> bugs = this.uiController_.BrowseBugs();
-//		
-//		bugs.add(new Bug());
-//		bugs.get(0).setBugId_(0);
-//		bugs.get(0).setBugTitle_("Bug0");
-//		bugs.get(0).setDescription_("This is Bug0");
-//		bugs.get(0).setProductId_(1);
-//		bugs.get(0).setState_(Bug.State.IN_PROGRESS);
-//
-//		bugs.add(new Bug());
-//		bugs.get(1).setBugId_(1);
-//		bugs.get(1).setBugTitle_("Bug1");
-//		bugs.get(1).setDescription_("This is Bug1");
-//		bugs.get(1).setProductId_(1);
-//		bugs.get(1).setState_(Bug.State.IN_PROGRESS);
-//		
-//		bugs.add(new Bug());
-//		bugs.get(2).setBugId_(2);
-//		bugs.get(2).setBugTitle_("Bug2");
-//		bugs.get(2).setDescription_("This is Bug2");
-//		bugs.get(2).setProductId_(1);
-//		bugs.get(2).setState_(Bug.State.IN_PROGRESS);
-//		
-//		bugs.add(new Bug());
-//		bugs.get(3).setBugId_(3);
-//		bugs.get(3).setBugTitle_("Bug3");
-//		bugs.get(3).setDescription_("This is Bug3");
-//		bugs.get(3).setProductId_(1);
-//		bugs.get(3).setState_(Bug.State.IN_PROGRESS);
-//		
+		
 		DefaultListModel<String> bugList = new DefaultListModel<String>();
 		
 		for(int i = 0; i < bugs.size(); i++)
@@ -198,8 +169,8 @@ public class ManagerPanel {
 			}
 		});
 				
-		bugListPanel.add(bugListLabel);
-		bugListPanel.add(bugScrollPane);
+		bugListPanel.add(productListLabel);
+		bugListPanel.add(productScrollPane);
 		
 		
 		
@@ -212,9 +183,9 @@ public class ManagerPanel {
 		panel_.add(new JLabel("Manager"));
 		panel_.add(bugListPanel);
 		panel_.add(demoBackButton);
+		panel_.add(productListPanel);
 		
 		/*****CONSTRAINSTS*****/
-		
 		layout.putConstraint(SpringLayout.NORTH, bugListPanel, 10, SpringLayout.NORTH, panel_);		
 		layout.putConstraint(SpringLayout.WEST, bugListPanel, 10, SpringLayout.WEST, panel_);		
 		
