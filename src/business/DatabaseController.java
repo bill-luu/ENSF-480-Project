@@ -403,6 +403,7 @@ public class DatabaseController {
 				tempString = tempString.concat(" ");
 				tempString = tempString.concat(bugs.get(i).getState_().toString());
 				tempString = tempString.concat(" ");
+				System.out.println(bugs.get(i).getDescription_());
 				tempString = tempString.concat(bugs.get(i).getDescription_());
 				tempString = tempString.concat(" ");
 
@@ -412,6 +413,7 @@ public class DatabaseController {
 			output.close();
 		} catch (IOException | NullPointerException e) {
 			System.out.println("Error writing the bugs file.");
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
