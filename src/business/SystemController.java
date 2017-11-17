@@ -199,6 +199,54 @@ public class SystemController {
 		save();
 	}
 
+	public void updateBug(Bug toUpdate) {
+		for (Bug bug : bugList_) {
+			if (toUpdate.getBugId_() == bug.getBugId_()) {
+				int index = bugList_.indexOf(bug);
+				bugList_.set(index, toUpdate);
+			}
+		}
+	}
+
+	public void updateAssignment(Assignment toUpdate) {
+		for (Assignment assignment : assignmentList_) {
+			if (toUpdate.getAssignmentId_() == assignment.getAssignmentId_()) {
+				int index = assignmentList_.indexOf(assignment);
+				assignmentList_.set(index, toUpdate);
+			}
+		}
+	}
+
+	public void updateProduct(Product toUpdate) {
+		for (Product product : productList_) {
+			if (toUpdate.getProductId_() == product.getProductId_()) {
+				int index = productList_.indexOf(product);
+				productList_.set(index, toUpdate);
+			}
+		}
+	}
+
+	public void updateDeveloper(Developer toUpdate) {
+		for (Developer dev : developerList_) {
+			if (toUpdate.getUserId_() == dev.getUserId_()) {
+				int index = developerList_.indexOf(dev);
+				developerList_.set(index, toUpdate);
+			}
+		}
+	}
+
+	public void updateLoginInfo(String userName, String password) {
+		for (String info : loginInfoList_) {
+			if (info.contains(userName + ":")) {
+				int index = loginInfoList_.indexOf(info);
+				String[] parts = info.split(":");
+				String newLogin = parts[0] + ":" + password + ">";
+				System.out.println(newLogin);
+				loginInfoList_.set(index, newLogin);
+			}
+		}
+	}
+
 	public static void main(String[] args) {
 		SystemController application = new SystemController();
 	}
