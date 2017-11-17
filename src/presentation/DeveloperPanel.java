@@ -303,7 +303,6 @@ public class DeveloperPanel {
 		assignmentDescriptionModel.clear();
 		setStateBox(assignmentComboBox, assignStateModel, assignmentDescriptionModel);
 
-
 		assignmentComboBox.addActionListener(new ActionListener() {
 
 			@Override
@@ -345,12 +344,10 @@ public class DeveloperPanel {
 					uiController_.updateAssignment(a);
 				}
 			}
-			
+
 			Bug b = new Bug();
-			for(Bug bug : uiController_.getSystem().getBugList_())
-			{
-				if(a.getBugId_() == bug.getBugId_())
-				{
+			for (Bug bug : uiController_.getSystem().getBugList_()) {
+				if (a.getBugId_() == bug.getBugId_()) {
 					b.setBugId_(a.getBugId_());
 					b.setBugTitle_(bug.getBugTitle_());
 					b.setDescription_(bug.getDescription_());
@@ -362,8 +359,9 @@ public class DeveloperPanel {
 		}
 
 	}
-	public void setStateBox(JComboBox<String> assignmentComboBox, DefaultComboBoxModel<State> assignStateModel, DefaultListModel<String> assignmentDescriptionModel)
-	{
+
+	public void setStateBox(JComboBox<String> assignmentComboBox, DefaultComboBoxModel<State> assignStateModel,
+			DefaultListModel<String> assignmentDescriptionModel) {
 		String s = (String) assignmentComboBox.getSelectedItem();
 		int id = Integer.parseInt(s.split(" ")[1]);
 		for (Assignment a : getUiController_().getSystem().getAssignmentList_()) {
@@ -378,6 +376,7 @@ public class DeveloperPanel {
 			}
 		}
 	}
+
 	public JPanel getPanel_() {
 		return panel_;
 	}
