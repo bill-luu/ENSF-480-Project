@@ -39,6 +39,7 @@ import data.Bug;
 import data.Bug.State;
 import presentation.OrdinaryPanel.HintTextField;
 import data.Developer;
+import data.Employee;
 import data.Manager;
 import data.Product;
 
@@ -61,6 +62,7 @@ public class ManagerPanel {
 	private String bugList[];
 	private String assignmentList[];
 	private String developerList[];
+	private String productList[];
 	/**
 	 * 
 	 */
@@ -143,7 +145,7 @@ public class ManagerPanel {
 		
 		ArrayList<Product> products = this.uiController_.BrowseProducts();
 		
-		DefaultListModel<String> productList = new DefaultListModel<String>();
+		productList = new String[products.size()];
 		
 		for(int i = 0; i < products.size(); i++)
 		{
@@ -153,7 +155,7 @@ public class ManagerPanel {
 			temp = temp.concat(products.get(i).getProductName_());
 			temp = temp.concat("    ");
 			temp = temp.concat(String.valueOf(products.get(i).getProductDescription()));
-			productList.addElement(temp);
+			productList[i] = temp;
 		}
 		productJList = new JList<String>(productList);
 		
@@ -316,9 +318,7 @@ public class ManagerPanel {
 		addAssButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout) viewHolder.getLayout();
-				layout.show(viewHolder, "OrdinaryPanel");
+				ManagerPanel.this.createAssignmentPopUp();
 			}
 		});
 		assignmentListPanel.add(addAssButton);
@@ -330,9 +330,7 @@ public class ManagerPanel {
 		addProButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout) viewHolder.getLayout();
-				layout.show(viewHolder, "OrdinaryPanel");
+				ManagerPanel.this.createProductPopUp();
 			}
 		});
 		productListPanel.add(addProButton);
@@ -461,11 +459,6 @@ public class ManagerPanel {
     		}
     	}
 	}
-
-	public void createDeveloperInfoPanel(int index)
-	{
-		
-	}
 	
 	public void createAssignmentInfoPanel(int index)
 	{
@@ -529,14 +522,66 @@ public class ManagerPanel {
 	 * @param void
 	 * @return
 	 */
-	public void createProductPopUp() {
-		// TODO implement here
+	public void createProductPopUp() 
+	{
+		JPanel productPanel = new JPanel();
+    	
+    	HintTextFieldCopy name = new HintTextFieldCopy("Enter a product name here");
+    	
+    	JTextArea description = new JTextArea();
+    	description.setPreferredSize(new Dimension(500, 250));
+    	description.setBorder(BorderFactory.createEtchedBorder());
+    	description.setLineWrap(true);
+    	
+    	// Fill a dropdown menu with all the products    	
+    	Box vBox = Box.createVerticalBox();
+    	vBox.add(Box.createVerticalStrut(20));
+    	vBox.add(name);
+    	vBox.add(Box.createVerticalStrut(20));
+    	vBox.add(description);
+    	vBox.add(Box.createVerticalStrut(20));
+    	
+    	productPanel.add(vBox);
+    	
+    	Object options[] = {"Create", "Cancel"};
+    	int selection = JOptionPane.showOptionDialog(null, productPanel, 
+        		"New Bug", 
+        		JOptionPane.OK_CANCEL_OPTION, 
+        		JOptionPane.PLAIN_MESSAGE,
+        		null,
+        		options, 
+        		options[0]);
+    	
+    	if(selection == JOptionPane.OK_OPTION)
+    	{
+    		Product p = new Product(); 
+    		p.setProductId_(ManagerPanel.this.uiController_.BrowseProducts().size() + 1);
+    		p.setProductName_(name.getText());
+    		p.setProductDescription(description.getText());
+    		
+    		uiController_.AddProduct(p);
+    		
+    		ArrayList<Product> products = uiController_.BrowseProducts();
+
+    		bugList = new String[products.size()];
+    		for(int i = 0; i < products.size(); i++)
+    		{
+    			String temp = "";
+    			temp = temp.concat(String.valueOf(products.get(i).getProductId_()));
+    			temp = temp.concat("    ");
+    			temp = temp.concat(products.get(i).getProductName_());
+    			temp = temp.concat("    ");
+    			temp = temp.concat(String.valueOf(products.get(i).getProductDescription()));
+    			productList[i] = temp;
+    		}
+	    	productJList.setListData(productList);
+    	}
 	}
 
 	public void createDeveloperPopUp()
 	{
 		JPanel devPanel = new JPanel();
-    	devPanel.setPreferredSize(new Dimension(200, 100));
+    	devPanel.setPreferredSize(new Dimension(250, 400));
     	HintTextFieldCopy firstName = new HintTextFieldCopy("Enter first name here");
     	HintTextFieldCopy lastName = new HintTextFieldCopy("Enter last name here");
     	HintTextFieldCopy userName = new HintTextFieldCopy("Enter username here");
@@ -546,18 +591,6 @@ public class ManagerPanel {
         userName.setPreferredSize(new Dimension(150, 25));
         password.setPreferredSize(new Dimension(150, 25));
 
-
-//    	JTextArea description = new JTextArea();
-//    	description.setPreferredSize(new Dimension(500, 250));
-//    	description.setBorder(BorderFactory.createEtchedBorder());
-//    	description.setLineWrap(true);
-    	
-    	// Fill a dropdown menu with all the products
-//    	DefaultComboBoxModel<String> productModel = new DefaultComboBoxModel<String>();
-//    	DefaultListModel<String> model2 = (DefaultListModel<String>) productJList.getModel();
-//    	for(int i = 0; i < model2.size(); i++)
-//    		productModel.addElement(model2.getElementAt(i).split("    ")[0] +" "+ model2.getElementAt(i).split("    ")[1]); // Fill combobox with only product names
-//    	JComboBox<String> products2 = new JComboBox<String>(productModel);
     	
     	Box vBox = Box.createVerticalBox();
     	vBox.add(firstName);
@@ -566,7 +599,7 @@ public class ManagerPanel {
     	vBox.add(Box.createVerticalStrut(20));
     	vBox.add(userName);
     	vBox.add(Box.createVerticalStrut(20));
-    	
+    	vBox.add(password);
     	devPanel.add(vBox);
     	
     	Object options[] = {"Create", "Cancel"};
@@ -580,7 +613,6 @@ public class ManagerPanel {
     	
     	if(selection == JOptionPane.OK_OPTION)
     	{
-    		String usrN = userName.getText();
     		ArrayList<String> loginInfo = ManagerPanel.this.uiController_.getSystem().getLoginInfoList_();
     		
     		for(int i = 0; i < loginInfo.size(); i++)
@@ -618,7 +650,7 @@ public class ManagerPanel {
     			temp = temp.concat(String.valueOf(developers.get(i).getLastName_()));
     			developerList[i] = temp;
     		}
-    		developerJList = new JList<String>(developerList);
+    		developerJList.setListData(developerList);
     	}
 
 	}
@@ -730,8 +762,59 @@ public class ManagerPanel {
 	 * @param void
 	 * @return
 	 */
-	public void createAssignmentPopUp() {
-		// TODO implement here
+	public void createAssignmentPopUp() 
+	{
+		JPanel assignmentPanel = new JPanel();
+    	
+    	// Fill a dropdown menu with all the products    	
+    	DefaultComboBoxModel<String> bugsBox = new DefaultComboBoxModel<String>();
+    	for(int i = 0; i < bugList.length; i++)
+    		bugsBox.addElement(bugList[i].split("    ")[0] +" "+ bugList[i].split("    ")[1]); // Fill combobox with only product names
+    	JComboBox<String> bugs = new JComboBox<String>(bugsBox);
+    	
+    	DefaultComboBoxModel<String> devBox = new DefaultComboBoxModel<String>();
+    	for(int i = 0; i < developerList.length; i++)
+    		devBox.addElement(developerList[i].split("    ")[0] +" "+ developerList[i].split("    ")[1]); // Fill combobox with only product names
+    	JComboBox<String> devs = new JComboBox<String>(devBox);
+
+    	Box vBox = Box.createVerticalBox();
+    	vBox.add(bugs);
+    	vBox.add(Box.createVerticalStrut(20));
+    	vBox.add(devs);
+    	
+    	assignmentPanel.add(vBox);
+    	
+    	Object options[] = {"Create", "Cancel"};
+    	int selection = JOptionPane.showOptionDialog(null, assignmentPanel, 
+        		"New Assignment", 
+        		JOptionPane.OK_CANCEL_OPTION, 
+        		JOptionPane.PLAIN_MESSAGE,
+        		null,
+        		options, 
+        		options[0]);
+    	
+    	if(selection == JOptionPane.OK_OPTION)
+    	{
+    		Assignment a = new Assignment(); 
+    		//ManagerPanel.this.uiController_.setUserLoggedIn(new Manager());
+    		a.setAssignmentId_(ManagerPanel.this.uiController_.getUserLoggedIn().getUserId_());
+    		a.setBugId_(Integer.parseInt(bugsBox.getElementAt(bugs.getSelectedIndex()).split(" ")[0]));
+    		a.setDeveloperId_(Integer.parseInt(bugsBox.getElementAt(bugs.getSelectedIndex()).split(" ")[0]));
+    		a.setAssignmentId_(ManagerPanel.this.uiController_.BrowseAssignments().size() + 1);
+    		
+    		uiController_.AddAssignment(a);
+    		
+    		ArrayList<Assignment> assignments = uiController_.BrowseAssignments();
+
+    		bugList = new String[assignments.size()];
+	    	for(int i = 0; i < assignments.size(); i++)
+			{
+				String temp = "";
+				temp = temp.concat(String.valueOf(assignments.get(i).getAssignmentId_()));
+				assignmentList[i] = temp;
+			}
+	    	assignmentJList.setListData(assignmentList);
+    	}
 	}
 
 	public JPanel getPanel_() {
