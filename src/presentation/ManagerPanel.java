@@ -345,7 +345,7 @@ public class ManagerPanel {
 		});
 		bugListPanel.add(addBugButton);
 
-		/*****ADD DEVELOPER BUTTON*****/
+		/*****ADD /DELETE DEVELOPER BUTTON*****/
 		JButton addDevButton = new JButton("Add Developer");
 		addDevButton.setPreferredSize(new Dimension(50, 20));
 
@@ -356,6 +356,17 @@ public class ManagerPanel {
 			}
 		});
 		developerListPanel.add(addDevButton);
+		
+		JButton deletedev = new JButton("Delete Developer");
+		deletedev.setPreferredSize(new Dimension(50, 20));
+
+		deletedev.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ManagerPanel.this.DeleteDeveloper();
+			}
+		});
+		developerListPanel.add(deletedev);
 		
 		/*****ADD ASSIGNMENT BUTTON*****/
 		JButton addAssButton = new JButton("Add Assignment");
@@ -369,7 +380,7 @@ public class ManagerPanel {
 		});
 		assignmentListPanel.add(addAssButton);
 		
-		/*****ADD PRODUCT BUTTON*****/
+		/*****ADD / DELETE PRODUCT BUTTON*****/
 		JButton addProButton = new JButton("Add Product");
 		addProButton.setPreferredSize(new Dimension(50, 20));
 
@@ -381,7 +392,7 @@ public class ManagerPanel {
 		});
 		productListPanel.add(addProButton);
 		
-		JButton deleteProduct = new JButton();
+		JButton deleteProduct = new JButton("Delete Product");
 		deleteProduct.setPreferredSize(new Dimension(50, 20));
 
 		deleteProduct.addActionListener(new ActionListener() {
@@ -390,7 +401,6 @@ public class ManagerPanel {
 				ManagerPanel.this.DeleteProduct();
 			}
 		});
-		productListPanel.add(addProButton);
 		productListPanel.add(deleteProduct);
 
 		
@@ -418,6 +428,46 @@ public class ManagerPanel {
 
 	}
 	
+	public void DeleteDeveloper()
+	{
+		String developer = developerJList.getSelectedValue();
+		if(developer == null)
+		{
+			return;
+		}
+		ArrayList<Developer> dev = this.uiController_.BrowseDevelopers();
+		for(int i = 0; i < dev.size(); i++)
+		{
+			if(dev.get(i).getUserId_() == Integer.parseInt(developer.split(" ")[0]))
+			{
+				Developer temp = new Developer();
+				temp.setUserId_(dev.get(i).getUserId_());
+				temp.setFirstName_(dev.get(i).getFirstName_());
+				temp.setLastName_(dev.get(i).getLastName_());
+				temp.setUsername_(dev.get(i).getUsername_());
+				this.uiController_.RemoveDeveloper(temp);
+				
+				ArrayList<Developer> developers = this.uiController_.BrowseDevelopers();
+								
+				developerList = new String[developers.size()];
+				
+				for(int j = 0; j < developers.size(); j++)
+				{
+					String temp2 = "";
+					temp2 = temp2.concat(String.valueOf(developers.get(j).getUserId_()));
+					temp2 = temp2.concat("    ");
+					temp2 = temp2.concat(developers.get(j).getFirstName_());
+					temp2 = temp2.concat("    ");
+					temp2 = temp2.concat(String.valueOf(developers.get(j).getLastName_()));
+					developerList[j] = temp2;
+				}
+				developerJList = new JList<String>(developerList);
+				return;
+			}
+		}	
+	}
+
+	
 	public void DeleteProduct()
 	{
 		String product = productJList.getSelectedValue();
@@ -435,6 +485,22 @@ public class ManagerPanel {
 				temp.setProductName_(prod.get(i).getProductName_());
 				temp.setProductDescription(prod.get(i).getProductDescription());
 				this.uiController_.RemoveProduct(temp);
+				
+				ArrayList<Product> products = this.uiController_.BrowseProducts();
+				
+				productList = new String[products.size()];
+				
+				for(int j = 0; j < products.size(); j++)
+				{
+					String temp2 = "";
+					temp2 = temp2.concat(String.valueOf(products.get(j).getProductId_()));
+					temp2 = temp2.concat("    ");
+					temp2 = temp2.concat(products.get(j).getProductName_());
+					temp2 = temp2.concat("    ");
+					temp2 = temp2.concat(String.valueOf(products.get(j).getProductDescription()));
+					productList[j] = temp2;
+				}
+				productJList.setListData(productList);
 				return;
 			}
 		}	
