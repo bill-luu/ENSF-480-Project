@@ -370,6 +370,8 @@ public class DatabaseController {
 				tempString.concat(" ");
 				tempString.concat(bugs.get(i).getBugTitle_());
 				tempString.concat(" ");
+				tempString.concat(bugs.get(i).getState_().toString());
+				tempString.concat(" ");
 				tempString.concat(bugs.get(i).getDescription_());
 				tempString.concat(" ");
 
