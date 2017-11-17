@@ -10,20 +10,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import data.Assignment;
 import data.Bug;
+import data.Manager;
 import data.Product;
+import presentation.OrdinaryPanel.HintTextField;
 
 /**
  * 
@@ -44,6 +51,11 @@ public class DeveloperPanel {
 	 * The JList display for products
 	 */
 	private JList<String> assignList;
+
+	/**
+	 * The JList display for products
+	 */
+	private JList<String> assignInfoList;
 
 	/**
 	 * The JList display for bugs
@@ -70,9 +82,9 @@ public class DeveloperPanel {
     	title2.setFont(titlefont);
     	
     	JButton logoutButton = new JButton("Log Out");
-    	// JButton submitBugButton = new JButton("Report Bug");
+    	JButton submitBugButton = new JButton("Report Bug");
     	
-    	String[] pages = {"Bugs", "Assignments"};
+    	String[] pages = {"Assignments", "Bugs"};
     	DefaultComboBoxModel<String> pageModel = new DefaultComboBoxModel<String>(pages);
     	JComboBox<String> pageSelector = new JComboBox<String>(pageModel);
     	pageSelector.addActionListener(new ActionListener() {
@@ -81,12 +93,17 @@ public class DeveloperPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				if(pageSelector.getSelectedItem().equals("Bugs"))
 				{
-					
+					//Switch to Ordinary panel
+					JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
+					CardLayout layout = (CardLayout) viewHolder.getLayout();
+					layout.show(viewHolder, "OrdinaryPanel");
 				}
 				
 			}
     		
     	});
+    	
+    	
     	
     	ArrayList<Assignment> assignments = uiController.BrowseAssignments(uiController_.getUserLoggedIn().getUserId_());
 	    	
@@ -100,6 +117,18 @@ public class DeveloperPanel {
     	    	
     	JScrollPane assignmentScoller = new JScrollPane(assignList);
     	assignmentScoller.setPreferredSize(new Dimension(200, 525));
+    	
+    	ArrayList<String> assignmentInfo;
+//    	assignmentInfo
+    	
+    	DefaultListModel<String> assignmentInfoModel = new DefaultListModel<String>();
+    	
+    	
+    	
+    	assignInfoList = new JList<String>(assignmentInfoModel);
+    	    	
+    	JScrollPane assignmentInfoScroller = new JScrollPane(assignInfoList);
+    	assignmentInfoScroller.setPreferredSize(new Dimension(200, 525));
     	
     	
     	// Temporary components for testing
@@ -160,17 +189,43 @@ public class DeveloperPanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				//bugModel.removeAllElements();
-				String product = assignList.getSelectedValue();
-				String products[] = product.split(" ");
-				int productID = Integer.parseInt(products[0]);
-				
-		    	// Search for corresponding bugs
-				// ArrayList<Bug> bugs = uiController.BrowseBugs();
-		  //   	for(Bug b : bugs){
-		  //   		if(b.getProductId_() == productID)
-		  //   			bugModel.addElement(b.getBugId_() + " " + b.getBugTitle_() + " " + b.getState_());
-		    	//}
+				assignmentInfoModel.removeAllElements();
+				String assign = assignList.getSelectedValue();
+				String assigns[] = assign.split(" ");
+				int assignID = Integer.parseInt(assigns[0]);
+				ArrayList<Assignment> assignments = uiController.BrowseAssignments(uiController_.getUserLoggedIn().getUserId_());
+				for(Assignment a : assignments)
+				{
+					if(a.getAssignmentId_() == assignID)
+					{
+						assignmentInfoModel.addElement("Assignment ID: " + a.getAssignmentId_());
+						for(Manager b : uiController_.getSystem().getManagerList_())
+						{
+							if(b.getUserId_() == a.getManagerId_())
+							{
+								assignmentInfoModel.addElement("Manager: " + b.getUsername_());
+							}
+						}
+						
+						
+						for(Bug b : uiController_.getSystem().getBugList_())
+						{
+							if( b.getBugId_() == a.getBugId_())
+							{
+								for(Product p : uiController_.getSystem().getProductList_())
+								{
+									if(b.getProductId_() == p.getProductId_())
+									{
+										assignmentInfoModel.addElement("Product: " + p.getProductName_());
+										assignmentInfoModel.addElement("Bug ID: " + a.getBugId_());
+									}
+								}
+								assignmentInfoModel.addElement("Bug Description: " + b.getDescription_());
+								assignmentInfoModel.addElement("Bug State: " + b.getState_().toString());
+							}
+						}
+					}
+				}
 			}
 	    });
 	    
@@ -188,18 +243,19 @@ public class DeveloperPanel {
     	});
     	
     	// Open submit bug popup when clicking submit bug button
-    	// submitBugButton.addActionListener(new ActionListener(){
+    	 submitBugButton.addActionListener(new ActionListener(){
 
 			// @Override
-			// public void actionPerformed(ActionEvent arg0) {
-			// 	submitBugPopUp();
-			// }
+			 public void actionPerformed(ActionEvent arg0) {
+				 updateAssignmentPopUp();
+			 }
 
-			// private void submitBugPopUp() {
-			// 	// TODO Auto-generated method stub
+			 private void submitBugPopUp() {
+				 
+			 	// TODO Auto-generated method stub
 				
-			// }
-   //  	});
+			 }
+     	});
     	
     	// Temp Components
 //	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
@@ -228,13 +284,13 @@ public class DeveloperPanel {
     	gbc.insets = new Insets(0,0,0,0);
     	gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
     	panel_.add(assignmentScoller, gbc);
-    	
-//    	gbc.gridx = 5; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
-//    	panel_.add(bugScroller, gbc);
+	    	
+	   	gbc.gridx = 5; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
+	   	panel_.add(assignmentInfoScroller, gbc);
     	
     	gbc.fill = GridBagConstraints.HORIZONTAL;
     	gbc.gridx = 4; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
-    	// panel_.add(submitBugButton, gbc);
+    	panel_.add(submitBugButton, gbc);
 //		this.uiController_ = uiController;
 //		this.panel_ = new JPanel();
 //		panel_.setName("DeveloperPanel");
@@ -253,6 +309,7 @@ public class DeveloperPanel {
 //		panel_.add(new JLabel("Developer"));
 //		panel_.add(demoBackButton);
 	}
+	
 
 	/**
 	 * @param void
@@ -260,6 +317,51 @@ public class DeveloperPanel {
 	 */
 	public void updateAssignmentPopUp() {
 		// TODO implement here
+		JPanel bugPanel = new JPanel();
+		
+		JTextField title = new JTextField("Text");
+		//OrdinaryPanel.HintTextField title = new OrdinaryPanel.HintTextField("Enter a bug title here");
+
+		JTextArea description = new JTextArea();
+		description.setPreferredSize(new Dimension(500, 250));
+		description.setBorder(BorderFactory.createEtchedBorder());
+		description.setLineWrap(true);
+
+		// Fill a dropdown menu with all the products
+		DefaultComboBoxModel<String> assignModel = new DefaultComboBoxModel<String>();
+		DefaultListModel<String> model = (DefaultListModel<String>) assignList.getModel();
+//		
+//		// Fill combobox with only product names
+		for (int i = 0; i < model.size(); i++)
+			assignModel.addElement("Assignment: " + model.getElementAt(i)); 
+		JComboBox<String> assignments = new JComboBox<String>(assignModel);
+//		String selectedProduct = model.getElementAt(products.getSelectedIndex());
+//		int productID = Integer.parseInt(selectedProduct.split(" ")[0]);
+
+		Box vBox = Box.createVerticalBox();
+		vBox.add(assignments);
+		vBox.add(Box.createVerticalStrut(20));
+		vBox.add(title);
+		vBox.add(Box.createVerticalStrut(20));
+		vBox.add(description);
+		vBox.add(Box.createVerticalStrut(20));
+
+		bugPanel.add(vBox);
+
+		Object options[] = { "Submit Bug", "Cancel" };
+		int selection = JOptionPane.showOptionDialog(null, bugPanel, "Update Assignment", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+		if (selection == JOptionPane.OK_OPTION) {
+			Bug b = new Bug();
+			b.setBugId_(uiController_.BrowseBugs().size() + 101);
+			b.setBugTitle_(title.getText());
+			b.setDescription_(description.getText());
+		//	b.setProductId_(productID);
+			b.setState_(Bug.State.PENDING_APPROVAL);
+			uiController_.SubmitBug(b);
+		}
+	
 	}
 
 	/**
