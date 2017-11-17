@@ -372,6 +372,20 @@ public class DeveloperPanel {
 					uiController_.updateAssignment(a);
 				}
 			}
+			
+			Bug b = new Bug();
+			for(Bug bug : uiController_.getSystem().getBugList_())
+			{
+				if(a.getBugId_() == bug.getBugId_())
+				{
+					b.setBugId_(a.getBugId_());
+					b.setBugTitle_(bug.getBugTitle_());
+					b.setDescription_(bug.getDescription_());
+					b.setProductId_(bug.getProductId_());
+					b.setState_((State) assignStateModel.getSelectedItem());
+					uiController_.UpdateBug(b);
+				}
+			}
 		}
 
 	}

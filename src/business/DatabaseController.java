@@ -364,16 +364,16 @@ public class DatabaseController {
 			output = new BufferedWriter(new FileWriter(BUG_FILE));
 			for (int i = 0; i < bugs.size(); i++) {
 				String tempString = "";
-				tempString.concat(String.valueOf(bugs.get(i).getBugId_()));
-				tempString.concat(" ");
-				tempString.concat(String.valueOf(bugs.get(i).getProductId_()));
-				tempString.concat(" ");
-				tempString.concat(bugs.get(i).getBugTitle_());
-				tempString.concat(" ");
-				tempString.concat(bugs.get(i).getState_().toString());
-				tempString.concat(" ");
-				tempString.concat(bugs.get(i).getDescription_());
-				tempString.concat(" ");
+				tempString = tempString.concat(String.valueOf(bugs.get(i).getBugId_()));
+				tempString = tempString.concat(" ");
+				tempString = tempString.concat(String.valueOf(bugs.get(i).getProductId_()));
+				tempString = tempString.concat(" ");
+				tempString = tempString.concat(bugs.get(i).getBugTitle_());
+				tempString = tempString.concat(" ");
+				tempString = tempString.concat(bugs.get(i).getState_().toString());
+				tempString = tempString.concat(" ");
+				tempString = tempString.concat(bugs.get(i).getDescription_());
+				tempString = tempString.concat(" ");
 
 				output.write(tempString);
 				output.newLine();
