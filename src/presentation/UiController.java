@@ -197,7 +197,7 @@ public class UiController {
 	 *            The developer account to be removed
 	 */
 	public void RemoveDeveloper(Developer developer_) {
-		// TODO: Remove method
+		system_.RemoveDeveloper(developer_);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class UiController {
 	 *            The product to be removed
 	 */
 	public void RemoveProduct(Product product_) {
-		// TODO Remove method
+		system_.RemoveProduct(product_);
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class UiController {
 	 *            The assignment to be removed
 	 */
 	public void RemoveAssignment(Assignment assignment_) {
-		// TODO Remove method
+		system_.RemoveAssignment(assignment_);
 	}
 
 	/**
