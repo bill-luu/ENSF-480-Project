@@ -277,4 +277,9 @@ public class SystemController {
 	public static void main(String[] args) {
 		SystemController application = new SystemController();
 	}
+	
+	public void writeReport(String report)
+	{
+		this.databaseController_.writeReport(report);
+	}
 }

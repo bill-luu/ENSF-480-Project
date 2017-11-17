@@ -314,7 +314,7 @@ public class UiController {
 //		TODO: Use this in manager/developer to gen reports
 //		String report = uiController.GenerateReport(uiController.BrowseAssignments(assignment_.getAssignmentId_()).get(0));
 //		JOptionPane.showMessageDialog(uiController_.getFrame(), report, "Report", JOptionPane.INFORMATION_MESSAGE);
-		
+		this.getSystem().writeReport(report);
 		return report;
 	}
 

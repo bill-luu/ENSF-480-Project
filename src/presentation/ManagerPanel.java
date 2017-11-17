@@ -88,17 +88,30 @@ public class ManagerPanel {
 		
 		ArrayList<Bug> bugs = this.uiController_.BrowseBugs();
 		
-    	bugList = new String[bugs.size()];
-		
-		for(int i = 0; i < bugs.size(); i++)
+		int count1 = 0;
+    	for(int i = 0; i < bugs.size(); i++)
 		{
-			String temp = "";
-			temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
-			temp = temp.concat("    ");
-			temp = temp.concat(bugs.get(i).getBugTitle_());
-			temp = temp.concat("    ");
-			temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
-			bugList[i] = temp;
+			if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+			{
+				count1++;
+			}
+		}
+
+    	bugList = new String[count1];
+    	int x = 0;
+    	for(int i = 0; i < bugs.size(); i++)
+		{
+			if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+			{
+				String temp = "";
+				temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
+				temp = temp.concat("    ");
+				temp = temp.concat(bugs.get(i).getBugTitle_());
+				temp = temp.concat("    ");
+				temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
+				bugList[x] = temp;
+				x++;
+			}
 		}
 		bugJList = new JList<String>();
 		bugJList.setListData(bugList);
@@ -181,7 +194,7 @@ public class ManagerPanel {
 				int count = 0;
 				for(int i = 0; i < bugs.size(); i++)
 		    	{
-		    		if(bugs.get(i).getProductId_() == productID)
+		    		if(bugs.get(i).getProductId_() == productID && !(bugs.get(i).getState_().equals(Bug.State.ARCHIEVE)))
 		    			count++;
 		    	}
 				bugList = new String[count];
@@ -428,6 +441,68 @@ public class ManagerPanel {
     	    	vBox.add(Box.createVerticalStrut(15));
     	    	vBox.add(productDescription);
     	    	
+    	    	if(bugs.get(index).getState_().equals(Bug.State.FIXED))
+    	    	{
+    	    		JButton archieve = new JButton("Archieve");
+    	    		vBox.add(archieve);
+    	    		archieve.addActionListener(new ActionListener() {
+    	    			@Override
+    	    			public void actionPerformed(ActionEvent arg0) {
+    	    				Bug temp1 = bugs.get(index);
+    	    				temp1.setState_(State.ARCHIEVE);
+    	    				ManagerPanel.this.uiController_.UpdateBug(temp1);
+    	    		    	bugState.setText(bugs.get(index).getState_().toString());
+    	    		    	vBox.remove(archieve);
+    	    		    	
+    	    		    	int count1 = 0;
+    	    		    	for(int i = 0; i < bugs.size(); i++)
+    	    				{
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					{
+    	    						count1++;
+    	    					}
+    	    				}
+
+    	    		    	bugList = new String[count1];
+    	    		    	int x = 0;
+    	    		    	for(int i = 0; i < bugs.size(); i++)
+    	    				{
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					{
+	    	    					String temp = "";
+	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
+	    	    					temp = temp.concat("    ");
+	    	    					temp = temp.concat(bugs.get(i).getBugTitle_());
+	    	    					temp = temp.concat("    ");
+	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
+	    	    					bugList[x] = temp;
+	    	    					x++;
+    	    					}
+    	    				}
+    	    		    	bugJList.setListData(bugList);
+    	    		    	ArrayList<Assignment> asL = ManagerPanel.this.uiController_.BrowseAssignments();
+    	    		    	Assignment temp = new Assignment();
+    	    		    	for(int i = 0; i < asL.size(); i++)
+    	    		    	{
+    	    		    		if(asL.get(i).getBugId_() == bugs.get(index).getBugId_())
+    	    		    		{
+    	    		    			System.out.println("here");
+    	    		    			temp.setAssignmentId_(asL.get(i).getAssignmentId_());
+    	    		    			temp.setBugId_(asL.get(i).getBugId_());
+    	    		    			temp.setDeveloperId_(asL.get(i).getDeveloperId_());
+    	    		    			temp.setManagerId_(asL.get(i).getManagerId_());
+    	    		    			temp.setUpdateMessages_(new ArrayList<String>(asL.get(i).getUpdateMessages_()));
+    	    		    		}
+    	    		    	}
+    	    		    	System.out.println(temp.getBugId_());
+    	    		    	String report = ManagerPanel.this.uiController_.GenerateReport(temp);
+    	    		    	JOptionPane.showMessageDialog(uiController_.getFrame(), report, "Report", JOptionPane.INFORMATION_MESSAGE);
+    	    			}
+    	    		});
+
+    	    	}
+
+    	    	
     	    	if(bugs.get(index).getState_().equals(Bug.State.PENDING_APPROVAL))
     	    	{
     	    		JButton approve = new JButton("Approve");
@@ -444,16 +519,30 @@ public class ManagerPanel {
     	    		    	vBox.remove(approve);
     	    		    	vBox.remove(reject);
     	    		    	
-    	    		    	bugList = new String[bugs.size()];
+    	    		    	int count1 = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					String temp = "";
-    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
-    	    					temp = temp.concat("    ");
-    	    					temp = temp.concat(bugs.get(i).getBugTitle_());
-    	    					temp = temp.concat("    ");
-    	    					temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
-    	    					bugList[i] = temp;
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					{
+    	    						count1++;
+    	    					}
+    	    				}
+
+    	    		    	bugList = new String[count1];
+    	    		    	int x = 0;
+    	    		    	for(int i = 0; i < bugs.size(); i++)
+    	    				{
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					{
+	    	    					String temp = "";
+	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
+	    	    					temp = temp.concat("    ");
+	    	    					temp = temp.concat(bugs.get(i).getBugTitle_());
+	    	    					temp = temp.concat("    ");
+	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
+	    	    					bugList[x] = temp;
+	    	    					x++;
+    	    					}
     	    				}
     	    		    	bugJList.setListData(bugList);
     	    			}
@@ -467,16 +556,30 @@ public class ManagerPanel {
     	    				bugState.setText(bugs.get(index).getState_().toString());
     	    		    	vBox.remove(approve);
     	    		    	vBox.remove(reject);
-    	    		    	String[] bugList = new String[bugs.size()];
+    	    		    	int count1 = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					String temp = "";
-    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
-    	    					temp = temp.concat("    ");
-    	    					temp = temp.concat(bugs.get(i).getBugTitle_());
-    	    					temp = temp.concat("    ");
-    	    					temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
-    	    					bugList[i] = temp;
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					{
+    	    						count1++;
+    	    					}
+    	    				}
+
+    	    		    	bugList = new String[count1];
+    	    		    	int x = 0;
+    	    		    	for(int i = 0; i < bugs.size(); i++)
+    	    				{
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					{
+	    	    					String temp = "";
+	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
+	    	    					temp = temp.concat("    ");
+	    	    					temp = temp.concat(bugs.get(i).getBugTitle_());
+	    	    					temp = temp.concat("    ");
+	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getState_()));
+	    	    					bugList[x] = temp;
+	    	    					x++;
+    	    					}
     	    				}
     	    		    	bugJList.setListData(bugList);
     	    			}
