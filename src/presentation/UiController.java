@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -8,6 +9,9 @@ import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import data.*;
 import business.SystemController;
@@ -38,6 +42,32 @@ public class UiController {
      * Default constructor
      */
     public UiController(SystemController system) {
+    	
+    	// Better look and feel than default java components
+    	for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+	        if ("Nimbus".equals(info.getName())) {
+	            try {
+					UIManager.setLookAndFeel(info.getClassName());
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (UnsupportedLookAndFeelException e) {
+					e.printStackTrace();
+				}
+	            break;
+	        }
+		}
+    	
+    	// Give it some color
+    	Color grey_blue = new Color(120,144,156);
+    	Color blue = new Color(38,166,154);
+    	UIManager.put("nimbusBase", blue);
+    	UIManager.put("control", grey_blue);
+    	UIManager.put("nimbusBlueGrey", blue);
+    	
     	// Init GUI components
     	frame_ = new JFrame("Bug Tracking System");
     	system_ = system;
