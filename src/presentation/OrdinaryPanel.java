@@ -351,7 +351,7 @@ public class OrdinaryPanel {
      */
     public void inspectBugPopUp() {
     	JPanel bugPanel = new JPanel();
-    	int bugID = Integer.parseInt(buglist.getSelectedValue());
+    	int bugID = Integer.parseInt(buglist.getSelectedValue().split(" ")[0]); // Separate bugid from the rest of the string
     	System.out.println(bugID);
     	ArrayList<Bug> bugs = uiController_.BrowseBugs();
     	for(Bug b : bugs){
@@ -364,7 +364,6 @@ public class OrdinaryPanel {
     	    	ArrayList<Product> productlist = uiController_.BrowseProducts();
     	    	for(Product p : productlist){
     	    		if(p.getProductId_() == b.getProductId_()){
-    	    	
 		    	    	JLabel productTitle = new JLabel("Product");
 		    	    	JLabel productID = new JLabel("" + p.getProductId_());
 		    	    	JLabel productName = new JLabel(p.getProductName_());
@@ -398,8 +397,8 @@ public class OrdinaryPanel {
 		    	        		options[0]);
 		    	    	break;
     	    		}
-    	    	break;
     	    	}
+    	    	break;
     		}
     	}
     }
