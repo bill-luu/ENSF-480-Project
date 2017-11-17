@@ -15,56 +15,59 @@ import business.SystemController;
  */
 public class UiController {
 
-    /**
-     * The users account object recieved from logging into the system
-     */
-    private Employee userLoggedIn_;
+	/**
+	 * The users account object recieved from logging into the system
+	 */
+	private Employee userLoggedIn_;
 
-    /**
-     * The "back-end" controller for the entire system
-     */
-    private SystemController system_;
+	/**
+	 * The "back-end" controller for the entire system
+	 */
+	private SystemController system_;
 
-    /**
-     * The display frame for the GUI
-     */
-    private JFrame frame_;
+	/**
+	 * The display frame for the GUI
+	 */
+	private JFrame frame_;
 
+	/**
+	 * Default constructor
+	 */
+	public UiController(SystemController system) {
+		// Init GUI components
+		frame_ = new JFrame("Bug Tracking System");
+		system_ = system;
 
-    /**
-     * Default constructor
-     */
-    public UiController(SystemController system) {
-    	// Init GUI components
-    	frame_ = new JFrame("Bug Tracking System");
-    	system_ = system;
-    	
-    	// Cardlayout keeps a hashmap of JPanels mapped to Strings
-    	CardLayout layout = new CardLayout();
-    	JPanel viewHolder = new JPanel();
-    	viewHolder.setLayout(layout);
-    	
-    	// Add JPanel to hashmap
-    	viewHolder.add(new OrdinaryPanel(this).getPanel_(), "OrdinaryPanel");
-    	
-    	// Display the ordinary panel by calling the String its mapped to
-    	layout.show(viewHolder, "OrdinaryPanel");
-    	
-    	frame_.add(viewHolder);
-    	frame_.setSize(700, 700);
-    	frame_.setResizable(false);
-    	frame_.setVisible(true);
-    }
+		// Cardlayout keeps a hashmap of JPanels mapped to Strings
+		CardLayout layout = new CardLayout();
+		JPanel viewHolder = new JPanel();
+		viewHolder.setLayout(layout);
 
-    /**
-     * Check if the JPanel has already been added to the CardLayout
-     * @param panel_name The JPanel's name in the CardLayout
-     * @param viewHolder The JPanel holding the CardLayout
-     * @return True if the there exists a panel with name 'panel_name', false otherwise.
-     */
-    public boolean checkPanelExists(String panel_name, JPanel viewHolder){
-		for(Component panel : viewHolder.getComponents()){
-			if(panel != null && panel.getName().equals(panel_name) && panel instanceof JPanel)
+		// Add JPanel to hashmap
+		viewHolder.add(new OrdinaryPanel(this).getPanel_(), "OrdinaryPanel");
+
+		// Display the ordinary panel by calling the String its mapped to
+		layout.show(viewHolder, "OrdinaryPanel");
+
+		frame_.add(viewHolder);
+		frame_.setSize(700, 700);
+		frame_.setResizable(false);
+		frame_.setVisible(true);
+	}
+
+	/**
+	 * Check if the JPanel has already been added to the CardLayout
+	 * 
+	 * @param panel_name
+	 *            The JPanel's name in the CardLayout
+	 * @param viewHolder
+	 *            The JPanel holding the CardLayout
+	 * @return True if the there exists a panel with name 'panel_name', false
+	 *         otherwise.
+	 */
+	public boolean checkPanelExists(String panel_name, JPanel viewHolder) {
+		for (Component panel : viewHolder.getComponents()) {
+			if (panel != null && panel.getName().equals(panel_name) && panel instanceof JPanel)
 				return true;
 		}
 		return false;
@@ -179,8 +182,12 @@ public class UiController {
 	 * @return An arraylist of assignments
 	 */
 	public ArrayList<Assignment> BrowseAssignments(int userId_) {
-		return system_.getAssignmentList_(); // TODO: change args of
-												// getAssignmentList_ in system
+		ArrayList<Assignment> assignmentList = new ArrayList<Assignment>();
+		for (Assignment a : system_.getAssignmentList_()) {
+			if (a.getDeveloperId_() == userId_)
+				assignmentList.add(a);
+		}
+		return assignmentList;
 	}
 
 	/**
