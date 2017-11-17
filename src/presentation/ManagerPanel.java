@@ -461,7 +461,7 @@ public class ManagerPanel {
 					temp2 = temp2.concat(String.valueOf(developers.get(j).getLastName_()));
 					developerList[j] = temp2;
 				}
-				developerJList = new JList<String>(developerList);
+				developerJList.setListData(developerList);
 				return;
 			}
 		}	
