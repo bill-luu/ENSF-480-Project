@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import data.Bug;
+import data.Product;
 
 /**
  * 
@@ -30,9 +31,10 @@ public class ManagerPanel {
 	*/
 	private JPanel panel_;
 	private SpringLayout layout;
-	ArrayList<Bug> bugs;
 	
 	private JList<String> bugJList;
+	private JList<String> productJList;
+
 
 	/**
 	 * 
@@ -69,36 +71,38 @@ public class ManagerPanel {
 		
 		
 		/* remove this with the actual bug list*/
-		bugs = new ArrayList<Bug>();
-		bugs.add(new Bug());
-		bugs.get(0).setBugId_(0);
-		bugs.get(0).setBugTitle_("Bug0");
-		bugs.get(0).setDescription_("This is Bug0");
-		bugs.get(0).setProductId_(1);
-		bugs.get(0).setState_(Bug.State.IN_PROGRESS);
-
-		bugs.add(new Bug());
-		bugs.get(1).setBugId_(1);
-		bugs.get(1).setBugTitle_("Bug1");
-		bugs.get(1).setDescription_("This is Bug1");
-		bugs.get(1).setProductId_(1);
-		bugs.get(1).setState_(Bug.State.IN_PROGRESS);
-		
-		bugs.add(new Bug());
-		bugs.get(2).setBugId_(2);
-		bugs.get(2).setBugTitle_("Bug2");
-		bugs.get(2).setDescription_("This is Bug2");
-		bugs.get(2).setProductId_(1);
-		bugs.get(2).setState_(Bug.State.IN_PROGRESS);
-		
-		bugs.add(new Bug());
-		bugs.get(3).setBugId_(3);
-		bugs.get(3).setBugTitle_("Bug3");
-		bugs.get(3).setDescription_("This is Bug3");
-		bugs.get(3).setProductId_(1);
-		bugs.get(3).setState_(Bug.State.IN_PROGRESS);
-		
+		ArrayList<Bug> bugs = this.uiController_.BrowseBugs();
+//		
+//		bugs.add(new Bug());
+//		bugs.get(0).setBugId_(0);
+//		bugs.get(0).setBugTitle_("Bug0");
+//		bugs.get(0).setDescription_("This is Bug0");
+//		bugs.get(0).setProductId_(1);
+//		bugs.get(0).setState_(Bug.State.IN_PROGRESS);
+//
+//		bugs.add(new Bug());
+//		bugs.get(1).setBugId_(1);
+//		bugs.get(1).setBugTitle_("Bug1");
+//		bugs.get(1).setDescription_("This is Bug1");
+//		bugs.get(1).setProductId_(1);
+//		bugs.get(1).setState_(Bug.State.IN_PROGRESS);
+//		
+//		bugs.add(new Bug());
+//		bugs.get(2).setBugId_(2);
+//		bugs.get(2).setBugTitle_("Bug2");
+//		bugs.get(2).setDescription_("This is Bug2");
+//		bugs.get(2).setProductId_(1);
+//		bugs.get(2).setState_(Bug.State.IN_PROGRESS);
+//		
+//		bugs.add(new Bug());
+//		bugs.get(3).setBugId_(3);
+//		bugs.get(3).setBugTitle_("Bug3");
+//		bugs.get(3).setDescription_("This is Bug3");
+//		bugs.get(3).setProductId_(1);
+//		bugs.get(3).setState_(Bug.State.IN_PROGRESS);
+//		
 		DefaultListModel<String> bugList = new DefaultListModel<String>();
+		
 		for(int i = 0; i < bugs.size(); i++)
 		{
 			String temp = "";
@@ -144,7 +148,58 @@ public class ManagerPanel {
 		bugListPanel.add(bugScrollPane);
 		
 		
+		/*****PRODUCT LIST PANEL*****/
+		JPanel productListPanel = new JPanel();
+		JLabel productListLabel = new JLabel("Product List");
+		productListPanel.setLayout(new BoxLayout(productListPanel, BoxLayout.Y_AXIS));
 		
+		ArrayList<Product> products = this.uiController_.BrowseProducts();
+		
+		DefaultListModel<String> productList = new DefaultListModel<String>();
+		
+		for(int i = 0; i < products.size(); i++)
+		{
+			String temp = "";
+			temp = temp.concat(String.valueOf(products.get(i).getProductId_()));
+			temp = temp.concat("    ");
+			temp = temp.concat(products.get(i).getProductName_());
+			temp = temp.concat("    ");
+			temp = temp.concat(String.valueOf(products.get(i).getProductDescription()));
+			bugList.addElement(temp);
+		}
+		productJList = new JList<String>(productList);
+		
+		JScrollPane productScrollPane = new JScrollPane(productJList);	
+		productScrollPane.setPreferredSize(new Dimension(150, 600));
+		
+		productJList.addListSelectionListener(new ListSelectionListener()
+		{	
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) 
+			{
+				if (productJList.isSelectionEmpty())
+				{
+					return;
+				}
+				String s = (String) productJList.getSelectedValue();
+				StringTokenizer n = new StringTokenizer(s);
+				String productId = n.nextToken();
+				int index = -1;
+				
+				for(int i = 0; i < products.size(); i++)
+				{
+					if (String.valueOf(products.get(i).getProductId_()).equals(productId))
+					{
+						index = i;
+						break;
+					}
+				}
+				ManagerPanel.this.createProductInfoPanel(index);
+			}
+		});
+				
+		bugListPanel.add(bugListLabel);
+		bugListPanel.add(bugScrollPane);
 		
 		
 		
@@ -167,16 +222,12 @@ public class ManagerPanel {
 	
 	public void createBugInfoPanel(int index)
 	{
-		Bug temp = bugs.get(index);
-		SpringLayout layout = new SpringLayout();
-		
-		JPanel bugInfoPanel = new JPanel();
-		
-		JLabel BugIdLabel = new JLabel("ID: ");
-		JLabel BugTitleLabel = new JLabel("Bug Title: ");
-		JLabel BugDescriptionLabel = new JLabel("Description: ");
-		
-		
+			
+	}
+
+	public void createProductInfoPanel(int index)
+	{
+			
 	}
 
 	/**
