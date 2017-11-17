@@ -60,7 +60,7 @@ public class ManagerPanel {
 	private JScrollPane bugScrollPane;
 	private String bugList[];
 	private String assignmentList[];
-
+	private String developerList[];
 	/**
 	 * 
 	 */
@@ -193,7 +193,7 @@ public class ManagerPanel {
 		
 		ArrayList<Developer> developers = this.uiController_.BrowseDevelopers();
 		
-		DefaultListModel<String> developersList = new DefaultListModel<String>();
+		developerList = new String[developers.size()];
 		
 		for(int i = 0; i < developers.size(); i++)
 		{
@@ -203,9 +203,9 @@ public class ManagerPanel {
 			temp = temp.concat(developers.get(i).getFirstName_());
 			temp = temp.concat("    ");
 			temp = temp.concat(String.valueOf(developers.get(i).getLastName_()));
-			developersList.addElement(temp);
+			developerList[i] = temp;
 		}
-		developerJList = new JList<String>(developersList);
+		developerJList = new JList<String>(developerList);
 		
 		JScrollPane developerScrollPane = new JScrollPane(developerJList);	
 		
@@ -304,9 +304,7 @@ public class ManagerPanel {
 		addDevButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout) viewHolder.getLayout();
-				layout.show(viewHolder, "OrdinaryPanel");
+				ManagerPanel.this.createDeveloperPopUp();
 			}
 		});
 		developerListPanel.add(addDevButton);
@@ -535,6 +533,95 @@ public class ManagerPanel {
 		// TODO implement here
 	}
 
+	public void createDeveloperPopUp()
+	{
+		JPanel devPanel = new JPanel();
+    	devPanel.setPreferredSize(new Dimension(200, 100));
+    	HintTextFieldCopy firstName = new HintTextFieldCopy("Enter first name here");
+    	HintTextFieldCopy lastName = new HintTextFieldCopy("Enter last name here");
+    	HintTextFieldCopy userName = new HintTextFieldCopy("Enter username here");
+    	HintTextFieldCopy password = new HintTextFieldCopy("Enter password here");
+        firstName.setPreferredSize(new Dimension(150, 25));
+        lastName.setPreferredSize(new Dimension(150, 25));
+        userName.setPreferredSize(new Dimension(150, 25));
+        password.setPreferredSize(new Dimension(150, 25));
+
+
+//    	JTextArea description = new JTextArea();
+//    	description.setPreferredSize(new Dimension(500, 250));
+//    	description.setBorder(BorderFactory.createEtchedBorder());
+//    	description.setLineWrap(true);
+    	
+    	// Fill a dropdown menu with all the products
+//    	DefaultComboBoxModel<String> productModel = new DefaultComboBoxModel<String>();
+//    	DefaultListModel<String> model2 = (DefaultListModel<String>) productJList.getModel();
+//    	for(int i = 0; i < model2.size(); i++)
+//    		productModel.addElement(model2.getElementAt(i).split("    ")[0] +" "+ model2.getElementAt(i).split("    ")[1]); // Fill combobox with only product names
+//    	JComboBox<String> products2 = new JComboBox<String>(productModel);
+    	
+    	Box vBox = Box.createVerticalBox();
+    	vBox.add(firstName);
+    	vBox.add(Box.createVerticalStrut(20));
+    	vBox.add(lastName);
+    	vBox.add(Box.createVerticalStrut(20));
+    	vBox.add(userName);
+    	vBox.add(Box.createVerticalStrut(20));
+    	
+    	devPanel.add(vBox);
+    	
+    	Object options[] = {"Create", "Cancel"};
+    	int selection = JOptionPane.showOptionDialog(null, devPanel, 
+        		"New Developer", 
+        		JOptionPane.OK_CANCEL_OPTION, 
+        		JOptionPane.PLAIN_MESSAGE,
+        		null,
+        		options, 
+        		options[0]);
+    	
+    	if(selection == JOptionPane.OK_OPTION)
+    	{
+    		String usrN = userName.getText();
+    		ArrayList<String> loginInfo = ManagerPanel.this.uiController_.getSystem().getLoginInfoList_();
+    		
+    		for(int i = 0; i < loginInfo.size(); i++)
+    		{
+    			String uEntered = "man-<" + userName.getText().split(" ")[0];
+    			String username = loginInfo.get(i).split(":")[0];
+    			if(uEntered.equals(username))
+    			{
+    				JOptionPane.showMessageDialog(null, "Sorry, this username already exists.", "Error Message", JOptionPane.PLAIN_MESSAGE);
+    				return;
+    			}
+    		}
+    		
+    		Developer d = new Developer(); 
+    		d.setUserId_(ManagerPanel.this.uiController_.BrowseDevelopers().size() + 1);
+    		d.setFirstName_(firstName.getText().split(" ")[0]);
+    		d.setLastName_(lastName.getText().split(" ")[0]);
+    		d.setUsername_(userName.getText());
+    		
+    		String lInfo = "man-<" + userName.getText() + ":" + password.getText();
+    		
+    		ManagerPanel.this.uiController_.getSystem().addToDeveloperList(d, lInfo);
+    		
+    		ArrayList<Developer> developers = this.uiController_.BrowseDevelopers();
+    		
+    		developerList = new String[developers.size()];
+
+    		for(int i = 0; i < developers.size(); i++)
+    		{
+    			String temp = "";
+    			temp = temp.concat(String.valueOf(developers.get(i).getUserId_()));
+    			temp = temp.concat("    ");
+    			temp = temp.concat(developers.get(i).getFirstName_());
+    			temp = temp.concat("    ");
+    			temp = temp.concat(String.valueOf(developers.get(i).getLastName_()));
+    			developerList[i] = temp;
+    		}
+    		developerJList = new JList<String>(developerList);
+    	}
+
+	}
 	public void createBugPopUp() 
 	{
 		JPanel bugPanel = new JPanel();
@@ -638,15 +725,7 @@ public class ManagerPanel {
 			}
 		}
 	}
-
-	/**
-	 * @param void
-	 * @return
-	 */
-	public void createDeveloperPopUp() {
-		// TODO implement here
-	}
-
+	
 	/**
 	 * @param void
 	 * @return
