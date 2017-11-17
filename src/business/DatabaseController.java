@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 import data.*;
+import data.Bug.State;
 
 public class DatabaseController {
 
@@ -194,6 +195,22 @@ public class DatabaseController {
 					} else if (i == 2) {
 						tempBug.setBugTitle_(tokens.nextToken());
 					} else if (i == 3) {
+						String stateString = tokens.nextToken();
+						Bug.State state = State.PENDING_APPROVAL;
+						if (stateString.equals("PENDING_APPROVAL"))
+							state = State.PENDING_APPROVAL;
+						else if (stateString.equals("REJECTED"))
+							state = State.REJECTED;
+						else if (stateString.equals("AWAITING_ASSIGNMENT"))
+							state = State.AWAITING_ASSIGNMENT;
+						else if (stateString.equals("IN_PROGRESS"))
+							state = State.IN_PROGRESS;
+						else if (stateString.equals("FIXED"))
+							state = State.FIXED;
+
+						tempBug.setState_(state);
+					} else if (i == 4) {
+
 						description = description.concat(tokens.nextToken());
 					} else {
 						description = description.concat(" ");
@@ -353,6 +370,8 @@ public class DatabaseController {
 				tempString.concat(String.valueOf(bugs.get(i).getProductId_()));
 				tempString.concat(" ");
 				tempString.concat(bugs.get(i).getBugTitle_());
+				tempString.concat(" ");
+				tempString.concat(bugs.get(i).getState_().toString());
 				tempString.concat(" ");
 				tempString.concat(bugs.get(i).getDescription_());
 				tempString.concat(" ");
