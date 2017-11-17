@@ -8,7 +8,6 @@ public class Bug {
 	/**
 	 * Enum to represent the current bug state
 	 */
-	
 	public enum State {
 		PENDING_APPROVAL, REJECTED, AWAITING_ASSIGNMENT, IN_PROGRESS, FIXED
 	};
@@ -44,15 +43,6 @@ public class Bug {
 	 * Description of the bug
 	 */
 	private String description_;
-
-	/**
-	 * @param void
-	 * @return
-	 */
-	public String extractKeywords() {
-		// TODO implement here
-		return null;
-	}
 
 	public int getBugId_() {
 		return bugId_;
