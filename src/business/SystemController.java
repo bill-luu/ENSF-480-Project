@@ -47,6 +47,10 @@ public class SystemController {
 	private ArrayList<String> loginInfoList_;
 
 	/**
+	 * A list of the next generated ID for new entities
+	 */
+	private HashMap<String, Integer> idList_;
+	/**
 	 * The database controller
 	 */
 	private DatabaseController databaseController_;
@@ -118,6 +122,7 @@ public class SystemController {
 		productList_ = databaseController_.readProductFile();
 
 		loginInfoList_ = databaseController_.readLoginInfoFile();
+		idList_ = databaseController_.readIDFile();
 	}
 
 	public ArrayList<String> getLoginInfoList_() {
@@ -193,19 +198,31 @@ public class SystemController {
 	}
 
 	public void addToManagerList(Manager manToAdd) {
+		Integer nextID = idList_.get("MANAGER");
+		manToAdd.setUserId_(nextID);
 		managerList_.add(manToAdd);
+		idList_.put("MANAGER", nextID + 1);
 	}
 
 	public void addToBugList(Bug bugToAdd) {
+		Integer nextID = idList_.get("BUG");
+		bugToAdd.setBugId_(nextID);
 		bugList_.add(bugToAdd);
+		idList_.put("BUG", nextID + 1);
 	}
 
 	public void addToAssignmentList(Assignment assToAdd) {
+		Integer nextID = idList_.get("ASSIGNMENT");
+		assToAdd.setBugId_(nextID);
 		assignmentList_.add(assToAdd);
+		idList_.put("ASSIGNMENT", nextID + 1);
 	}
 
 	public void addToProductList(Product productToAdd) {
+		Integer nextID = idList_.get("PRODUCT");
+		productToAdd.setProductId_(nextID);
 		productList_.add(productToAdd);
+		idList_.put("PRODUCT", nextID + 1);
 	}
 
 	public void addToDeveloperList(Developer devToAdd, String loginInfoToAdd) {
@@ -220,6 +237,7 @@ public class SystemController {
 		databaseController_.writeManagerFile(managerList_);
 		databaseController_.writeProductFile(productList_);
 		databaseController_.writeLoginInfoFile(loginInfoList_);
+		databaseController_.writeIDFile(idList_);
 	}
 
 	public void shutdown() {
