@@ -45,7 +45,7 @@ import data.Product;
 public class OrdinaryPanel {
 
 	/**
-	 * 
+	 * The JPanel to holding all the components
 	 */
 	private JPanel panel_;
 
@@ -200,7 +200,6 @@ public class OrdinaryPanel {
 
 		// Open submit bug popup when clicking submit bug button
 		submitBugButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				submitBugPopUp();
