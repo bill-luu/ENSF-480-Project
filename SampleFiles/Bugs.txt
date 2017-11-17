@@ -1,10 +1,10 @@
-100 5 Bug1 This is Bug1
-101 5 Bug2 This is Bug2
-102 5 Bug3 This is Bug3
-103 5 Bug4 This is Bug4
-104 5 Bug5 This is Bug5
-105 5 Bug6 This is Bug6
-106 5 Bug7 This is Bug7
-107 5 Bug8 This is Bug8
-108 5 Bug9 This is Bug9
-109 5 Bug10 This is Bug10
+100 5 Bug1 PENDING_APPROVAL This is Bug1
+101 5 Bug2 REJECTED This is Bug2
+102 5 Bug3 AWAITING_ASSIGNMENT This is Bug3
+103 5 Bug4 IN_PROGRESS This is Bug4
+104 5 Bug5 FIXED This is Bug5
+105 5 Bug6 PENDING_APPROVAL This is Bug6
+106 5 Bug7 REJECTED This is Bug7
+107 5 Bug8 AWAITING_ASSIGNMENT This is Bug8
+108 5 Bug9 IN_PROGRESS This is Bug9
+109 5 Bug10 FIXED This is Bug10
