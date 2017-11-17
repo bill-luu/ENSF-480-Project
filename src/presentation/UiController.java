@@ -236,11 +236,6 @@ public class UiController {
 		return assignmentList;
 	}
 
-	public ArrayList<Assignment> BrowseAssignments() {
-		return system_.getAssignmentList_(); 
-	
-	}
-	
 	/**
 	 * Remove an assignment from the system
 	 * 
