@@ -34,9 +34,10 @@ public class UiController {
     /**
      * Default constructor
      */
-    public UiController() {
+    public UiController(SystemController system) {
     	// Init GUI components
     	frame_ = new JFrame("Bug Tracking System");
+    	system_ = system;
     	
     	// Cardlayout keeps a hashmap of JPanels mapped to Strings
     	CardLayout layout = new CardLayout();

@@ -2,7 +2,6 @@ package presentation;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -11,13 +10,9 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -41,7 +36,7 @@ import data.Bug;
 import data.Developer;
 import data.Employee;
 import data.Manager;
-import javafx.scene.control.ListView;
+import data.Product;
 
 /**
  * 
@@ -90,59 +85,30 @@ public class OrdinaryPanel {
     	JButton loginButton = new JButton("Login");
     	JButton submitBugButton = new JButton("Report Bug");
     	
-    	// Temp Data until System/Database integrated in main branch
-	    	ArrayList<String> products = new ArrayList<String>();
-	    	products.add("prod1");
-	    	products.add("prod2");
-	    	products.add("prod3");
-	    	products.add("prod4");
-	    	products.add("prod5");
-	    	products.add("prod1");
-	    	products.add("prod2");
-	    	products.add("prod3");
-	    	products.add("prod4");
-	    	products.add("prod5");
-	    	products.add("prod1");
-	    	products.add("prod2");
-	    	products.add("prod3");
-	    	products.add("prod4");
-	    	products.add("prod5");
-	    	
-	    	ArrayList<String> bugs = new ArrayList<String>();
-	    	bugs.add("bug1");
-	    	bugs.add("bug2");
-	    	bugs.add("bug3");
-	    	bugs.add("bug4");
-	    	bugs.add("bug5");
-	    	bugs.add("bug1");
-	    	bugs.add("bug2");
-	    	bugs.add("bug3");
-	    	bugs.add("bug4");
-	    	bugs.add("bug5");
-	    	bugs.add("bug1");
-	    	bugs.add("bug2");
-	    	bugs.add("bug3");
-	    	bugs.add("bug4");
-	    	bugs.add("bug5");
-    	// End Temp
+    	String[] pages = {"Bugs"};
+    	DefaultComboBoxModel<String> pageModel = new DefaultComboBoxModel<String>(pages);
+    	JComboBox<String> pageSelector = new JComboBox<String>(pageModel);
+    	
+    	ArrayList<Product> products = uiController.BrowseProducts();
+    	ArrayList<Bug> bugs = uiController.BrowseBugs();
 	    	
     	DefaultListModel<String> productModel = new DefaultListModel<String>();
     	DefaultListModel<String> bugModel = new DefaultListModel<String>();
     	
-    	for(String p : products)
-    		productModel.addElement(p);
+    	for(Product p : products)
+    		productModel.addElement(p.getProductId_() + " " + p.getProductName_() + " " + p.getProductDescription());
     	
-    	for(String b : bugs)
-    		bugModel.addElement(b);
+    	for(Bug b : bugs)
+    		bugModel.addElement(b.getBugId_() + " " + b.getBugTitle_() + " " + b.getState_());
     	
     	productlist = new JList<String>(productModel);
     	buglist = new JList<String>(bugModel);
     	
     	JScrollPane bugScroller = new JScrollPane(buglist);
-    	bugScroller.setPreferredSize(new Dimension(150, 400));
+    	bugScroller.setPreferredSize(new Dimension(150, 525));
     	
     	JScrollPane productScroller = new JScrollPane(productlist);
-    	productScroller.setPreferredSize(new Dimension(150, 400));
+    	productScroller.setPreferredSize(new Dimension(150, 525));
     	
     	
     	// Temporary components for testing
@@ -198,7 +164,17 @@ public class OrdinaryPanel {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				// TODO: Update bug list with bugs
+				bugModel.removeAllElements();
+				String product = productlist.getSelectedValue();
+				String products[] = product.split(" ");
+				int productID = Integer.parseInt(products[0]);
+				
+		    	// Search for corresponding bugs
+				ArrayList<Bug> bugs = uiController.BrowseBugs();
+		    	for(Bug b : bugs){
+		    		if(b.getProductId_() == productID)
+		    			bugModel.addElement(b.getBugId_() + " " + b.getBugTitle_() + " " + b.getState_());
+		    	}
 			}
 	    });
 	    
@@ -218,28 +194,40 @@ public class OrdinaryPanel {
 				submitBugPopUp();
 			}
     	});
-    	gbc.gridx = 1; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
+    	
+    	// Temp Components
+//	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
+//	    	panel_.add(demoManButton, gbc);
+//	    	
+//	    	gbc.gridx = 10; gbc.gridy = 10; gbc.gridwidth = 1; gbc.gridheight = 1;
+//	    	panel_.add(demoDevButton, gbc);
+    	//
+    	
+    	gbc.weighty = 1;
+    	gbc.insets = new Insets(20,0,0,0);
+    	gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
     	panel_.add(title, gbc);
     	
     	gbc.gridx = 5; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
     	panel_.add(title2, gbc);
     	
-    	gbc.gridx = 10; gbc.gridy = 2; gbc.gridwidth = 1; gbc.gridheight = 1;
-    	panel_.add(demoDevButton, gbc);
+    	gbc.insets = new Insets(0, 75, 0, 0);
+    	gbc.weightx = 1;
+    	gbc.gridx = 11; gbc.gridy = 0; gbc.gridwidth = 1; gbc.gridheight = 1;
+    	panel_.add(pageSelector, gbc);
     	
-    	gbc.gridx = 10; gbc.gridy = 4; gbc.gridwidth = 1; gbc.gridheight = 1;
-    	panel_.add(demoManButton, gbc);
-    	
-    	gbc.gridx = 10; gbc.gridy = 0; gbc.gridwidth = 1; gbc.gridheight = 1;
+    	gbc.gridx = 11; gbc.gridy = 2; gbc.gridwidth = 1; gbc.gridheight = 1;
     	panel_.add(loginButton, gbc);
     	
-    	gbc.gridx = 1; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
+    	gbc.insets = new Insets(0,0,0,0);
+    	gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
     	panel_.add(productScroller, gbc);
     	
     	gbc.gridx = 5; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
     	panel_.add(bugScroller, gbc);
     	
-    	gbc.gridx = 4; gbc.gridy = 9; gbc.gridwidth = 3; gbc.gridheight = 1;
+    	gbc.fill = GridBagConstraints.HORIZONTAL;
+    	gbc.gridx = 4; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
     	panel_.add(submitBugButton, gbc);
     }
 
@@ -330,7 +318,7 @@ public class OrdinaryPanel {
     	DefaultComboBoxModel<String> productModel = new DefaultComboBoxModel<String>();
     	DefaultListModel<String> model = (DefaultListModel<String>) productlist.getModel();
     	for(int i = 0; i < model.size(); i++)
-    		productModel.addElement(model.getElementAt(i));
+    		productModel.addElement(model.getElementAt(i).split(" ")[1]); // Fill combobox with only product names
     	JComboBox<String> products = new JComboBox<String>(productModel);
     	
     	Box vBox = Box.createVerticalBox();
@@ -361,30 +349,59 @@ public class OrdinaryPanel {
     /**
      * Create a new popup for users to inspect a bug
      */
-    public void inspectBugPopUp() { // TODO: Add real bug object info
+    public void inspectBugPopUp() {
     	JPanel bugPanel = new JPanel();
-    	String bug = buglist.getSelectedValue();
-    	
-    	JLabel bugTitle = new JLabel(bug);
-    	JLabel bugProduct = new JLabel("Product");
-    	JLabel bugDescription = new JLabel("Description");
-    	
-    	Box vBox = Box.createVerticalBox();
-    	vBox.add(bugTitle);
-    	vBox.add(Box.createVerticalStrut(15));
-    	vBox.add(bugProduct);
-    	vBox.add(Box.createVerticalStrut(15));
-    	vBox.add(bugDescription);
-    	bugPanel.add(vBox);
-    	
-    	Object options[] = {"OK"};
-    	JOptionPane.showOptionDialog(null, bugPanel, 
-        		"Inspect Bug", 
-        		JOptionPane.OK_OPTION, 
-        		JOptionPane.PLAIN_MESSAGE,
-        		null,
-        		options, 
-        		options[0]);
+    	int bugID = Integer.parseInt(buglist.getSelectedValue());
+    	System.out.println(bugID);
+    	ArrayList<Bug> bugs = uiController_.BrowseBugs();
+    	for(Bug b : bugs){
+    		if(b.getBugId_() == bugID){
+    			JLabel bugTitle = new JLabel(b.getBugTitle_());
+    	    	JLabel bugProduct = new JLabel("" + b.getProductId_());
+    	    	JLabel bugDescription = new JLabel(b.getDescription_());
+    	    	JLabel bugState = new JLabel("Default Status"); // TODO: b.getState_().toString()
+    	    	
+    	    	ArrayList<Product> productlist = uiController_.BrowseProducts();
+    	    	for(Product p : productlist){
+    	    		if(p.getProductId_() == b.getProductId_()){
+    	    	
+		    	    	JLabel productTitle = new JLabel("Product");
+		    	    	JLabel productID = new JLabel("" + p.getProductId_());
+		    	    	JLabel productName = new JLabel(p.getProductName_());
+		    	    	JLabel productDescription = new JLabel(p.getProductDescription());
+		    	    	
+		    	    	Box vBox = Box.createVerticalBox();
+		    	    	vBox.add(bugTitle);
+		    	    	vBox.add(Box.createVerticalStrut(15));
+		    	    	vBox.add(bugProduct);
+		    	    	vBox.add(Box.createVerticalStrut(15));
+		    	    	vBox.add(bugDescription);
+		    	    	vBox.add(Box.createVerticalStrut(15));
+		    	    	vBox.add(bugState);
+		    	    	vBox.add(Box.createVerticalStrut(30));
+		    	    	vBox.add(productTitle);
+		    	    	vBox.add(Box.createVerticalStrut(15));
+		    	    	vBox.add(productID);
+		    	    	vBox.add(Box.createVerticalStrut(15));
+		    	    	vBox.add(productName);
+		    	    	vBox.add(Box.createVerticalStrut(15));
+		    	    	vBox.add(productDescription);
+		    	    	bugPanel.add(vBox);
+		    	    	
+		    	    	Object options[] = {"OK"};
+		    	    	JOptionPane.showOptionDialog(null, bugPanel, 
+		    	        		"Inspect Bug", 
+		    	        		JOptionPane.OK_OPTION, 
+		    	        		JOptionPane.PLAIN_MESSAGE,
+		    	        		null,
+		    	        		options, 
+		    	        		options[0]);
+		    	    	break;
+    	    		}
+    	    	break;
+    	    	}
+    		}
+    	}
     }
 
 	public JPanel getPanel_() {
