@@ -267,8 +267,7 @@ public class UiController {
 	}
 
 	public void updateAssignment(Assignment a) {
-		// TODO Auto-generated method stub
-
+		getSystem().updateAssignment(a);
 	}
 
 }

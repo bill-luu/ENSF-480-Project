@@ -281,8 +281,8 @@ public class DatabaseController {
 				tempString = tempString.concat(" ");
 				tempString = tempString.concat(String.valueOf(assignments.get(i).getManagerId_()));
 				for (int j = 0; j < assignments.get(i).getUpdateMessages_().size(); j++) {
-					tempString = tempString.concat(" ");
 					tempString = tempString.concat(assignments.get(i).getUpdateMessages_().get(j));
+					tempString = tempString.concat("; ");
 				}
 
 				output.write(tempString);

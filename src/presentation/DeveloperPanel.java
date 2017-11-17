@@ -193,7 +193,6 @@ public class DeveloperPanel {
 			}
 		});
 
-		// Open login popup when clicking login button
 		logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -301,6 +300,22 @@ public class DeveloperPanel {
 
 		JScrollPane assignmentDesciptionScroller = new JScrollPane(assignDescriptionList);
 		assignmentDesciptionScroller.setPreferredSize(new Dimension(500, 250));
+		assignmentDescriptionModel.clear();
+		String s = (String) assignmentComboBox.getSelectedItem();
+		int id = Integer.parseInt(s.split(" ")[1]);
+		// Fill with all assignment info
+
+		for (Assignment a : getUiController_().getSystem().getAssignmentList_()) {
+			if (a.getAssignmentId_() == id) {
+				for (Bug b : getUiController_().getSystem().getBugList_()) {
+					if (b.getBugId_() == a.getBugId_())
+						assignStateModel.setSelectedItem(b.getState_());
+				}
+				for (String message : a.getUpdateMessages_()) {
+					assignmentDescriptionModel.addElement(message);
+				}
+			}
+		}
 
 		assignmentComboBox.addActionListener(new ActionListener() {
 
@@ -323,7 +338,6 @@ public class DeveloperPanel {
 					}
 				}
 			}
-
 		});
 
 		Box vBox = Box.createVerticalBox();
@@ -344,8 +358,8 @@ public class DeveloperPanel {
 		if (selection == JOptionPane.OK_OPTION) {
 			Assignment a = new Assignment();
 
-			String s = (String) assignmentComboBox.getSelectedItem();
-			a.setAssignmentId_(Integer.parseInt(s.split(" ")[1]));
+			String s1 = (String) assignmentComboBox.getSelectedItem();
+			a.setAssignmentId_(Integer.parseInt(s1.split(" ")[1]));
 			for (Assignment assign : uiController_.getSystem().getAssignmentList_()) {
 				if (assign.getAssignmentId_() == a.getAssignmentId_()) {
 					a.setBugId_(assign.getBugId_());
