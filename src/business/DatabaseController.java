@@ -210,7 +210,6 @@ public class DatabaseController {
 
 						tempBug.setState_(state);
 					} else if (i == 4) {
-
 						description = description.concat(tokens.nextToken());
 					} else {
 						description = description.concat(" ");
