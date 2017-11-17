@@ -112,8 +112,8 @@ public class OrdinaryPanel {
     	
     	
     	// Temporary components for testing
-	    	JButton demoDevButton = new JButton("Test Dev Screen");
-	    	JButton demoManButton = new JButton("Test Manager Screen");
+	    	JButton demoDevButton = new JButton("D");
+	    	JButton demoManButton = new JButton("M");
 	    	
     	demoDevButton.addActionListener(new ActionListener(){
 			@Override
@@ -196,12 +196,12 @@ public class OrdinaryPanel {
     	});
     	
     	// Temp Components
-//	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
-//	    	panel_.add(demoManButton, gbc);
-//	    	
-//	    	gbc.gridx = 10; gbc.gridy = 10; gbc.gridwidth = 1; gbc.gridheight = 1;
-//	    	panel_.add(demoDevButton, gbc);
-    	//
+	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
+	    	panel_.add(demoManButton, gbc);
+	    	
+	    	gbc.gridx = 10; gbc.gridy = 10; gbc.gridwidth = 1; gbc.gridheight = 1;
+	    	panel_.add(demoDevButton, gbc);
+    	
     	
     	gbc.weighty = 1;
     	gbc.insets = new Insets(20,0,0,0);
@@ -319,6 +319,7 @@ public class OrdinaryPanel {
     	DefaultListModel<String> model = (DefaultListModel<String>) productlist.getModel();
     	for(int i = 0; i < model.size(); i++)
     		productModel.addElement(model.getElementAt(i).split(" ")[1]); // Fill combobox with only product names
+    
     	JComboBox<String> products = new JComboBox<String>(productModel);
     	
     	Box vBox = Box.createVerticalBox();
