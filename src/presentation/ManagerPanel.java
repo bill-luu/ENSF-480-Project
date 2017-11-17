@@ -210,9 +210,11 @@ public class ManagerPanel {
 		    	bugJList.setListData(bugList);
 			}
 		});
-				
+		
 		productListPanel.add(productListLabel);
 		productListPanel.add(productScrollPane);
+		
+		
 		
 		
 		/*****DEVELOPER LIST PANEL*****/
@@ -379,7 +381,18 @@ public class ManagerPanel {
 		});
 		productListPanel.add(addProButton);
 		
-		
+		JButton deleteProduct = new JButton();
+		deleteProduct.setPreferredSize(new Dimension(50, 20));
+
+		deleteProduct.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ManagerPanel.this.DeleteProduct();
+			}
+		});
+		productListPanel.add(addProButton);
+		productListPanel.add(deleteProduct);
+
 		
 		panel_.add(bugListPanel);
 		panel_.add(productListPanel);
@@ -403,6 +416,28 @@ public class ManagerPanel {
 		layout.putConstraint(SpringLayout.NORTH, assignmentListPanel, 10, SpringLayout.NORTH, panel_);		
 		layout.putConstraint(SpringLayout.WEST, assignmentListPanel, 10, SpringLayout.EAST, developerListPanel);		
 
+	}
+	
+	public void DeleteProduct()
+	{
+		String product = productJList.getSelectedValue();
+		if(product == null)
+		{
+			return;
+		}
+		ArrayList<Product> prod = this.uiController_.BrowseProducts();
+		for(int i = 0; i < prod.size(); i++)
+		{
+			if(prod.get(i).getProductId_() == Integer.parseInt(product.split(" ")[0]))
+			{
+				Product temp = new Product();
+				temp.setProductId_(prod.get(i).getProductId_());
+				temp.setProductName_(prod.get(i).getProductName_());
+				temp.setProductDescription(prod.get(i).getProductDescription());
+				this.uiController_.RemoveProduct(temp);
+				return;
+			}
+		}	
 	}
 	
 	public void createBugInfoPanel(int index)
