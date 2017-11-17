@@ -207,6 +207,8 @@ public class DatabaseController {
 							state = State.IN_PROGRESS;
 						else if (stateString.equals("FIXED"))
 							state = State.FIXED;
+						else if (stateString.equals("ARCHIVED"))
+							state = State.ARCHIVED;
 
 						tempBug.setState_(state);
 					} else if (i == 4) {

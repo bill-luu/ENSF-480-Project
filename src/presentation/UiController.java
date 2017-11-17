@@ -14,6 +14,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import data.*;
+import data.Bug.State;
 import business.SystemController;
 
 /**
@@ -194,6 +195,11 @@ public class UiController {
 	 */
 	public void RemoveDeveloper(Developer developer_) {
 		//TODO: Remove method
+	}
+	
+	public void RemoveBug(Bug bug_){
+		bug_.setState_(State.ARCHIVED);
+		system_.updateBug(bug_);
 	}
 
 	/**
