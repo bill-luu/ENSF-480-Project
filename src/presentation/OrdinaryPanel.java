@@ -149,38 +149,38 @@ public class OrdinaryPanel {
 	    	JButton demoDevButton = new JButton("Test Dev Screen");
 	    	JButton demoManButton = new JButton("Test Manager Screen");
 	    	
-	    	demoDevButton.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// Get components
-					JPanel viewHolder = (JPanel)(uiController.getFrame().getContentPane().getComponent(0));
-					CardLayout layout = (CardLayout)viewHolder.getLayout();
-					
-					// Create new DeveloperPanel if it doesn't exist
-					if(! uiController.checkPanelExists("DeveloperPanel", viewHolder)){
-						viewHolder.add(new DeveloperPanel(uiController).getPanel_(), "DeveloperPanel");
-					}
-					
-					// Change view to developer panel
-					layout.show(viewHolder, "DeveloperPanel");
+    	demoDevButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// Get components
+				JPanel viewHolder = (JPanel)(uiController.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout)viewHolder.getLayout();
+				
+				// Create new DeveloperPanel if it doesn't exist
+				if(! uiController.checkPanelExists("DeveloperPanel", viewHolder)){
+					viewHolder.add(new DeveloperPanel(uiController).getPanel_(), "DeveloperPanel");
 				}
-	    	});
-	    	
-	    	demoManButton.addActionListener(new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// Get components
-					JPanel viewHolder = (JPanel)(uiController.getFrame().getContentPane().getComponent(0));
-					CardLayout layout = (CardLayout)viewHolder.getLayout();
-					
-					// Create new ManagerPanel if it doesn't exist
-					if(! uiController.checkPanelExists("ManagerPanel", viewHolder)){
-						viewHolder.add(new ManagerPanel(uiController).getPanel_(), "ManagerPanel");
-					}
-					
-					// Change view to manager panel
-					layout.show(viewHolder, "ManagerPanel");
+				
+				// Change view to developer panel
+				layout.show(viewHolder, "DeveloperPanel");
+			}
+		});
+
+		demoManButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// Get components
+				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout) viewHolder.getLayout();
+
+				// Create new ManagerPanel if it doesn't exist
+				if (!uiController.checkPanelExists("ManagerPanel", viewHolder)) {
+					viewHolder.add(new ManagerPanel(uiController).getPanel_(), "ManagerPanel");
 				}
+
+				// Change view to manager panel
+				layout.show(viewHolder, "ManagerPanel");
+			}
 	    	});
     	// End temporary components
 	    
@@ -212,6 +212,7 @@ public class OrdinaryPanel {
     	
     	// Open submit bug popup when clicking submit bug button
     	submitBugButton.addActionListener(new ActionListener(){
+
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				submitBugPopUp();
@@ -287,24 +288,24 @@ public class OrdinaryPanel {
 				JPanel viewHolder = (JPanel)(uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout)viewHolder.getLayout();
 				
+
 				// Create new ManagerPanel if it doesn't exist
-				if(! uiController_.checkPanelExists("ManagerPanel", viewHolder)){
+				if (!uiController_.checkPanelExists("ManagerPanel", viewHolder)) {
 					viewHolder.add(new ManagerPanel(uiController_).getPanel_(), "ManagerPanel");
 				}
-				
+
 				// Change view to manager panel
 				layout.show(viewHolder, "ManagerPanel");
-        	}
-        	else if(logged_in_result instanceof Developer){
-        		// Get components
-				JPanel viewHolder = (JPanel)(uiController_.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout)viewHolder.getLayout();
-				
+			} else if (logged_in_result instanceof Developer) {
+				// Get components
+				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout) viewHolder.getLayout();
+
 				// Create new DeveloperPanel if it doesn't exist
-				if(! uiController_.checkPanelExists("DeveloperPanel", viewHolder)){
+				if (!uiController_.checkPanelExists("DeveloperPanel", viewHolder)) {
 					viewHolder.add(new DeveloperPanel(uiController_).getPanel_(), "DeveloperPanel");
 				}
-				
+
 				// Change view to developer panel
 				layout.show(viewHolder, "DeveloperPanel");
         	}
@@ -401,86 +402,96 @@ public class OrdinaryPanel {
 	public void setUiController_(UiController uiController_) {
 		this.uiController_ = uiController_;
 	}
-	
+
 	/**
-	 * Anonymous inner class which places temporary background text in a JTextField 
+	 * Anonymous inner class which places temporary background text in a
+	 * JTextField
 	 */
 	public class HintTextField extends JTextField {
-		
+
 		private static final long serialVersionUID = 1L;
-		
+
 		/**
 		 * The hint text that appears in the component
 		 */
 		private final String hint_;
-		
+
 		/**
 		 * Constructor for the component
-		 * @param hint The hint text which appears in the component
+		 * 
+		 * @param hint
+		 *            The hint text which appears in the component
 		 */
-	    public HintTextField(String hint) {
-	        hint_ = hint;
-	    }
-	    
+		public HintTextField(String hint) {
+			hint_ = hint;
+		}
+
 		/**
-		 * Overwritten method that paints the hint text on the component if it is empty
+		 * Overwritten method that paints the hint text on the component if it
+		 * is empty
 		 */
-	    @Override
-	    public void paint(Graphics g) {
-	        super.paint(g);
-	        if (getText().length() == 0) {
-	            int h = getHeight();
-	            ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	            Insets ins = getInsets();
-	            FontMetrics fm = g.getFontMetrics();
-	            int c0 = getBackground().getRGB();
-	            int c1 = getForeground().getRGB();
-	            int m = 0xfefefefe;
-	            int c2 = ((c0 & m) >>> 1) + ((c1 & m) >>> 1);
-	            g.setColor(new Color(c2, true));
-	            g.drawString(hint_, ins.left, h / 2 + fm.getAscent() / 2 - 2);
-	        }
-	    }
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			if (getText().length() == 0) {
+				int h = getHeight();
+				((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+						RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				Insets ins = getInsets();
+				FontMetrics fm = g.getFontMetrics();
+				int c0 = getBackground().getRGB();
+				int c1 = getForeground().getRGB();
+				int m = 0xfefefefe;
+				int c2 = ((c0 & m) >>> 1) + ((c1 & m) >>> 1);
+				g.setColor(new Color(c2, true));
+				g.drawString(hint_, ins.left, h / 2 + fm.getAscent() / 2 - 2);
+			}
+		}
 	}
-	
+
 	/**
-	 * Anonymous inner class which places temporary background text in a JPasswordField 
+	 * Anonymous inner class which places temporary background text in a
+	 * JPasswordField
 	 */
 	public class HintPasswordField extends JPasswordField {
-		
+
 		private static final long serialVersionUID = 2L;
-		
+
 		/**
 		 * The hint text that appears in the component
 		 */
 		private final String hint_;
-		
+
 		/**
 		 * Constructor for the component
-		 * @param hint The hint text which appears in the component
+		 * 
+		 * @param hint
+		 *            The hint text which appears in the component
 		 */
-	    public HintPasswordField(String hint) {
-	        hint_ = hint;
-	    }
-	    
-	    /**
-		 * Overwritten method that paints the hint text on the component if it is empty
+		public HintPasswordField(String hint) {
+			hint_ = hint;
+		}
+
+		/**
+		 * Overwritten method that paints the hint text on the component if it
+		 * is empty
 		 */
-	    @Override
-	    public void paint(Graphics g) {
-	        super.paint(g);
-	        if (this.getPassword().length == 0) {
-	            int h = getHeight();
-	            ((Graphics2D)g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	            Insets ins = getInsets();
-	            FontMetrics fm = g.getFontMetrics();
-	            int c0 = getBackground().getRGB();
-	            int c1 = getForeground().getRGB();
-	            int m = 0xfefefefe;
-	            int c2 = ((c0 & m) >>> 1) + ((c1 & m) >>> 1);
-	            g.setColor(new Color(c2, true));
-	            g.drawString(hint_, ins.left, h / 2 + fm.getAscent() / 2 - 2);
-	        }
-	    }
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			if (this.getPassword().length == 0) {
+				int h = getHeight();
+				((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+						RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				Insets ins = getInsets();
+				FontMetrics fm = g.getFontMetrics();
+				int c0 = getBackground().getRGB();
+				int c1 = getForeground().getRGB();
+				int m = 0xfefefefe;
+				int c2 = ((c0 & m) >>> 1) + ((c1 & m) >>> 1);
+				g.setColor(new Color(c2, true));
+				g.drawString(hint_, ins.left, h / 2 + fm.getAscent() / 2 - 2);
+			}
+		}
 	}
 }

@@ -13,57 +13,57 @@ import javax.swing.JPanel;
  */
 public class DeveloperPanel {
 
-	 /**
-     * 
-     */
-    private JPanel panel_;
+	/**
+	* 
+	*/
+	private JPanel panel_;
 
-    /**
-     * 
-     */
-    private UiController uiController_;
-    
-    /**
-     * 
-     * @param uiController
-     */
-    public DeveloperPanel(UiController uiController) {
-    	this.uiController_ = uiController;
-    	this.panel_ = new JPanel();
-    	panel_.setName("DeveloperPanel");
+	/**
+	 * 
+	 */
+	private UiController uiController_;
 
-    	JButton demoBackButton = new JButton("Logout");
-    	
-    	demoBackButton.addActionListener(new ActionListener(){
+	/**
+	 * 
+	 * @param uiController
+	 */
+	public DeveloperPanel(UiController uiController) {
+		this.uiController_ = uiController;
+		this.panel_ = new JPanel();
+		panel_.setName("DeveloperPanel");
+
+		JButton demoBackButton = new JButton("Logout");
+
+		demoBackButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JPanel viewHolder = (JPanel)(uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout)viewHolder.getLayout();
+				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout) viewHolder.getLayout();
 				layout.show(viewHolder, "OrdinaryPanel");
 			}
-    	});
-    	
-    	panel_.add(new JLabel("Developer"));
-    	panel_.add(demoBackButton);
-    }
+		});
 
-    /**
-     * @param void 
-     * @return
-     */
-    public void updateAssignmentPopUp() {
-        // TODO implement here
-    }
+		panel_.add(new JLabel("Developer"));
+		panel_.add(demoBackButton);
+	}
 
-    /**
-     * @param void 
-     * @return
-     */
-    public void reportFixPopUp() {
-        // TODO implement here
-    }
+	/**
+	 * @param void
+	 * @return
+	 */
+	public void updateAssignmentPopUp() {
+		// TODO implement here
+	}
 
-    public JPanel getPanel_() {
+	/**
+	 * @param void
+	 * @return
+	 */
+	public void reportFixPopUp() {
+		// TODO implement here
+	}
+
+	public JPanel getPanel_() {
 		return panel_;
 	}
 
@@ -78,5 +78,5 @@ public class DeveloperPanel {
 	public void setUiController_(UiController uiController_) {
 		this.uiController_ = uiController_;
 	}
-	
+
 }
