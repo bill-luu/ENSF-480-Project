@@ -315,6 +315,20 @@ public class OrdinaryPanel {
 				layout.show(viewHolder, "ManagerPanel");
 			} else if (logged_in_result instanceof Developer) {
 				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
+				pageSelector.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						if (pageSelector.getSelectedItem().equals("Assignment")) {
+							// Switch to Ordinary panel
+							JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
+							CardLayout layout = (CardLayout) viewHolder.getLayout();
+							layout.show(viewHolder, "DeveloperPanel");
+						}
+
+					}
+
+				});
 				// Get components
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
