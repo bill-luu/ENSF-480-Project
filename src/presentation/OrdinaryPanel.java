@@ -194,9 +194,7 @@ public class OrdinaryPanel {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				//createLoginPopUp();
-				Assignment assignment_ = uiController.BrowseAssignments(20000).get(0);
-				uiController.GenerateReport(assignment_);
+				createLoginPopUp();
 			}
 		});
 
