@@ -600,6 +600,11 @@ public class ManagerPanel {
     	    		    	}
     	    		    	System.out.println(temp.getBugId_());
     	    		    	String report = ManagerPanel.this.uiController_.GenerateReport(temp);
+    	    		    	if(report == null || report.length() < 1){
+    	    		    		JOptionPane.showMessageDialog(uiController_.getFrame(), "No Assignment exists for this bug!",
+    	    		    				"Error", JOptionPane.WARNING_MESSAGE);
+    	    		    		return;
+    	    		    	}
     	    		    	JOptionPane.showMessageDialog(uiController_.getFrame(), report, "Report", JOptionPane.INFORMATION_MESSAGE);
     	    			}
     	    		});
