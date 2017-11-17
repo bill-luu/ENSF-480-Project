@@ -239,10 +239,12 @@ public class SystemController {
 	 *            The developer account to be removed
 	 */
 	public void RemoveDeveloper(Developer developer_) {
+		Developer db = null;
 		for(Developer d : developerList_){
 			if(d.getUserId_() == developer_.getUserId_())
-				developerList_.remove(d);
+				db = d;
 		}
+		developerList_.remove(db);
 	}
 
 	/**
@@ -252,9 +254,12 @@ public class SystemController {
 	 *            The product to be removed
 	 */
 	public void RemoveProduct(Product product_) {
-		for(Product p : productList_)
+		Product pb = null;
+		for(Product p : productList_){
 			if(p.getProductId_() == product_.getProductId_())
-				productList_.remove(p);
+				pb = p;
+		}
+		productList_.remove(pb);
 	}
 
 	/**
@@ -264,9 +269,12 @@ public class SystemController {
 	 *            The assignment to be removed
 	 */
 	public void RemoveAssignment(Assignment assignment_) {
-		for(Assignment a : assignmentList_)
+		Assignment ab = null;
+		for(Assignment a : assignmentList_){
 			if(a.getAssignmentId_() == assignment_.getAssignmentId_())
-				assignmentList_.remove(a);
+				ab = a;
+		}
+		assignmentList_.remove(ab);
 	}
 
 	/**
