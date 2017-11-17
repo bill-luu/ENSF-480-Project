@@ -355,8 +355,6 @@ public class OrdinaryPanel {
 		for (int i = 0; i < model.size(); i++)
 			productModel.addElement(model.getElementAt(i).split(" ")[1]); 
 		JComboBox<String> products = new JComboBox<String>(productModel);
-		String selectedProduct = model.getElementAt(products.getSelectedIndex());
-		int productID = Integer.parseInt(selectedProduct.split(" ")[0]);
 
 		Box vBox = Box.createVerticalBox();
 		vBox.add(products);
@@ -373,6 +371,11 @@ public class OrdinaryPanel {
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
 		if (selection == JOptionPane.OK_OPTION) {
+			// Get selected product ID
+			String selectedProduct = model.getElementAt(products.getSelectedIndex());
+			int productID = Integer.parseInt(selectedProduct.split(" ")[0]);
+			
+			// Create the new bug
 			Bug b = new Bug();
 			b.setBugId_(uiController_.BrowseBugs().size() + 101);
 			b.setBugTitle_(title.getText());
