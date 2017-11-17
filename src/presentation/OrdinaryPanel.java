@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import data.Assignment;
 import data.Bug;
 import data.Developer;
 import data.Employee;
@@ -44,7 +45,7 @@ import data.Product;
 public class OrdinaryPanel {
 
 	/**
-	 * 
+	 * The JPanel to holding all the components
 	 */
 	private JPanel panel_;
 
@@ -199,7 +200,6 @@ public class OrdinaryPanel {
 
 		// Open submit bug popup when clicking submit bug button
 		submitBugButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				submitBugPopUp();
