@@ -76,10 +76,31 @@ public class SystemController {
 		buildList();
 	}
 
-	/**
+	public Employee loginUser(String login) {
+		Employee logged_in_user = loginController_.validateLogin(login);
+		if (logged_in_user instanceof Manager) {
+			for (Manager m : managerList_) {
+				if (logged_in_user.getUsername_().equals(m.getUsername_())) {
+					logged_in_user = m;
+				}
+			}
+		} else if (logged_in_user instanceof Developer) {
+			for (Developer d : developerList_) {
+				if (logged_in_user.getUsername_().equals(d.getUsername_())) {
+					logged_in_user = d;
+				}
+			}
+		} else {
+			logged_in_user = null;
+		}
+		return logged_in_user;
+	}
+
+	/*
 	 * Reads the databaseContoller for each of the lists
 	 * 
 	 * @param void
+	 * 
 	 * @return
 	 */
 	public void buildList() {

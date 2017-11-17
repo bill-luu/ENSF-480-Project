@@ -1,34 +1,35 @@
 package data;
+
 /**
  * 
  */
 public class Employee {
 
-    /**
-     * Default constructor
-     */
-    public Employee() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public Employee() {
+	}
 
-    /**
-     * The first name of the employee
-     */
-    private String firstName_;
+	/**
+	 * The first name of the employee
+	 */
+	private String firstName_;
 
-    /**
-     * The last name of the employee
-     */
-    private String lastName_;
+	/**
+	 * The last name of the employee
+	 */
+	private String lastName_;
 
-    /**
-     * The username of the employee
-     */
-    private String username_;
-    
-    /**
-     * The user id of the employee
-     */
-    private int userId_;
+	/**
+	 * The username of the employee
+	 */
+	private String username_;
+
+	/**
+	 * The user id of the employee
+	 */
+	private int userId_;
 
 	public String getFirstName_() {
 		return firstName_;
@@ -53,7 +54,7 @@ public class Employee {
 	public void setUserId_(int userId_) {
 		this.userId_ = userId_;
 	}
-	
+
 	public String getUsername_() {
 		return username_;
 	}
@@ -61,7 +62,5 @@ public class Employee {
 	public void setUsername_(String username_) {
 		this.username_ = username_;
 	}
-	
 
-    
 }

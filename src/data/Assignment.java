@@ -1,4 +1,5 @@
 package data;
+
 import java.util.*;
 
 /**
@@ -6,38 +7,37 @@ import java.util.*;
  */
 public class Assignment {
 
-    /**
-     * Default constructor
-     */
-    public Assignment() {
-    }
+	/**
+	 * Default constructor
+	 */
+	public Assignment() {
+	}
 
-    /**
-     * 
-     */
-    private int assignmentId_;
+	/**
+	 * 
+	 */
+	private int assignmentId_;
 
-    /**
-     * The unique ID of the assignment
-     */
-    private int developerId_;
+	/**
+	 * The unique ID of the assignment
+	 */
+	private int developerId_;
 
-    /**
-     * The ID of the developer assigned to the assignment
-     */
-    private int bugId_;
+	/**
+	 * The ID of the developer assigned to the assignment
+	 */
+	private int bugId_;
 
-    /**
-     * The ID of the bug that needs to be fixed
-     */
-    private int managerId_;
+	/**
+	 * The ID of the bug that needs to be fixed
+	 */
+	private int managerId_;
 
-    /**
-     * The ID of the manager that created the assignment
-     */
-    private ArrayList<String> updateMessages_;
+	/**
+	 * The ID of the manager that created the assignment
+	 */
+	private ArrayList<String> updateMessages_;
 
-    
 	public int getAssignmentId_() {
 		return assignmentId_;
 	}
