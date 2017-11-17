@@ -112,8 +112,8 @@ public class OrdinaryPanel {
     	
     	
     	// Temporary components for testing
-	    	JButton demoDevButton = new JButton("Test Dev Screen");
-	    	JButton demoManButton = new JButton("Test Manager Screen");
+	    	JButton demoDevButton = new JButton("D");
+	    	JButton demoManButton = new JButton("M");
 	    	
     	demoDevButton.addActionListener(new ActionListener(){
 			@Override
@@ -196,11 +196,11 @@ public class OrdinaryPanel {
     	});
     	
     	// Temp Components
-//	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
-//	    	panel_.add(demoManButton, gbc);
-//	    	
-//	    	gbc.gridx = 10; gbc.gridy = 10; gbc.gridwidth = 1; gbc.gridheight = 1;
-//	    	panel_.add(demoDevButton, gbc);
+	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
+	    	panel_.add(demoManButton, gbc);
+	    	
+	    	gbc.gridx = 10; gbc.gridy = 5; gbc.gridwidth = 1; gbc.gridheight = 1;
+	    	panel_.add(demoDevButton, gbc);
     	//
     	
     	gbc.weighty = 1;
@@ -320,6 +320,8 @@ public class OrdinaryPanel {
     	for(int i = 0; i < model.size(); i++)
     		productModel.addElement(model.getElementAt(i).split(" ")[1]); // Fill combobox with only product names
     	JComboBox<String> products = new JComboBox<String>(productModel);
+    	String selectedProduct = model.getElementAt(products.getSelectedIndex());
+    	int productID = Integer.parseInt(selectedProduct.split(" ")[0]);
     	
     	Box vBox = Box.createVerticalBox();
     	vBox.add(products);
@@ -342,6 +344,11 @@ public class OrdinaryPanel {
     	
     	if(selection == JOptionPane.OK_OPTION){
     		Bug b = new Bug(); // Populate with entered bug values
+    		b.setBugId_(uiController_.BrowseBugs().size() + 101);
+    		b.setBugTitle_(title.getText());
+    		b.setDescription_(description.getText());
+    		b.setProductId_(productID);
+    		b.setState_(Bug.State.PENDING_APPROVAL);
     		uiController_.SubmitBug(b);
     	}
     }

@@ -93,7 +93,7 @@ public class UiController {
 	 *            The new bug to be submitted to the system
 	 */
 	public void SubmitBug(Bug bug_) {
-		// TODO implement here
+		system_.addToBugList(bug_);
 	}
 
 	/**

@@ -7,7 +7,7 @@ import data.Employee;
 import data.Manager;
 
 /**
- * LoginController is a class that authenicates user logins.
+ * LoginController is a class that authenticates user logins.
  */
 public class LoginController {
 

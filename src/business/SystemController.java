@@ -73,10 +73,10 @@ public class SystemController {
 
 		// Create each of the controllers & set them
 		setDatabaseController_(new DatabaseController());
-		setLoginController_(new LoginController());
 		
 		buildList();
 		
+		setLoginController_(new LoginController(loginInfoList_));
 		setUiController(new UiController(this));
 	}
 
