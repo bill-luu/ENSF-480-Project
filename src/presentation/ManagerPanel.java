@@ -91,7 +91,7 @@ public class ManagerPanel {
 		int count1 = 0;
     	for(int i = 0; i < bugs.size(); i++)
 		{
-			if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+			if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
 			{
 				count1++;
 			}
@@ -101,7 +101,7 @@ public class ManagerPanel {
     	int x = 0;
     	for(int i = 0; i < bugs.size(); i++)
 		{
-			if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+			if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
 			{
 				String temp = "";
 				temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
@@ -194,7 +194,7 @@ public class ManagerPanel {
 				int count = 0;
 				for(int i = 0; i < bugs.size(); i++)
 		    	{
-		    		if(bugs.get(i).getProductId_() == productID && !(bugs.get(i).getState_().equals(Bug.State.ARCHIEVE)))
+		    		if(bugs.get(i).getProductId_() == productID && !(bugs.get(i).getState_().equals(Bug.State.ARCHIVED)))
 		    			count++;
 		    	}
 				bugList = new String[count];
@@ -449,7 +449,7 @@ public class ManagerPanel {
     	    			@Override
     	    			public void actionPerformed(ActionEvent arg0) {
     	    				Bug temp1 = bugs.get(index);
-    	    				temp1.setState_(State.ARCHIEVE);
+    	    				temp1.setState_(State.ARCHIVED);
     	    				ManagerPanel.this.uiController_.UpdateBug(temp1);
     	    		    	bugState.setText(bugs.get(index).getState_().toString());
     	    		    	vBox.remove(archieve);
@@ -457,7 +457,7 @@ public class ManagerPanel {
     	    		    	int count1 = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
     	    					{
     	    						count1++;
     	    					}
@@ -467,7 +467,7 @@ public class ManagerPanel {
     	    		    	int x = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
     	    					{
 	    	    					String temp = "";
 	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
@@ -522,7 +522,7 @@ public class ManagerPanel {
     	    		    	int count1 = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
     	    					{
     	    						count1++;
     	    					}
@@ -532,7 +532,7 @@ public class ManagerPanel {
     	    		    	int x = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
     	    					{
 	    	    					String temp = "";
 	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
@@ -559,7 +559,7 @@ public class ManagerPanel {
     	    		    	int count1 = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
     	    					{
     	    						count1++;
     	    					}
@@ -569,7 +569,7 @@ public class ManagerPanel {
     	    		    	int x = 0;
     	    		    	for(int i = 0; i < bugs.size(); i++)
     	    				{
-    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIEVE))
+    	    					if(!bugs.get(i).getState_().equals(Bug.State.ARCHIVED))
     	    					{
 	    	    					String temp = "";
 	    	    					temp = temp.concat(String.valueOf(bugs.get(i).getBugId_()));
