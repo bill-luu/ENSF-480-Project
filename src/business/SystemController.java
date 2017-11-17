@@ -80,12 +80,16 @@ public class SystemController {
 		buildList();
 
 		setLoginController_(new LoginController(loginInfoList_));
-		
-		
+
 		setLoginController_(new LoginController(loginInfoList_));
 		setUiController(new UiController(this));
 	}
 
+	/**
+	 * Attempt to login a user using a login string in the form "username:password"
+	 * @param login The login credentials received
+	 * @return An employee if successful, null if failed. 
+	 */
 	public Employee loginUser(String login) {
 		Employee logged_in_user = loginController_.validateLogin(login);
 		if (logged_in_user instanceof Manager) {
@@ -108,10 +112,6 @@ public class SystemController {
 
 	/**
 	 * Reads the databaseController for each of the lists
-	 * 
-	 * @param void
-	 * 
-	 * @return
 	 */
 	public void buildList() {
 		managerList_ = databaseController_.readManagerFile();
@@ -230,6 +230,39 @@ public class SystemController {
 		loginInfoList_.add(loginInfoToAdd);
 	}
 
+	/**
+	 * Remove the developer account from the system
+	 * 
+	 * @param developer_
+	 *            The developer account to be removed
+	 */
+	public void RemoveDeveloper(Developer developer_) {
+		developerList_.remove(developer_);
+	}
+
+	/**
+	 * Remove a product from the system
+	 * 
+	 * @param product_
+	 *            The product to be removed
+	 */
+	public void RemoveProduct(Product product_) {
+		productList_.remove(product_);
+	}
+
+	/**
+	 * Remove an assignment from the system
+	 * 
+	 * @param assignment_
+	 *            The assignment to be removed
+	 */
+	public void RemoveAssignment(Assignment assignment_) {
+		assignmentList_.remove(assignment_);
+	}
+
+	/**
+	 * Method that saves all arraylist values to the database text files
+	 */
 	public void save() {
 		databaseController_.writeAssignmentFile(assignmentList_);
 		databaseController_.writeBugFile(bugList_);
@@ -240,10 +273,20 @@ public class SystemController {
 		databaseController_.writeIDFile(idList_);
 	}
 
+	/**
+	 * Method that saves all arraylist values to the database text files on
+	 * shutdown
+	 */
 	public void shutdown() {
 		save();
 	}
 
+	/**
+	 * Update a bug in the buglist
+	 * 
+	 * @param toUpdate
+	 *            The new values for the bug
+	 */
 	public void updateBug(Bug toUpdate) {
 		for (Bug bug : bugList_) {
 			if (toUpdate.getBugId_() == bug.getBugId_()) {
@@ -253,6 +296,12 @@ public class SystemController {
 		}
 	}
 
+	/**
+	 * Update an assignment in the assignemnt list with new values
+	 * 
+	 * @param toUpdate
+	 *            The new values for the assignment
+	 */
 	public void updateAssignment(Assignment toUpdate) {
 		for (Assignment assignment : assignmentList_) {
 			if (toUpdate.getAssignmentId_() == assignment.getAssignmentId_()) {
@@ -262,6 +311,12 @@ public class SystemController {
 		}
 	}
 
+	/**
+	 * Update a product in the product list with new values
+	 * 
+	 * @param toUpdate
+	 *            The new values for the product
+	 */
 	public void updateProduct(Product toUpdate) {
 		for (Product product : productList_) {
 			if (toUpdate.getProductId_() == product.getProductId_()) {
@@ -271,6 +326,12 @@ public class SystemController {
 		}
 	}
 
+	/**
+	 * Update a dev in the dev list with new values
+	 * 
+	 * @param toUpdate
+	 *            The new values for the dev
+	 */
 	public void updateDeveloper(Developer toUpdate) {
 		for (Developer dev : developerList_) {
 			if (toUpdate.getUserId_() == dev.getUserId_()) {
@@ -280,6 +341,12 @@ public class SystemController {
 		}
 	}
 
+	/**
+	 * Update a login in the login list with new values
+	 * 
+	 * @param toUpdate
+	 *            The new values for the login
+	 */
 	public void updateLoginInfo(String userName, String password) {
 		for (String info : loginInfoList_) {
 			if (info.contains(userName + ":")) {
