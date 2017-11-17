@@ -403,7 +403,6 @@ public class DatabaseController {
 				tempString = tempString.concat(" ");
 				tempString = tempString.concat(bugs.get(i).getState_().toString());
 				tempString = tempString.concat(" ");
-				System.out.println(bugs.get(i).getDescription_());
 				tempString = tempString.concat(bugs.get(i).getDescription_());
 				tempString = tempString.concat(" ");
 

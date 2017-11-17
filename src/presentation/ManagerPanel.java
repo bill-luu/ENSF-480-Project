@@ -836,7 +836,6 @@ public class ManagerPanel {
     		a.setManagerId_(ManagerPanel.this.uiController_.getUserLoggedIn().getUserId_());
     		a.setUpdateMessages_(new ArrayList<String>());
     		uiController_.AddAssignment(a);
-    		System.out.println(a.getAssignmentId_());
     		ArrayList<Assignment> assignments = uiController_.BrowseAssignments();
 
     		assignmentList = new String[assignments.size()];
