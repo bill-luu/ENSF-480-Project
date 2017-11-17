@@ -832,6 +832,7 @@ public class ManagerPanel {
     		b.setBugTitle_(title.getText());
     		b.setProductId_(Integer.parseInt(productModel.getElementAt(products2.getSelectedIndex()).split(" ")[0]));
     		b.setState_(Bug.State.PENDING_APPROVAL);
+    		b.setDescription_(description.getText());
     		uiController_.SubmitBug(b);
     		ArrayList<Bug> bugs = uiController_.BrowseBugs();
 
@@ -938,7 +939,6 @@ public class ManagerPanel {
     		a.setManagerId_(ManagerPanel.this.uiController_.getUserLoggedIn().getUserId_());
     		a.setUpdateMessages_(new ArrayList<String>());
     		uiController_.AddAssignment(a);
-    		
     		ArrayList<Assignment> assignments = uiController_.BrowseAssignments();
 
     		assignmentList = new String[assignments.size()];
