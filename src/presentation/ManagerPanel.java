@@ -166,6 +166,11 @@ public class ManagerPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) 
 			{
+				if (productJList.isSelectionEmpty())
+				{
+					return;
+				}
+
 		    	bugList = new String[bugs.size()];
 				String product = productJList.getSelectedValue();
 				String products[] = product.split(" ");
@@ -173,10 +178,21 @@ public class ManagerPanel {
 				
 		    	// Search for corresponding bugs
 				ArrayList<Bug> bugs = uiController.BrowseBugs();
-		    	for(int i = 0; i < bugs.size(); i++)
+				int count = 0;
+				for(int i = 0; i < bugs.size(); i++)
 		    	{
 		    		if(bugs.get(i).getProductId_() == productID)
-		    			bugList[i] = (bugs.get(i).getBugId_() + " " + bugs.get(i).getBugTitle_() + " " + bugs.get(i).getState_());
+		    			count++;
+		    	}
+				bugList = new String[count];
+				int x = 0;
+				for(int i = 0; i < bugs.size(); i++)
+		    	{
+		    		if(bugs.get(i).getProductId_() == productID)
+		    		{
+		    			bugList[x] = (bugs.get(i).getBugId_() + " " + bugs.get(i).getBugTitle_() + " " + bugs.get(i).getState_());
+		    			x++;
+		    		}
 		    	}
 		    	bugJList.setListData(bugList);
 			}
@@ -216,17 +232,32 @@ public class ManagerPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) 
 			{
-				assignmentList = new String[bugs.size()];
+				if (developerJList.isSelectionEmpty())
+				{
+					return;
+				}
+
 				String developer = developerJList.getSelectedValue();
 				String developers[] = developer.split(" ");
 				int developerId = Integer.parseInt(developers[0]);
 				
 		    	// Search for corresponding bugs
 				ArrayList<Assignment> assignments = uiController.BrowseAssignments();
+				int count = 0;
 		    	for(int i = 0; i < assignments.size(); i++)
 		    	{
 		    		if(assignments.get(i).getDeveloperId_()== developerId)
-		    			assignmentList[i] = (String.valueOf(assignments.get(i).getAssignmentId_()));
+		    			count++;
+		    	}
+		    	int x = 0;
+		    	assignmentList = new String[count];
+		    	for(int i = 0; i < assignments.size(); i++)
+		    	{
+		    		if(assignments.get(i).getDeveloperId_()== developerId)
+		    		{
+		    			assignmentList[x] = (String.valueOf(assignments.get(i).getAssignmentId_()));
+		    			x++;
+		    		}
 		    	}
 		    	assignmentJList.setListData(assignmentList);
 			}
@@ -508,14 +539,14 @@ public class ManagerPanel {
 				}
 				JLabel bugId = new JLabel("Bug ID: " + b.getBugId_());
 				vBox.add(bugId);
-				JLabel bugDescription = new JLabel("Bug Description: " + String.valueOf(i) + ": " + b.getDescription_());
+				JLabel bugDescription = new JLabel("Bug Description: " + b.getDescription_());
 				vBox.add(bugDescription);
 			}
 		}
     	
     	assignmentPanel.add(vBox);
     	Object options[] = {"OK"};
-    	JOptionPane.showOptionDialog(null, assignmentPanel, "Inspect Bug", JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+    	JOptionPane.showOptionDialog(null, assignmentPanel, "Inspect Assignment", JOptionPane.OK_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 	}
 
 	/**
@@ -545,7 +576,7 @@ public class ManagerPanel {
     	
     	Object options[] = {"Create", "Cancel"};
     	int selection = JOptionPane.showOptionDialog(null, productPanel, 
-        		"New Bug", 
+        		"New Product", 
         		JOptionPane.OK_CANCEL_OPTION, 
         		JOptionPane.PLAIN_MESSAGE,
         		null,
@@ -563,7 +594,7 @@ public class ManagerPanel {
     		
     		ArrayList<Product> products = uiController_.BrowseProducts();
 
-    		bugList = new String[products.size()];
+    		productList = new String[products.size()];
     		for(int i = 0; i < products.size(); i++)
     		{
     			String temp = "";
@@ -617,7 +648,7 @@ public class ManagerPanel {
     		
     		for(int i = 0; i < loginInfo.size(); i++)
     		{
-    			String uEntered = "man-<" + userName.getText().split(" ")[0];
+    			String uEntered = "dev-<" + userName.getText().split(" ")[0];
     			String username = loginInfo.get(i).split(":")[0];
     			if(uEntered.equals(username))
     			{
@@ -632,7 +663,7 @@ public class ManagerPanel {
     		d.setLastName_(lastName.getText().split(" ")[0]);
     		d.setUsername_(userName.getText());
     		
-    		String lInfo = "man-<" + userName.getText() + ":" + password.getText();
+    		String lInfo = "dev-<" + userName.getText() + ":" + password.getText();
     		
     		ManagerPanel.this.uiController_.getSystem().addToDeveloperList(d, lInfo);
     		
@@ -667,9 +698,8 @@ public class ManagerPanel {
     	
     	// Fill a dropdown menu with all the products
     	DefaultComboBoxModel<String> productModel = new DefaultComboBoxModel<String>();
-    	DefaultListModel<String> model2 = (DefaultListModel<String>) productJList.getModel();
-    	for(int i = 0; i < model2.size(); i++)
-    		productModel.addElement(model2.getElementAt(i).split("    ")[0] +" "+ model2.getElementAt(i).split("    ")[1]); // Fill combobox with only product names
+    	for(int i = 0; i < productList.length; i++)
+    		productModel.addElement(productList[i].split("    ")[0] +" "+ productList[i].split("    ")[1]); // Fill combobox with only product names
     	JComboBox<String> products2 = new JComboBox<String>(productModel);
     	
     	Box vBox = Box.createVerticalBox();
@@ -796,17 +826,16 @@ public class ManagerPanel {
     	if(selection == JOptionPane.OK_OPTION)
     	{
     		Assignment a = new Assignment(); 
-    		//ManagerPanel.this.uiController_.setUserLoggedIn(new Manager());
-    		a.setAssignmentId_(ManagerPanel.this.uiController_.getUserLoggedIn().getUserId_());
-    		a.setBugId_(Integer.parseInt(bugsBox.getElementAt(bugs.getSelectedIndex()).split(" ")[0]));
-    		a.setDeveloperId_(Integer.parseInt(bugsBox.getElementAt(bugs.getSelectedIndex()).split(" ")[0]));
     		a.setAssignmentId_(ManagerPanel.this.uiController_.BrowseAssignments().size() + 1);
-    		
+    		a.setBugId_(Integer.parseInt(bugsBox.getElementAt(bugs.getSelectedIndex()).split(" ")[0]));
+    		a.setDeveloperId_(Integer.parseInt(devBox.getElementAt(devs.getSelectedIndex()).split(" ")[0]));
+    		a.setManagerId_(ManagerPanel.this.uiController_.getUserLoggedIn().getUserId_());
+    		a.setUpdateMessages_(new ArrayList<String>());
     		uiController_.AddAssignment(a);
     		
     		ArrayList<Assignment> assignments = uiController_.BrowseAssignments();
 
-    		bugList = new String[assignments.size()];
+    		assignmentList = new String[assignments.size()];
 	    	for(int i = 0; i < assignments.size(); i++)
 			{
 				String temp = "";
