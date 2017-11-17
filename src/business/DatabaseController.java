@@ -264,8 +264,9 @@ public class DatabaseController {
 		BufferedWriter output;
 		Random rand = new Random();
 		int temp = rand.nextInt() % 20000;
-		String reportName = "Report";
+		String reportName = "./SampleFiles/Report";
 		reportName = reportName.concat(String.valueOf(temp));
+		reportName = reportName.concat(".txt");
 		try {
 			output = new BufferedWriter(new FileWriter(reportName));
 			output.write(report);

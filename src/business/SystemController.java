@@ -226,6 +226,8 @@ public class SystemController {
 	}
 
 	public void addToDeveloperList(Developer devToAdd, String loginInfoToAdd) {
+		Integer nextID = idList_.get("DEVELOPER");
+		devToAdd.setUserId_(nextID);
 		developerList_.add(devToAdd);
 		loginInfoList_.add(loginInfoToAdd);
 	}
@@ -361,5 +363,10 @@ public class SystemController {
 
 	public static void main(String[] args) {
 		SystemController application = new SystemController();
+	}
+	
+	public void writeReport(String report)
+	{
+		this.databaseController_.writeReport(report);
 	}
 }
