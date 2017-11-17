@@ -766,7 +766,7 @@ public class ManagerPanel {
     		d.setLastName_(lastName.getText().split(" ")[0]);
     		d.setUsername_(userName.getText());
     		
-    		String lInfo = "dev-<" + userName.getText() + ":" + password.getText();
+    		String lInfo = "dev-<" + userName.getText() + ":" + password.getText() + ">";
     		
     		ManagerPanel.this.uiController_.getSystem().addToDeveloperList(d, lInfo);
     		
