@@ -194,7 +194,7 @@ public class OrdinaryPanel {
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				createLoginPopUp();
+				createLoginPopUp(loginButton);
 			}
 		});
 
@@ -271,8 +271,9 @@ public class OrdinaryPanel {
 
 	/**
 	 * Create popup for user login
+	 * @param loginButton 
 	 */
-	public void createLoginPopUp() {
+	public void createLoginPopUp(JButton loginButton) {
 		JPanel loginPanel = new JPanel();
 
 		HintTextField usernameEntry = new HintTextField("Username");
@@ -305,6 +306,7 @@ public class OrdinaryPanel {
 				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
+				loginButton.setVisible(false);
 				
 				// Create new ManagerPanel if it doesn't exist
 				if (!uiController_.checkPanelExists("ManagerPanel", viewHolder)) {
@@ -332,7 +334,7 @@ public class OrdinaryPanel {
 				// Get components
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
-
+				loginButton.setVisible(false);
 				// Create new DeveloperPanel if it doesn't exist
 				if (!uiController_.checkPanelExists("DeveloperPanel", viewHolder)) {
 					viewHolder.add(new DeveloperPanel(uiController_).getPanel_(), "DeveloperPanel");
