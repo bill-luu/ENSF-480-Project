@@ -41,6 +41,9 @@ public class SystemController {
 	 */
 	private ArrayList<Product> productList_;
 
+	/**
+	 * A list of usernames and passwords for the company
+	 */
 	private ArrayList<String> loginInfoList_;
 
 	/**
@@ -71,9 +74,10 @@ public class SystemController {
 		// Create each of the controllers & set them
 		setDatabaseController_(new DatabaseController());
 		setLoginController_(new LoginController());
-		setUiController(new UiController());
-
+		
 		buildList();
+		
+		setUiController(new UiController(this));
 	}
 
 	public Employee loginUser(String login) {
