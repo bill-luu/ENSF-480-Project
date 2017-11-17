@@ -228,7 +228,12 @@ public class UiController {
 	 * @return An arraylist of assignments
 	 */
 	public ArrayList<Assignment> BrowseAssignments(int userId_) {
-		return system_.getAssignmentList_();
+		ArrayList<Assignment> assignmentList = new ArrayList<Assignment>();
+		for (Assignment a : system_.getAssignmentList_()) {
+			if (a.getDeveloperId_() == userId_)
+				assignmentList.add(a);
+		}
+		return assignmentList;
 	}
 
 	/**
@@ -345,6 +350,10 @@ public class UiController {
 
 	public void setFrame(JFrame frame_) {
 		this.frame_ = frame_;
+	}
+
+	public void updateAssignment(Assignment a) {
+		getSystem().updateAssignment(a);
 	}
 
 }
