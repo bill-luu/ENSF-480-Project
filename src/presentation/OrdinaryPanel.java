@@ -236,13 +236,13 @@ public class OrdinaryPanel {
 
 		gbc.insets = new Insets(0, 75, 0, 0);
 		gbc.weightx = 1;
-		gbc.gridx = 11;
+		gbc.gridx = 9;
 		gbc.gridy = 0;
-		gbc.gridwidth = 1;
+		gbc.gridwidth = 3;
 		gbc.gridheight = 1;
 		panel_.add(pageSelector, gbc);
 
-		gbc.gridx = 11;
+		gbc.gridx = 10;
 		gbc.gridy = 2;
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
@@ -397,26 +397,36 @@ public class OrdinaryPanel {
 		ArrayList<Bug> bugs = uiController_.BrowseBugs();
 		for (Bug b : bugs) {
 			if (b.getBugId_() == bugID) {
-				JLabel bugTitle = new JLabel("Bug:" + b.getBugTitle_());
-				JLabel bugDescription = new JLabel("Description:" + b.getDescription_());
-				JLabel bugState = new JLabel("Status:" + b.getState_().toString());
+				JLabel title = new JLabel("<HTML><U>Bug</U></HTML>");
+				JLabel bugTitle = new JLabel("Name: " + b.getBugTitle_());
+				JLabel bugid = new JLabel("ID: " + b.getBugId_());
+				JLabel bugDescription = new JLabel("Description: " + b.getDescription_());
+				JLabel bugState = new JLabel("Status: " + b.getState_().toString());
 				ArrayList<Product> productlist = uiController_.BrowseProducts();
 				
 				for (Product p : productlist) {
 					if (p.getProductId_() == b.getProductId_()) {
 						JLabel productTitle = new JLabel("<HTML><U>Product Information</U></HTML>");
-						JLabel productID = new JLabel("" + p.getProductId_());
-						JLabel productName = new JLabel(p.getProductName_());
-						JLabel productDescription = new JLabel(p.getProductDescription());
+						JLabel productID = new JLabel("ID: " + p.getProductId_());
+						JLabel productName = new JLabel("Name: " + p.getProductName_());
+						JLabel productDescription = new JLabel("Description: " + p.getProductDescription());
 						
+						// Set Font
 						Font font = new Font("Calibri", Font.PLAIN, 20);
-						bugTitle.setFont(font); 		productTitle.setFont(new Font("Calibri", Font.PLAIN, 30));
-						productID.setFont(font);		productName.setFont(font);
-						bugDescription.setFont(font); 	productDescription.setFont(font);
+						Font big_underline_font = new Font("Calibri", Font.PLAIN, 30);
+						title.setFont(big_underline_font); 	bugid.setFont(font);
+						bugTitle.setFont(font); 			productTitle.setFont(big_underline_font);
+						productID.setFont(font);			productName.setFont(font);
+						bugDescription.setFont(font); 		productDescription.setFont(font);
 						bugState.setFont(font); 		
 						
+						// Add textfields to parent component
 						Box vBox = Box.createVerticalBox();
+						vBox.add(title);
+						vBox.add(Box.createVerticalStrut(15));
 						vBox.add(bugTitle);
+						vBox.add(Box.createVerticalStrut(15));
+						vBox.add(bugid);
 						vBox.add(Box.createVerticalStrut(15));
 						vBox.add(bugDescription);
 						vBox.add(Box.createVerticalStrut(15));
