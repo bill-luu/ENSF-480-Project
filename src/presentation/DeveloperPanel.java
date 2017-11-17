@@ -301,42 +301,15 @@ public class DeveloperPanel {
 		JScrollPane assignmentDesciptionScroller = new JScrollPane(assignDescriptionList);
 		assignmentDesciptionScroller.setPreferredSize(new Dimension(500, 250));
 		assignmentDescriptionModel.clear();
-		String s = (String) assignmentComboBox.getSelectedItem();
-		int id = Integer.parseInt(s.split(" ")[1]);
-		// Fill with all assignment info
+		setStateBox(assignmentComboBox, assignStateModel, assignmentDescriptionModel);
 
-		for (Assignment a : getUiController_().getSystem().getAssignmentList_()) {
-			if (a.getAssignmentId_() == id) {
-				for (Bug b : getUiController_().getSystem().getBugList_()) {
-					if (b.getBugId_() == a.getBugId_())
-						assignStateModel.setSelectedItem(b.getState_());
-				}
-				for (String message : a.getUpdateMessages_()) {
-					assignmentDescriptionModel.addElement(message);
-				}
-			}
-		}
 
 		assignmentComboBox.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				assignmentDescriptionModel.clear();
-				String s = (String) assignmentComboBox.getSelectedItem();
-				int id = Integer.parseInt(s.split(" ")[1]);
-				// Fill with all assignment info
-
-				for (Assignment a : getUiController_().getSystem().getAssignmentList_()) {
-					if (a.getAssignmentId_() == id) {
-						for (Bug b : getUiController_().getSystem().getBugList_()) {
-							if (b.getBugId_() == a.getBugId_())
-								assignStateModel.setSelectedItem(b.getState_());
-						}
-						for (String message : a.getUpdateMessages_()) {
-							assignmentDescriptionModel.addElement(message);
-						}
-					}
-				}
+				setStateBox(assignmentComboBox, assignStateModel, assignmentDescriptionModel);
 			}
 		});
 
@@ -389,7 +362,22 @@ public class DeveloperPanel {
 		}
 
 	}
-
+	public void setStateBox(JComboBox<String> assignmentComboBox, DefaultComboBoxModel<State> assignStateModel, DefaultListModel<String> assignmentDescriptionModel)
+	{
+		String s = (String) assignmentComboBox.getSelectedItem();
+		int id = Integer.parseInt(s.split(" ")[1]);
+		for (Assignment a : getUiController_().getSystem().getAssignmentList_()) {
+			if (a.getAssignmentId_() == id) {
+				for (Bug b : getUiController_().getSystem().getBugList_()) {
+					if (b.getBugId_() == a.getBugId_())
+						assignStateModel.setSelectedItem(b.getState_());
+				}
+				for (String message : a.getUpdateMessages_()) {
+					assignmentDescriptionModel.addElement(message);
+				}
+			}
+		}
+	}
 	public JPanel getPanel_() {
 		return panel_;
 	}
