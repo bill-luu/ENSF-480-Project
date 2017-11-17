@@ -18,6 +18,7 @@ public class DatabaseController {
 	final String MANAGER_FILE = "./SampleFiles/Managers.txt";
 	final String LOGIN_FILE = "./SampleFiles/Login.txt";
 	final String BUG_FILE = "./SampleFiles/Bugs.txt";
+	final String ID_FILE = "./SampleFiles/IDs.txt";
 
 	public ArrayList<Product> readProductFile() {
 		ArrayList<Product> tempProductList = new ArrayList<Product>();
@@ -228,6 +229,36 @@ public class DatabaseController {
 		}
 		return tempBugsList;
 	}
+	
+	public HashMap<String, Integer> readIDFile() {
+		HashMap<String, Integer> idList = new HashMap<String, Integer>();
+		BufferedReader input;
+		try {
+			input = new BufferedReader(new FileReader(ID_FILE));
+			String tempString = "";
+			while ((tempString = input.readLine()) != null && tempString.length() != 0) {
+				String id_owner = null;
+				Integer id = null;
+				StringTokenizer tokens = new StringTokenizer(tempString);
+				int i = 0;
+				while (tokens.hasMoreTokens()) {
+					if (i == 0) {
+						id_owner = tokens.nextToken();
+					} else if (i == 1) {
+						id = Integer.parseInt(tokens.nextToken());
+					}
+					i++;
+				}
+				idList.put(id_owner, id);
+			}
+			input.close();
+		} catch (IOException | NullPointerException e) {
+			System.out.println("Error reading the products file.");
+			System.out.println(e.getMessage());
+			return null;
+		}
+		return idList;
+	}
 
 	public void writeReport(String report) {
 		BufferedWriter output;
@@ -381,6 +412,23 @@ public class DatabaseController {
 			output.close();
 		} catch (IOException | NullPointerException e) {
 			System.out.println("Error writing the bugs file.");
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void writeIDFile(HashMap<String, Integer> idList) {
+		BufferedWriter output;
+		try {
+			output = new BufferedWriter(new FileWriter(ID_FILE));
+			Iterator it = idList.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        output.write(pair.getKey() + " " + pair.getValue());
+		        output.newLine();
+		    }
+			output.close();
+		} catch (IOException | NullPointerException e) {
+			System.out.println("Error writing the id file.");
 			System.out.println(e.getMessage());
 		}
 	}
