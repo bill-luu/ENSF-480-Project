@@ -226,6 +226,8 @@ public class SystemController {
 	}
 
 	public void addToDeveloperList(Developer devToAdd, String loginInfoToAdd) {
+		Integer nextID = idList_.get("DEVELOPER");
+		devToAdd.setUserId_(nextID);
 		developerList_.add(devToAdd);
 		loginInfoList_.add(loginInfoToAdd);
 	}
@@ -237,7 +239,10 @@ public class SystemController {
 	 *            The developer account to be removed
 	 */
 	public void RemoveDeveloper(Developer developer_) {
-		developerList_.remove(developer_);
+		for(Developer d : developerList_){
+			if(d.getUserId_() == developer_.getUserId_())
+				developerList_.remove(d);
+		}
 	}
 
 	/**
@@ -247,7 +252,9 @@ public class SystemController {
 	 *            The product to be removed
 	 */
 	public void RemoveProduct(Product product_) {
-		productList_.remove(product_);
+		for(Product p : productList_)
+			if(p.getProductId_() == product_.getProductId_())
+				productList_.remove(p);
 	}
 
 	/**
@@ -257,7 +264,9 @@ public class SystemController {
 	 *            The assignment to be removed
 	 */
 	public void RemoveAssignment(Assignment assignment_) {
-		assignmentList_.remove(assignment_);
+		for(Assignment a : assignmentList_)
+			if(a.getAssignmentId_() == assignment_.getAssignmentId_())
+				assignmentList_.remove(a);
 	}
 
 	/**
