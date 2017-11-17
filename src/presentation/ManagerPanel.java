@@ -698,8 +698,9 @@ public class ManagerPanel {
     	
     	// Fill a dropdown menu with all the products
     	DefaultComboBoxModel<String> productModel = new DefaultComboBoxModel<String>();
-    	for(int i = 0; i < productList.length; i++)
-    		productModel.addElement(productList[i].split("    ")[0] +" "+ productList[i].split("    ")[1]); // Fill combobox with only product names
+    	ArrayList<Product> proL = ManagerPanel.this.uiController_.BrowseProducts();
+    	for(int i = 0; i < proL.size(); i++)
+    		productModel.addElement(proL.get(i).getProductId_()+" "+ proL.get(i).getProductName_()); // Fill combobox with only product names
     	JComboBox<String> products2 = new JComboBox<String>(productModel);
     	
     	Box vBox = Box.createVerticalBox();
@@ -728,6 +729,7 @@ public class ManagerPanel {
     		b.setBugTitle_(title.getText());
     		b.setProductId_(Integer.parseInt(productModel.getElementAt(products2.getSelectedIndex()).split(" ")[0]));
     		b.setState_(Bug.State.PENDING_APPROVAL);
+    		b.setDescription_(description.getText());
     		uiController_.SubmitBug(b);
     		ArrayList<Bug> bugs = uiController_.BrowseBugs();
 
@@ -798,13 +800,15 @@ public class ManagerPanel {
     	
     	// Fill a dropdown menu with all the products    	
     	DefaultComboBoxModel<String> bugsBox = new DefaultComboBoxModel<String>();
-    	for(int i = 0; i < bugList.length; i++)
-    		bugsBox.addElement(bugList[i].split("    ")[0] +" "+ bugList[i].split("    ")[1]); // Fill combobox with only product names
+    	ArrayList<Bug> bugL = ManagerPanel.this.uiController_.BrowseBugs();
+    	for(int i = 0; i < bugL.size(); i++)
+    		bugsBox.addElement(bugL.get(i).getBugId_() +" " + bugL.get(i).getBugTitle_()); // Fill combobox with only product names
     	JComboBox<String> bugs = new JComboBox<String>(bugsBox);
     	
     	DefaultComboBoxModel<String> devBox = new DefaultComboBoxModel<String>();
-    	for(int i = 0; i < developerList.length; i++)
-    		devBox.addElement(developerList[i].split("    ")[0] +" "+ developerList[i].split("    ")[1]); // Fill combobox with only product names
+    	ArrayList<Developer> devL = ManagerPanel.this.uiController_.BrowseDevelopers();
+    	for(int i = 0; i < devL.size(); i++)
+    		devBox.addElement(devL.get(i).getUserId_() +" "+ devL.get(i).getFirstName_()); // Fill combobox with only product names
     	JComboBox<String> devs = new JComboBox<String>(devBox);
 
     	Box vBox = Box.createVerticalBox();
@@ -832,7 +836,6 @@ public class ManagerPanel {
     		a.setManagerId_(ManagerPanel.this.uiController_.getUserLoggedIn().getUserId_());
     		a.setUpdateMessages_(new ArrayList<String>());
     		uiController_.AddAssignment(a);
-    		
     		ArrayList<Assignment> assignments = uiController_.BrowseAssignments();
 
     		assignmentList = new String[assignments.size()];

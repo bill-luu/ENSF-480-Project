@@ -213,7 +213,7 @@ public class SystemController {
 
 	public void addToAssignmentList(Assignment assToAdd) {
 		Integer nextID = idList_.get("ASSIGNMENT");
-		assToAdd.setBugId_(nextID);
+		assToAdd.setAssignmentId_(nextID);
 		assignmentList_.add(assToAdd);
 		idList_.put("ASSIGNMENT", nextID + 1);
 	}

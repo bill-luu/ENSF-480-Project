@@ -412,6 +412,7 @@ public class DatabaseController {
 			output.close();
 		} catch (IOException | NullPointerException e) {
 			System.out.println("Error writing the bugs file.");
+			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
 	}
