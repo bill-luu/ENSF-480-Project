@@ -410,21 +410,24 @@ public class ManagerPanel {
 		JPanel bugPanel = new JPanel();
 
 		ArrayList<Bug> bugs = uiController_.BrowseBugs();
-	
-		JLabel bugTitle = new JLabel(bugs.get(index).getBugTitle_());
-    	JLabel bugProduct = new JLabel("" + bugs.get(index).getProductId_());
-    	JLabel bugDescription = new JLabel(bugs.get(index).getDescription_());
-    	JLabel bugState = new JLabel(bugs.get(index).getState_().toString());
+		
+		JLabel bugLabel = new JLabel("<HTML><b>Bug");
+		JLabel bugTitle = new JLabel("Bug Title: " + bugs.get(index).getBugTitle_());
+    	JLabel bugProduct = new JLabel("Product:" + bugs.get(index).getProductId_());
+    	JLabel bugDescription = new JLabel("Description: " + bugs.get(index).getDescription_());
+    	JLabel bugState = new JLabel("State: " + bugs.get(index).getState_().toString());
     	
     	ArrayList<Product> productlist = uiController_.BrowseProducts();
     	for(Product p : productlist){
     		if(p.getProductId_() == bugs.get(index).getProductId_()){
-    	    	JLabel productTitle = new JLabel("Product");
-    	    	JLabel productID = new JLabel("" + p.getProductId_());
-    	    	JLabel productName = new JLabel(p.getProductName_());
-    	    	JLabel productDescription = new JLabel(p.getProductDescription());
+    	    	JLabel productTitle = new JLabel("<HTML><b>Product");
+    	    	JLabel productID = new JLabel("Product ID: " + p.getProductId_());
+    	    	JLabel productName = new JLabel("Name: " + p.getProductName_());
+    	    	JLabel productDescription = new JLabel("Description: " + p.getProductDescription());
     	    	
     	    	Box vBox = Box.createVerticalBox();
+    	    	vBox.add(bugLabel);
+    	    	vBox.add(Box.createVerticalStrut(15));
     	    	vBox.add(bugTitle);
     	    	vBox.add(Box.createVerticalStrut(15));
     	    	vBox.add(bugProduct);
