@@ -266,4 +266,9 @@ public class UiController {
 		this.frame_ = frame_;
 	}
 
+	public void updateAssignment(Assignment a) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

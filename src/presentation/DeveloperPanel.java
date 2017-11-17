@@ -28,9 +28,9 @@ import javax.swing.event.ListSelectionListener;
 
 import data.Assignment;
 import data.Bug;
+import data.Bug.State;
 import data.Manager;
 import data.Product;
-import presentation.OrdinaryPanel.HintTextField;
 
 /**
  * 
@@ -58,95 +58,81 @@ public class DeveloperPanel {
 	private JList<String> assignInfoList;
 
 	/**
-	 * The JList display for bugs
-	 */
-	private JList<String> buglist;
-
-	/**
 	 * 
 	 * @param uiController
 	 */
 	public DeveloperPanel(UiController uiController) {
 		this.uiController_ = uiController;
-    	panel_ = new JPanel();
-    	panel_.setLayout(new GridBagLayout());
-    	panel_.setName("DeveloperPanel");
-    	
-    	Font titlefont = new Font("Calibri", Font.BOLD, 40);
-    	
-    	GridBagConstraints gbc = new GridBagConstraints();
-    	JLabel title = new JLabel("Assignments");
-    	title.setFont(titlefont);
-    	
-    	JLabel title2 = new JLabel("Info");
-    	title2.setFont(titlefont);
-    	
-    	JButton logoutButton = new JButton("Log Out");
-    	JButton submitBugButton = new JButton("Report Bug");
-    	
-    	String[] pages = {"Assignments", "Bugs"};
-    	DefaultComboBoxModel<String> pageModel = new DefaultComboBoxModel<String>(pages);
-    	JComboBox<String> pageSelector = new JComboBox<String>(pageModel);
-    	pageSelector.addActionListener(new ActionListener() {
+		panel_ = new JPanel();
+		panel_.setLayout(new GridBagLayout());
+		panel_.setName("DeveloperPanel");
+
+		Font titlefont = new Font("Calibri", Font.BOLD, 40);
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		JLabel title = new JLabel("Assignments");
+		title.setFont(titlefont);
+
+		JLabel title2 = new JLabel("Info");
+		title2.setFont(titlefont);
+
+		JButton logoutButton = new JButton("Log Out");
+		JButton updateAssignmentButton = new JButton("Update");
+
+		String[] pages = { "Assignments", "Bugs" };
+		DefaultComboBoxModel<String> pageModel = new DefaultComboBoxModel<String>(pages);
+		JComboBox<String> pageSelector = new JComboBox<String>(pageModel);
+		pageSelector.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				if(pageSelector.getSelectedItem().equals("Bugs"))
-				{
-					//Switch to Ordinary panel
+				if (pageSelector.getSelectedItem().equals("Bugs")) {
+					// Switch to Ordinary panel
 					JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 					CardLayout layout = (CardLayout) viewHolder.getLayout();
 					layout.show(viewHolder, "OrdinaryPanel");
 				}
-				
+
 			}
-    		
-    	});
-    	
-    	
-    	
-    	ArrayList<Assignment> assignments = uiController.BrowseAssignments(uiController_.getUserLoggedIn().getUserId_());
-	    	
-    	DefaultListModel<String> assignmentModel = new DefaultListModel<String>();
-    	
-    	for(Assignment a : assignments)
-    		assignmentModel.addElement(a.getAssignmentId_() + "");
-    	
-    	
-    	assignList = new JList<String>(assignmentModel);
-    	    	
-    	JScrollPane assignmentScoller = new JScrollPane(assignList);
-    	assignmentScoller.setPreferredSize(new Dimension(200, 525));
-    	
-    	ArrayList<String> assignmentInfo;
-//    	assignmentInfo
-    	
-    	DefaultListModel<String> assignmentInfoModel = new DefaultListModel<String>();
-    	
-    	
-    	
-    	assignInfoList = new JList<String>(assignmentInfoModel);
-    	    	
-    	JScrollPane assignmentInfoScroller = new JScrollPane(assignInfoList);
-    	assignmentInfoScroller.setPreferredSize(new Dimension(200, 525));
-    	
-    	
-    	// Temporary components for testing
-	    	JButton demoDevButton = new JButton("Test Dev Screen");
-	    	JButton demoManButton = new JButton("Test Manager Screen");
-	    	
-    	demoDevButton.addActionListener(new ActionListener(){
+
+		});
+
+		ArrayList<Assignment> assignments = uiController
+				.BrowseAssignments(uiController_.getUserLoggedIn().getUserId_());
+
+		DefaultListModel<String> assignmentModel = new DefaultListModel<String>();
+
+		for (Assignment a : assignments)
+			assignmentModel.addElement(a.getAssignmentId_() + "");
+
+		assignList = new JList<String>(assignmentModel);
+
+		JScrollPane assignmentScoller = new JScrollPane(assignList);
+		assignmentScoller.setPreferredSize(new Dimension(200, 525));
+
+		DefaultListModel<String> assignmentInfoModel = new DefaultListModel<String>();
+
+		assignInfoList = new JList<String>(assignmentInfoModel);
+
+		JScrollPane assignmentInfoScroller = new JScrollPane(assignInfoList);
+		assignmentInfoScroller.setPreferredSize(new Dimension(200, 525));
+
+		// Temporary components for testing
+		JButton demoDevButton = new JButton("Test Dev Screen");
+		JButton demoManButton = new JButton("Test Manager Screen");
+
+		demoDevButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// Get components
-				JPanel viewHolder = (JPanel)(uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout)viewHolder.getLayout();
-				
+				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout) viewHolder.getLayout();
+
 				// Create new DeveloperPanel if it doesn't exist
-				if(! uiController.checkPanelExists("DeveloperPanel", viewHolder)){
+				if (!uiController.checkPanelExists("DeveloperPanel", viewHolder)) {
 					viewHolder.add(new DeveloperPanel(uiController).getPanel_(), "DeveloperPanel");
 				}
-				
+
 				// Change view to developer panel
 				layout.show(viewHolder, "DeveloperPanel");
 			}
@@ -167,25 +153,11 @@ public class DeveloperPanel {
 				// Change view to manager panel
 				layout.show(viewHolder, "ManagerPanel");
 			}
-	    	});
-    	// End temporary components
-	    
-	    // Open Popup when clicking on list
-	  //   buglist.addListSelectionListener(new ListSelectionListener(){
+		});
+		// End temporary components
 
-			// @Override
-			// public void valueChanged(ListSelectionEvent e) {
-			// 	inspectBugPopUp();
-			// }
-
-			// private void inspectBugPopUp() {
-			// 	// TODO Auto-generated method stub
-				
-			// }
-	  //   });
-	    
-	    // Open Popup when clicking on list
-	    assignList.addListSelectionListener(new ListSelectionListener(){
+		// Open Popup when clicking on list
+		assignList.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -193,29 +165,21 @@ public class DeveloperPanel {
 				String assign = assignList.getSelectedValue();
 				String assigns[] = assign.split(" ");
 				int assignID = Integer.parseInt(assigns[0]);
-				ArrayList<Assignment> assignments = uiController.BrowseAssignments(uiController_.getUserLoggedIn().getUserId_());
-				for(Assignment a : assignments)
-				{
-					if(a.getAssignmentId_() == assignID)
-					{
+				ArrayList<Assignment> assignments = uiController
+						.BrowseAssignments(uiController_.getUserLoggedIn().getUserId_());
+				for (Assignment a : assignments) {
+					if (a.getAssignmentId_() == assignID) {
 						assignmentInfoModel.addElement("Assignment ID: " + a.getAssignmentId_());
-						for(Manager b : uiController_.getSystem().getManagerList_())
-						{
-							if(b.getUserId_() == a.getManagerId_())
-							{
+						for (Manager b : uiController_.getSystem().getManagerList_()) {
+							if (b.getUserId_() == a.getManagerId_()) {
 								assignmentInfoModel.addElement("Manager: " + b.getUsername_());
 							}
 						}
-						
-						
-						for(Bug b : uiController_.getSystem().getBugList_())
-						{
-							if( b.getBugId_() == a.getBugId_())
-							{
-								for(Product p : uiController_.getSystem().getProductList_())
-								{
-									if(b.getProductId_() == p.getProductId_())
-									{
+
+						for (Bug b : uiController_.getSystem().getBugList_()) {
+							if (b.getBugId_() == a.getBugId_()) {
+								for (Product p : uiController_.getSystem().getProductList_()) {
+									if (b.getProductId_() == p.getProductId_()) {
 										assignmentInfoModel.addElement("Product: " + p.getProductName_());
 										assignmentInfoModel.addElement("Bug ID: " + a.getBugId_());
 									}
@@ -227,149 +191,175 @@ public class DeveloperPanel {
 					}
 				}
 			}
-	    });
-	    
-	    // Open login popup when clicking login button
-    	logoutButton.addActionListener(new ActionListener(){
+		});
+
+		// Open login popup when clicking login button
+		logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				createLoginPopUp();
 			}
 
 			private void createLoginPopUp() {
-				// TODO Auto-generated method stub
-				
+				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
+				CardLayout layout = (CardLayout) viewHolder.getLayout();
+				layout.show(viewHolder, "OrdinaryPanel");
+
 			}
-    	});
-    	
-    	// Open submit bug popup when clicking submit bug button
-    	 submitBugButton.addActionListener(new ActionListener(){
+		});
+
+		// Open submit bug popup when clicking submit bug button
+		updateAssignmentButton.addActionListener(new ActionListener() {
 
 			// @Override
-			 public void actionPerformed(ActionEvent arg0) {
-				 updateAssignmentPopUp();
-			 }
+			public void actionPerformed(ActionEvent arg0) {
+				updateAssignmentPopUp();
+			}
+		});
 
-			 private void submitBugPopUp() {
-				 
-			 	// TODO Auto-generated method stub
-				
-			 }
-     	});
-    	
-    	// Temp Components
-//	    	gbc.gridx = 10; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
-//	    	panel_.add(demoManButton, gbc);
-//	    	
-//    	gbc.gridx = 10; gbc.gridy = 10; gbc.gridwidth = 1; gbc.gridheight = 1;
-	//    	panel_.add(demoDevButton, gbc);
-    	//
-    	
-    	gbc.weighty = 1;
-    	gbc.insets = new Insets(20,0,0,0);
-    	gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
-    	panel_.add(title, gbc);
-    	
-    	gbc.gridx = 5; gbc.gridy = 0; gbc.gridwidth = 4; gbc.gridheight = 1;
-    	panel_.add(title2, gbc);
-    	
-    	gbc.insets = new Insets(0, 75, 0, 0);
-    	gbc.weightx = 1;
-    	gbc.gridx = 11; gbc.gridy = 0; gbc.gridwidth = 1; gbc.gridheight = 1;
-    	panel_.add(pageSelector, gbc);
-    	
-    	gbc.gridx = 11; gbc.gridy = 2; gbc.gridwidth = 1; gbc.gridheight = 1;
-    	panel_.add(logoutButton, gbc);
-    	
-    	gbc.insets = new Insets(0,0,0,0);
-    	gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
-    	panel_.add(assignmentScoller, gbc);
-	    	
-	   	gbc.gridx = 5; gbc.gridy = 3; gbc.gridwidth = 4; gbc.gridheight = 6;
-	   	panel_.add(assignmentInfoScroller, gbc);
-    	
-    	gbc.fill = GridBagConstraints.HORIZONTAL;
-    	gbc.gridx = 4; gbc.gridy = 9; gbc.gridwidth = 1; gbc.gridheight = 1;
-    	panel_.add(submitBugButton, gbc);
-//		this.uiController_ = uiController;
-//		this.panel_ = new JPanel();
-//		panel_.setName("DeveloperPanel");
-//
-//		JButton demoBackButton = new JButton("Logout");
-//
-//		demoBackButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
-//				CardLayout layout = (CardLayout) viewHolder.getLayout();
-//				layout.show(viewHolder, "OrdinaryPanel");
-//			}
-//		});
-//
-//		panel_.add(new JLabel("Developer"));
-//		panel_.add(demoBackButton);
+		gbc.weighty = 1;
+		gbc.insets = new Insets(20, 0, 0, 0);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 4;
+		gbc.gridheight = 1;
+		panel_.add(title, gbc);
+
+		gbc.gridx = 5;
+		gbc.gridy = 0;
+		gbc.gridwidth = 4;
+		gbc.gridheight = 1;
+		panel_.add(title2, gbc);
+
+		gbc.insets = new Insets(0, 75, 0, 0);
+		gbc.weightx = 1;
+		gbc.gridx = 11;
+		gbc.gridy = 0;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		panel_.add(pageSelector, gbc);
+
+		gbc.gridx = 11;
+		gbc.gridy = 2;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		panel_.add(logoutButton, gbc);
+
+		gbc.insets = new Insets(0, 0, 0, 0);
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.gridwidth = 4;
+		gbc.gridheight = 6;
+		panel_.add(assignmentScoller, gbc);
+
+		gbc.gridx = 5;
+		gbc.gridy = 3;
+		gbc.gridwidth = 4;
+		gbc.gridheight = 6;
+		panel_.add(assignmentInfoScroller, gbc);
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 4;
+		gbc.gridy = 9;
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+		panel_.add(updateAssignmentButton, gbc);
 	}
-	
 
 	/**
 	 * @param void
 	 * @return
 	 */
 	public void updateAssignmentPopUp() {
-		// TODO implement here
-		JPanel bugPanel = new JPanel();
-		
-		JTextField title = new JTextField("Text");
-		//OrdinaryPanel.HintTextField title = new OrdinaryPanel.HintTextField("Enter a bug title here");
+		JPanel updatePanel = new JPanel();
+
+		JTextField title = new JTextField("New Message");
 
 		JTextArea description = new JTextArea();
 		description.setPreferredSize(new Dimension(500, 250));
 		description.setBorder(BorderFactory.createEtchedBorder());
 		description.setLineWrap(true);
 
-		// Fill a dropdown menu with all the products
+		// Fill a dropdown menu with all the assignment
 		DefaultComboBoxModel<String> assignModel = new DefaultComboBoxModel<String>();
 		DefaultListModel<String> model = (DefaultListModel<String>) assignList.getModel();
-//		
-//		// Fill combobox with only product names
+
+		// // Fill combobox with only assignment names
 		for (int i = 0; i < model.size(); i++)
-			assignModel.addElement("Assignment: " + model.getElementAt(i)); 
-		JComboBox<String> assignments = new JComboBox<String>(assignModel);
-//		String selectedProduct = model.getElementAt(products.getSelectedIndex());
-//		int productID = Integer.parseInt(selectedProduct.split(" ")[0]);
+			assignModel.addElement("Assignment: " + model.getElementAt(i));
+		JComboBox<String> assignmentComboBox = new JComboBox<String>(assignModel);
+
+		// Fill a dropdown menu with all the states
+		State[] states = { State.PENDING_APPROVAL, State.AWAITING_ASSIGNMENT, State.FIXED, State.IN_PROGRESS,
+				State.REJECTED };
+		DefaultComboBoxModel<State> assignStateModel = new DefaultComboBoxModel<State>(states);
+		assignStateModel.setSelectedItem(State.PENDING_APPROVAL);
+		JComboBox<State> stateComboBox = new JComboBox<State>(assignStateModel);
+
+		DefaultListModel<String> assignmentDescriptionModel = new DefaultListModel<String>();
+		JList assignDescriptionList = new JList<String>(assignmentDescriptionModel);
+
+		JScrollPane assignmentDesciptionScroller = new JScrollPane(assignDescriptionList);
+		assignmentDesciptionScroller.setPreferredSize(new Dimension(500, 250));
+
+		assignmentComboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				assignmentDescriptionModel.clear();
+				String s = (String) assignmentComboBox.getSelectedItem();
+				int id = Integer.parseInt(s.split(" ")[1]);
+				// Fill with all assignment info
+
+				for (Assignment a : getUiController_().getSystem().getAssignmentList_()) {
+					if (a.getAssignmentId_() == id) {
+						for (Bug b : getUiController_().getSystem().getBugList_()) {
+							if (b.getBugId_() == a.getBugId_())
+								assignStateModel.setSelectedItem(b.getState_());
+						}
+						for (String message : a.getUpdateMessages_()) {
+							assignmentDescriptionModel.addElement(message);
+						}
+					}
+				}
+			}
+
+		});
 
 		Box vBox = Box.createVerticalBox();
-		vBox.add(assignments);
+		vBox.add(assignmentComboBox);
 		vBox.add(Box.createVerticalStrut(20));
+		vBox.add(stateComboBox);
 		vBox.add(title);
 		vBox.add(Box.createVerticalStrut(20));
-		vBox.add(description);
+		vBox.add(assignmentDesciptionScroller);
 		vBox.add(Box.createVerticalStrut(20));
 
-		bugPanel.add(vBox);
+		updatePanel.add(vBox);
 
-		Object options[] = { "Submit Bug", "Cancel" };
-		int selection = JOptionPane.showOptionDialog(null, bugPanel, "Update Assignment", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		Object options[] = { "Submit Update", "Cancel" };
+		int selection = JOptionPane.showOptionDialog(null, updatePanel, "Update Assignment",
+				JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 
 		if (selection == JOptionPane.OK_OPTION) {
-			Bug b = new Bug();
-			b.setBugId_(uiController_.BrowseBugs().size() + 101);
-			b.setBugTitle_(title.getText());
-			b.setDescription_(description.getText());
-		//	b.setProductId_(productID);
-			b.setState_(Bug.State.PENDING_APPROVAL);
-			uiController_.SubmitBug(b);
-		}
-	
-	}
+			Assignment a = new Assignment();
 
-	/**
-	 * @param void
-	 * @return
-	 */
-	public void reportFixPopUp() {
-		// TODO implement here
+			String s = (String) assignmentComboBox.getSelectedItem();
+			a.setAssignmentId_(Integer.parseInt(s.split(" ")[1]));
+			for (Assignment assign : uiController_.getSystem().getAssignmentList_()) {
+				if (assign.getAssignmentId_() == a.getAssignmentId_()) {
+					a.setBugId_(assign.getBugId_());
+					ArrayList<String> updates = new ArrayList<String>();
+					updates = assign.getUpdateMessages_();
+					updates.add(title.getText());
+					a.setUpdateMessages_(updates);
+					a.setDeveloperId_(assign.getDeveloperId_());
+					a.setManagerId_(assign.getManagerId_());
+					uiController_.updateAssignment(a);
+				}
+			}
+		}
+
 	}
 
 	public JPanel getPanel_() {
