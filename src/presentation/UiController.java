@@ -84,7 +84,7 @@ public class UiController {
     	layout.show(viewHolder, "OrdinaryPanel");
     	
     	frame_.add(viewHolder);
-    	frame_.setSize(700, 700);
+    	frame_.setSize(800, 800);
     	frame_.setResizable(false);
     	frame_.setVisible(true);
     	
