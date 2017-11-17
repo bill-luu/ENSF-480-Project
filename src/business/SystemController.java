@@ -226,6 +226,8 @@ public class SystemController {
 	}
 
 	public void addToDeveloperList(Developer devToAdd, String loginInfoToAdd) {
+		Integer nextID = idList_.get("DEVELOPER");
+		devToAdd.setUserId_(nextID);
 		developerList_.add(devToAdd);
 		loginInfoList_.add(loginInfoToAdd);
 	}
