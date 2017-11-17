@@ -44,15 +44,6 @@ public class Bug {
 	 */
 	private String description_;
 
-	/**
-	 * @param void
-	 * @return
-	 */
-	public String extractKeywords() {
-		// TODO implement here
-		return null;
-	}
-
 	public int getBugId_() {
 		return bugId_;
 	}

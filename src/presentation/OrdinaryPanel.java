@@ -105,10 +105,10 @@ public class OrdinaryPanel {
     	buglist = new JList<String>(bugModel);
     	
     	JScrollPane bugScroller = new JScrollPane(buglist);
-    	bugScroller.setPreferredSize(new Dimension(150, 525));
+    	bugScroller.setPreferredSize(new Dimension(200, 525));
     	
     	JScrollPane productScroller = new JScrollPane(productlist);
-    	productScroller.setPreferredSize(new Dimension(150, 525));
+    	productScroller.setPreferredSize(new Dimension(200, 525));
     	
     	
     	// Temporary components for testing
@@ -351,15 +351,17 @@ public class OrdinaryPanel {
      */
     public void inspectBugPopUp() {
     	JPanel bugPanel = new JPanel();
+    	if(buglist.isSelectionEmpty())
+    		return;
+    	
     	int bugID = Integer.parseInt(buglist.getSelectedValue().split(" ")[0]); // Separate bugid from the rest of the string
-    	System.out.println(bugID);
     	ArrayList<Bug> bugs = uiController_.BrowseBugs();
     	for(Bug b : bugs){
     		if(b.getBugId_() == bugID){
     			JLabel bugTitle = new JLabel(b.getBugTitle_());
     	    	JLabel bugProduct = new JLabel("" + b.getProductId_());
     	    	JLabel bugDescription = new JLabel(b.getDescription_());
-    	    	JLabel bugState = new JLabel("Default Status"); // TODO: b.getState_().toString()
+    	    	JLabel bugState = new JLabel(b.getState_().toString());
     	    	
     	    	ArrayList<Product> productlist = uiController_.BrowseProducts();
     	    	for(Product p : productlist){
