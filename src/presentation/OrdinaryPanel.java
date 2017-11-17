@@ -123,45 +123,6 @@ public class OrdinaryPanel {
 		JScrollPane productScroller = new JScrollPane(productlist);
 		productScroller.setPreferredSize(new Dimension(200, 525));
 
-		// Temporary components for testing
-		JButton demoDevButton = new JButton("D");
-		JButton demoManButton = new JButton("M");
-
-		demoDevButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// Get components
-				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout) viewHolder.getLayout();
-
-				// Create new DeveloperPanel if it doesn't exist
-				if (!uiController.checkPanelExists("DeveloperPanel", viewHolder)) {
-					viewHolder.add(new DeveloperPanel(uiController).getPanel_(), "DeveloperPanel");
-				}
-
-				// Change view to developer panel
-				layout.show(viewHolder, "DeveloperPanel");
-			}
-		});
-
-		demoManButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// Get components
-				JPanel viewHolder = (JPanel) (uiController.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout) viewHolder.getLayout();
-
-				// Create new ManagerPanel if it doesn't exist
-				if (!uiController.checkPanelExists("ManagerPanel", viewHolder)) {
-					viewHolder.add(new ManagerPanel(uiController).getPanel_(), "ManagerPanel");
-				}
-
-				// Change view to manager panel
-				layout.show(viewHolder, "ManagerPanel");
-			}
-		});
-		// End temporary components
-
 		// Open Popup when clicking on list
 		buglist.addListSelectionListener(new ListSelectionListener() {
 
@@ -205,21 +166,7 @@ public class OrdinaryPanel {
 				submitBugPopUp();
 			}
 		});
-
-		// Temp Components
-		gbc.gridx = 10;
-		gbc.gridy = 9;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		panel_.add(demoManButton, gbc);
-
-		gbc.gridx = 10;
-		gbc.gridy = 5;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		panel_.add(demoDevButton, gbc);
-		//
-
+		
 		gbc.weighty = 1;
 		gbc.insets = new Insets(20, 0, 0, 0);
 		gbc.gridx = 0;
