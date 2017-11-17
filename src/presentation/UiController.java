@@ -63,6 +63,7 @@ public class UiController {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				system_.save();
+				System.exit(0);
 			}
     	});
     }
@@ -112,7 +113,7 @@ public class UiController {
 	 *            The bug to be updated in the system
 	 */
 	public void UpdateBug(Bug bug_) {
-		// TODO implement here
+		system_.updateBug(bug_);
 	}
 
 	/**
@@ -120,7 +121,8 @@ public class UiController {
 	 *            The bug to be approved in the system
 	 */
 	public void ApproveBug(Bug bug_) {
-		// TODO implement here
+		bug_.setState_(Bug.State.AWAITING_ASSIGNMENT);
+		system_.updateBug(bug_);
 	}
 
 	/**
@@ -137,9 +139,12 @@ public class UiController {
 	 * 
 	 * @param developer_
 	 *            The new developer account to be added
+	 * @param devPassword
+	 * 			  The new developers password
 	 */
-	public void AddDeveloper(Employee developer_) {
-		// TODO implement here
+	public void AddDeveloper(Developer developer_, String devPassword) {
+		String loginInfoToAdd = "dev-<" + developer_.getUsername_() + ":" + devPassword + ">";
+		system_.addToDeveloperList(developer_, loginInfoToAdd);
 	}
 
 	/**
@@ -148,8 +153,8 @@ public class UiController {
 	 * @param developer_
 	 *            The developer account to be updated
 	 */
-	public void UpdateDeveloper(Employee developer_) {
-		// TODO implement here
+	public void UpdateDeveloper(Developer developer_) {
+		system_.updateDeveloper(developer_);
 	}
 
 	/**
@@ -158,8 +163,8 @@ public class UiController {
 	 * @param developer_
 	 *            The developer account to be removed
 	 */
-	public void RemoveDeveloper(Employee developer_) {
-		// TODO implement here
+	public void RemoveDeveloper(Developer developer_) {
+		//TODO: Remove method
 	}
 
 	/**
@@ -169,7 +174,7 @@ public class UiController {
 	 *            The new product to be added
 	 */
 	public void AddProduct(Product product_) {
-		// TODO implement here
+		system_.addToProductList(product_);
 	}
 
 	/**
@@ -179,7 +184,7 @@ public class UiController {
 	 *            The product to be removed
 	 */
 	public void RemoveProduct(Product product_) {
-		// TODO implement here
+		// TODO Remove method
 	}
 
 	/**
@@ -190,8 +195,7 @@ public class UiController {
 	 * @return An arraylist of assignments
 	 */
 	public ArrayList<Assignment> BrowseAssignments(int userId_) {
-		return system_.getAssignmentList_(); // TODO: change args of
-												// getAssignmentList_ in system
+		return system_.getAssignmentList_(); 
 	}
 
 	/**
@@ -201,7 +205,7 @@ public class UiController {
 	 *            The assignment to be removed
 	 */
 	public void RemoveAssignment(Assignment assignment_) {
-		// TODO implement here
+		// TODO Remove method
 	}
 
 	/**
@@ -211,7 +215,7 @@ public class UiController {
 	 *            The new assignment to be added
 	 */
 	public void AddAssignment(Assignment assignment_) {
-		// TODO implement here
+		system_.addToAssignmentList(assignment_);
 	}
 
 	/**
@@ -222,7 +226,7 @@ public class UiController {
 	 * @return The report held in a string object
 	 */
 	public String GenerateReport(Assignment assignment_) {
-		// TODO implement here
+		//TODO: generate report
 		return "";
 	}
 
@@ -237,11 +241,6 @@ public class UiController {
 	 *         object if successful
 	 */
 	public Employee login(String login) {
-		// Temporary
-		if (system_ == null)
-			return null;
-		//
-
 		userLoggedIn_ = system_.loginUser(login);
 		return userLoggedIn_;
 	}

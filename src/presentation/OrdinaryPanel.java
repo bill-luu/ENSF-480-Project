@@ -270,8 +270,7 @@ public class OrdinaryPanel {
 	}
 
 	/**
-	 * @param void
-	 * @return
+	 * Create popup for user login
 	 */
 	public void createLoginPopUp() {
 		JPanel loginPanel = new JPanel();
@@ -304,7 +303,6 @@ public class OrdinaryPanel {
 			} else if (logged_in_result instanceof Manager) {
 				// Get components
 				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
-				loginButton.setVisible(false);
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
 				
@@ -317,7 +315,6 @@ public class OrdinaryPanel {
 				layout.show(viewHolder, "ManagerPanel");
 			} else if (logged_in_result instanceof Developer) {
 				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
-				loginButton.setVisible(false);
 				// Get components
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
