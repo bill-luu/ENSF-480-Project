@@ -63,17 +63,17 @@ public class OrdinaryPanel {
 	 * The JList display for bugs
 	 */
 	private JList<String> buglist;
-	
+
 	/**
 	 * Combobox for selecting pages to view
 	 */
 	JComboBox<String> pageSelector;
-	
+
 	/**
 	 * Button for logging into the system
 	 */
 	private JButton loginButton;
-	
+
 	/**
 	 * Constructor for the Ordinary Panel
 	 * 
@@ -271,7 +271,8 @@ public class OrdinaryPanel {
 
 	/**
 	 * Create popup for user login
-	 * @param loginButton 
+	 * 
+	 * @param loginButton
 	 */
 	public void createLoginPopUp(JButton loginButton) {
 		JPanel loginPanel = new JPanel();
@@ -303,11 +304,11 @@ public class OrdinaryPanel {
 						"Invalid Login", JOptionPane.WARNING_MESSAGE);
 			} else if (logged_in_result instanceof Manager) {
 				// Get components
-				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
+				((DefaultComboBoxModel<String>) pageSelector.getModel()).addElement("Assignment");
 				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
 				CardLayout layout = (CardLayout) viewHolder.getLayout();
 				loginButton.setVisible(false);
-				
+
 				// Create new ManagerPanel if it doesn't exist
 				if (!uiController_.checkPanelExists("ManagerPanel", viewHolder)) {
 					viewHolder.add(new ManagerPanel(uiController_).getPanel_(), "ManagerPanel");
@@ -316,7 +317,7 @@ public class OrdinaryPanel {
 				// Change view to manager panel
 				layout.show(viewHolder, "ManagerPanel");
 			} else if (logged_in_result instanceof Developer) {
-				((DefaultComboBoxModel<String>)pageSelector.getModel()).addElement("Assignment");
+				((DefaultComboBoxModel<String>) pageSelector.getModel()).addElement("Assignment");
 				pageSelector.addActionListener(new ActionListener() {
 
 					@Override
@@ -344,7 +345,6 @@ public class OrdinaryPanel {
 				layout.show(viewHolder, "DeveloperPanel");
 			}
 		}
-
 	}
 
 	/**
@@ -363,10 +363,10 @@ public class OrdinaryPanel {
 		// Fill a dropdown menu with all the products
 		DefaultComboBoxModel<String> productModel = new DefaultComboBoxModel<String>();
 		DefaultListModel<String> model = (DefaultListModel<String>) productlist.getModel();
-		
+
 		// Fill combobox with only product names
 		for (int i = 0; i < model.size(); i++)
-			productModel.addElement(model.getElementAt(i).split(" ")[1]); 
+			productModel.addElement(model.getElementAt(i).split(" ")[1]);
 		JComboBox<String> products = new JComboBox<String>(productModel);
 
 		Box vBox = Box.createVerticalBox();
@@ -387,7 +387,7 @@ public class OrdinaryPanel {
 			// Get selected product ID
 			String selectedProduct = model.getElementAt(products.getSelectedIndex());
 			int productID = Integer.parseInt(selectedProduct.split(" ")[0]);
-			
+
 			// Create the new bug
 			Bug b = new Bug();
 			b.setBugId_(uiController_.BrowseBugs().size() + 101);
@@ -406,10 +406,10 @@ public class OrdinaryPanel {
 		JPanel bugPanel = new JPanel();
 		if (buglist.isSelectionEmpty())
 			return;
-		
+
 		// Separate bug id from the rest of the string
 		int bugID = Integer.parseInt(buglist.getSelectedValue().split(" ")[0]);
-		
+
 		ArrayList<Bug> bugs = uiController_.BrowseBugs();
 		for (Bug b : bugs) {
 			if (b.getBugId_() == bugID) {
@@ -419,23 +419,27 @@ public class OrdinaryPanel {
 				JLabel bugDescription = new JLabel("Description: " + b.getDescription_());
 				JLabel bugState = new JLabel("Status: " + b.getState_().toString());
 				ArrayList<Product> productlist = uiController_.BrowseProducts();
-				
+
 				for (Product p : productlist) {
 					if (p.getProductId_() == b.getProductId_()) {
 						JLabel productTitle = new JLabel("<HTML><U>Product Information</U></HTML>");
 						JLabel productID = new JLabel("ID: " + p.getProductId_());
 						JLabel productName = new JLabel("Name: " + p.getProductName_());
 						JLabel productDescription = new JLabel("Description: " + p.getProductDescription());
-						
+
 						// Set Font
 						Font font = new Font("Calibri", Font.PLAIN, 20);
 						Font big_underline_font = new Font("Calibri", Font.PLAIN, 30);
-						title.setFont(big_underline_font); 	bugid.setFont(font);
-						bugTitle.setFont(font); 			productTitle.setFont(big_underline_font);
-						productID.setFont(font);			productName.setFont(font);
-						bugDescription.setFont(font); 		productDescription.setFont(font);
-						bugState.setFont(font); 		
-						
+						title.setFont(big_underline_font);
+						bugid.setFont(font);
+						bugTitle.setFont(font);
+						productTitle.setFont(big_underline_font);
+						productID.setFont(font);
+						productName.setFont(font);
+						bugDescription.setFont(font);
+						productDescription.setFont(font);
+						bugState.setFont(font);
+
 						// Add textfields to parent component
 						Box vBox = Box.createVerticalBox();
 						vBox.add(title);
