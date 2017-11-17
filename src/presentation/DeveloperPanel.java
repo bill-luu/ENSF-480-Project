@@ -76,7 +76,6 @@ public class DeveloperPanel {
 		JLabel title2 = new JLabel("Info");
 		title2.setFont(titlefont);
 
-		JButton logoutButton = new JButton("Log Out");
 		JButton updateAssignmentButton = new JButton("Update");
 
 		String[] pages = { "Assignments", "Bugs" };
@@ -193,20 +192,6 @@ public class DeveloperPanel {
 			}
 		});
 
-		logoutButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				createLoginPopUp();
-			}
-
-			private void createLoginPopUp() {
-				JPanel viewHolder = (JPanel) (uiController_.getFrame().getContentPane().getComponent(0));
-				CardLayout layout = (CardLayout) viewHolder.getLayout();
-				layout.show(viewHolder, "OrdinaryPanel");
-
-			}
-		});
-
 		// Open submit bug popup when clicking submit bug button
 		updateAssignmentButton.addActionListener(new ActionListener() {
 
@@ -237,12 +222,6 @@ public class DeveloperPanel {
 		gbc.gridwidth = 1;
 		gbc.gridheight = 1;
 		panel_.add(pageSelector, gbc);
-
-		gbc.gridx = 11;
-		gbc.gridy = 2;
-		gbc.gridwidth = 1;
-		gbc.gridheight = 1;
-		panel_.add(logoutButton, gbc);
 
 		gbc.insets = new Insets(0, 0, 0, 0);
 		gbc.gridx = 0;
