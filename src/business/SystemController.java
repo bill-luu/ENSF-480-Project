@@ -78,6 +78,7 @@ public class SystemController {
 		setLoginController_(new LoginController(loginInfoList_));
 		
 		
+		setLoginController_(new LoginController(loginInfoList_));
 		setUiController(new UiController(this));
 	}
 
@@ -101,8 +102,8 @@ public class SystemController {
 		return logged_in_user;
 	}
 
-	/*
-	 * Reads the databaseContoller for each of the lists
+	/**
+	 * Reads the databaseController for each of the lists
 	 * 
 	 * @param void
 	 * 
